@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity >=0.6.0 <0.7.0;
+pragma experimental ABIEncoderV2;
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract KomodoNotarise is Ownable{
 
     //last notarised blockheight
     uint32 public lastBlockHeight;
-    currencyState private lastCurrencyState;
+    CurrencyState private lastCurrencyState;
     //allows for the contract to be upgradable
     bool public deprecated;
     address public upgradedAddress;
@@ -25,7 +26,7 @@ contract KomodoNotarise is Ownable{
 
     struct NotarisedBlock{
         uint32 version;
-        int32 protocol;
+        uint32 protocol;
         uint160 currencyID;
         uint160 notaryDest;
         uint32 notarizationHeight;
@@ -101,6 +102,8 @@ contract KomodoNotarise is Ownable{
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
         require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
         require(_blockHeight > lastBlockHeight,"Block Height must be greater than current block height");
+        require(_komodoBlockDetail.length == 148,"Incorrect block length, block whould be 148 long");
+        
 
         address signingAddress;
         //total number of signatures that have been validated
@@ -126,30 +129,22 @@ contract KomodoNotarise is Ownable{
 
     }
 
-    function recoverSigner2(bytes32 h, uint8 v, bytes32 r, bytes32 s) public pure returns (address) {
+    function recoverSigner(bytes32 h, uint8 v, bytes32 r, bytes32 s) public pure returns (address) {
         address addr = ecrecover(h, v, r, s);
         return addr;
     }
 
-    function recoverSigner(bytes32 h, uint8 v, bytes32 r, bytes32 s) public pure returns (address) {
-        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, h));
-        address addr = ecrecover(prefixedHash, v, r, s);
 
-        return addr;
-    }
-
-    function getLastNotarisedBlock() public view returns(bytes memory){
+    function getLastNotarisedBlock() public view returns(NotarisedBlock memory){
 
         require(!deprecated,"Contract has been deprecated");
-        return notarisedBlocks[lastBlockHeight];
+        return convertSerialisedBlock(notarisedBlocks[lastBlockHeight]);
 
     }
 
-    function getNotarisedBlock(uint32 _blockHeight) public view returns(bytes memory){
+    function getNotarisedBlock(uint32 _blockHeight) public view returns(NotarisedBlock memory){
 
-        require(!deprecated,"Contract has been deprecated");
-        return notarisedBlocks[_blockHeight];
+        return convertSerialisedBlock(notarisedBlocks[_blockHeight]);
 
     }
 
@@ -159,14 +154,58 @@ contract KomodoNotarise is Ownable{
         return lastBlockHeight;
     }
 
-    function convertSerialisedBlock(bytes memory _serialisedBlock) private view returns(NotarisedBlock memory){
+    function convertSerialisedBlock(bytes memory _serialisedBlock) private pure returns(NotarisedBlock memory){
         NotarisedBlock memory deserialisedBlock;
-        decentralisedBlock.version = 
+        deserialisedBlock.version = toUint32(_serialisedBlock,0);
+        deserialisedBlock.protocol = toUint32(_serialisedBlock,4);
+        deserialisedBlock.currencyID = toUint160(_serialisedBlock,8);
+        deserialisedBlock.notaryDest = toUint160(_serialisedBlock,28);
+        deserialisedBlock.notarizationHeight = toUint32(_serialisedBlock,48);
+        deserialisedBlock.mmrRoot = toUint256(_serialisedBlock,52);
+        deserialisedBlock.notarizationPreHash = toUint256(_serialisedBlock,84);
+        deserialisedBlock.compactPower = toUint256(_serialisedBlock,116);
+        return deserialisedBlock;
     }
+
+    function toUint32(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
+        require(_bytes.length >= (_start + 4), "Read out of bounds Uint32");
+        uint32 tempUint;
+
+        assembly {
+            tempUint := mload(add(add(_bytes, 0x4), _start))
+        }
+
+        return tempUint;
+    }
+
+    function toUint160(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
+        require(_bytes.length >= (_start + 20), "Read out of bounds Uint160");
+        uint32 tempUint;
+
+        assembly {
+            tempUint := mload(add(add(_bytes, 0x14), _start))
+        }
+
+        return tempUint;
+    }
+
+    function toUint256(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
+        require(_bytes.length >= (_start + 32), "Read out of bounds Uint256");
+        uint32 tempUint;
+
+        assembly {
+            tempUint := mload(add(add(_bytes, 0x10), _start))
+        }
+
+        return tempUint;
+    }
+
 
     function kill() public onlyOwner{
         selfdestruct(msg.sender);
     }
+
+
 
     /**
     * deprecate current contract
@@ -180,3 +219,5 @@ contract KomodoNotarise is Ownable{
     }
 
 }
+
+
