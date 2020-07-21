@@ -33,6 +33,7 @@ contract KomodoNotarise is Ownable{
         uint256 mmrRoot;
         uint256 notarizationPreHash;
         uint256 compactPower;
+        CurrencyState currencyState;
     }
 
     struct CurrencyState{
@@ -47,7 +48,7 @@ contract KomodoNotarise is Ownable{
     // Notifies when the contract is deprecated
     event Deprecate(address newAddress);
     // Notifies when a new block hash is published
-    event NewBlock(bytes notarisedBlock,uint64 komodoBlockHeight);
+    event NewBlock(NotarisedBlock notarisedBlock,uint64 notarisedBlockHeight);
 
 
     constructor() public {
@@ -61,7 +62,7 @@ contract KomodoNotarise is Ownable{
 
         require(!deprecated,"Contract has been deprecated");
         //if the the komodoNotaries is full reject
-        require(notaryCount < 60,"Cnat have more than 60 notaries");
+        require(notaryCount < 60,"Cant have more than 60 notaries");
         //if the notary already is in the komodNotaries then reject
         require(!komodoNotaries[_notary],"Notary already exists");
 
@@ -85,15 +86,8 @@ contract KomodoNotarise is Ownable{
 
     }
 
-    /**
-    Solidity cant handle a struct array or an array of variable length arrays
-    as the sig byte array is 65 bytes this gets flagged as a variable length array
-    to get round this we pass in the constituents of the address.
-    _komodoBlockDetail is 148 bytes serialised
-    **/
-    function setLatestBlock(bytes memory _komodoBlockDetail,
-        uint32 _blockHeight,
-        bytes32[] memory _hashedBlockDetail,
+
+    function setLatestBlock(NotarisedBlock memory _notarisedBlockDetail,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
         uint8[] memory _vs) public returns(bool){
@@ -101,9 +95,13 @@ contract KomodoNotarise is Ownable{
         require(!deprecated,"Contract has been deprecated");
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
         require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
-        require(_blockHeight > lastBlockHeight,"Block Height must be greater than current block height");
-        require(_komodoBlockDetail.length == 148,"Incorrect block length, block whould be 148 long");
-        
+        require(_notarisedBlockDetail.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
+
+        bytes memory serialisedBlock = serialiseBlock(_notarisedBlockDetail);
+        //check the hash of the data
+        bytes32 hashedData = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n",serialisedBlock.length,serialisedBlock));
+        //need to check the block hash matches the hashed notarised block
+        //require(_notarisedBlockDetail.length == 148,"Incorrect block length, block whould be 148 long");
 
         address signingAddress;
         //total number of signatures that have been validated
@@ -112,9 +110,8 @@ contract KomodoNotarise is Ownable{
         //loop through the arrays, check the following:
         //does the hash in the hashedBlocks match the komodoBlockHash passed in
         for(uint i = 0; i < _rs.length; i++){
-            //is the address in the hashed block
-
-            signingAddress = ecrecover(_hashedBlockDetail[i], _vs[i], _rs[i], _ss[i]);
+            //if the address is in the notary array increment the number of signatures
+            signingAddress = recoverSigner(hashedData, _vs[i], _rs[i], _ss[i]);
             if(komodoNotaries[signingAddress]) {
                 numberOfSignatures++;
             }
@@ -122,10 +119,12 @@ contract KomodoNotarise is Ownable{
 
         //if there is greater than 13 proper signatories then set the block hash
         if(numberOfSignatures >= requiredNotaries){
-            notarisedBlocks[_blockHeight] = _komodoBlockDetail;
-            lastBlockHeight = _blockHeight;
-            emit NewBlock(_komodoBlockDetail,lastBlockHeight);
-        }
+            notarisedBlocks[_notarisedBlockDetail.notarizationHeight] = serialisedBlock;
+            lastBlockHeight = _notarisedBlockDetail.notarizationHeight;
+            emit NewBlock(_notarisedBlockDetail,lastBlockHeight);
+            return true;
+        } else return false;
+
 
     }
 
@@ -138,13 +137,13 @@ contract KomodoNotarise is Ownable{
     function getLastNotarisedBlock() public view returns(NotarisedBlock memory){
 
         require(!deprecated,"Contract has been deprecated");
-        return convertSerialisedBlock(notarisedBlocks[lastBlockHeight]);
+        return deSerialiseBlock(notarisedBlocks[lastBlockHeight]);
 
     }
 
     function getNotarisedBlock(uint32 _blockHeight) public view returns(NotarisedBlock memory){
 
-        return convertSerialisedBlock(notarisedBlocks[_blockHeight]);
+        return deSerialiseBlock(notarisedBlocks[_blockHeight]);
 
     }
 
@@ -154,58 +153,35 @@ contract KomodoNotarise is Ownable{
         return lastBlockHeight;
     }
 
-    function convertSerialisedBlock(bytes memory _serialisedBlock) private pure returns(NotarisedBlock memory){
+    function deSerialiseBlock(bytes memory _serialisedBlock) private pure returns(NotarisedBlock memory){
         NotarisedBlock memory deserialisedBlock;
-        deserialisedBlock.version = toUint32(_serialisedBlock,0);
-        deserialisedBlock.protocol = toUint32(_serialisedBlock,4);
-        deserialisedBlock.currencyID = toUint160(_serialisedBlock,8);
-        deserialisedBlock.notaryDest = toUint160(_serialisedBlock,28);
-        deserialisedBlock.notarizationHeight = toUint32(_serialisedBlock,48);
-        deserialisedBlock.mmrRoot = toUint256(_serialisedBlock,52);
-        deserialisedBlock.notarizationPreHash = toUint256(_serialisedBlock,84);
-        deserialisedBlock.compactPower = toUint256(_serialisedBlock,116);
+        (deserialisedBlock.version,
+        deserialisedBlock.protocol,
+        deserialisedBlock.currencyID,
+        deserialisedBlock.notaryDest,
+        deserialisedBlock.notarizationHeight,
+        deserialisedBlock.mmrRoot,
+        deserialisedBlock.notarizationPreHash,
+        deserialisedBlock.compactPower
+        ) = abi.decode(_serialisedBlock,(uint32,uint32,uint160,uint160,uint32,uint256,uint256,uint256));
+
         return deserialisedBlock;
     }
 
-    function toUint32(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
-        require(_bytes.length >= (_start + 4), "Read out of bounds Uint32");
-        uint32 tempUint;
-
-        assembly {
-            tempUint := mload(add(add(_bytes, 0x4), _start))
-        }
-
-        return tempUint;
+    function serialiseBlock(NotarisedBlock memory _deserialisedBlock) private pure returns(bytes memory){
+        return abi.encode(_deserialisedBlock.version,
+        _deserialisedBlock.protocol,
+        _deserialisedBlock.currencyID,
+        _deserialisedBlock.notaryDest,
+        _deserialisedBlock.notarizationHeight,
+        _deserialisedBlock.mmrRoot,
+        _deserialisedBlock.notarizationPreHash,
+        _deserialisedBlock.compactPower);
     }
-
-    function toUint160(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
-        require(_bytes.length >= (_start + 20), "Read out of bounds Uint160");
-        uint32 tempUint;
-
-        assembly {
-            tempUint := mload(add(add(_bytes, 0x14), _start))
-        }
-
-        return tempUint;
-    }
-
-    function toUint256(bytes memory _bytes, uint256 _start) internal pure returns (uint32) {
-        require(_bytes.length >= (_start + 32), "Read out of bounds Uint256");
-        uint32 tempUint;
-
-        assembly {
-            tempUint := mload(add(add(_bytes, 0x10), _start))
-        }
-
-        return tempUint;
-    }
-
 
     function kill() public onlyOwner{
         selfdestruct(msg.sender);
     }
-
-
 
     /**
     * deprecate current contract
@@ -219,5 +195,4 @@ contract KomodoNotarise is Ownable{
     }
 
 }
-
 
