@@ -1,5 +1,5 @@
-var KomodoNotarise = artifacts.require("./komodoNotarise.sol");
+var KomodoNotarize = artifacts.require("./komodoNotarize.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(KomodoNotarise);
+  deployer.deploy(KomodoNotarize);
 };
