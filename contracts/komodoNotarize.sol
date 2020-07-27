@@ -85,22 +85,10 @@ contract KomodoNotarize is Ownable{
 
     }
 
-
-    function setLatestBlock(NotarizedBlock memory _notarizedBlockDetail,
-        CurrencyState memory _currencyState,
-        bytes32 notarizedBlockHash,
+    function isNotarized(bytes32 notarizedBlockHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
-        uint8[] memory _vs) public returns(bool){
-
-        require(!deprecated,"Contract has been deprecated");
-        require(komodoNotaries[msg.sender],"Only a notary can call this function");
-        require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
-        require(_notarizedBlockDetail.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
-
-        bytes memory serializedBlock = serializeBlock(_notarizedBlockDetail);
-        //check the hash of the data
-        //need to check the block hash matches the hashed notarized block
+        uint8[] memory _vs) private view returns(bool){
         
         address signingAddress;
         //total number of signatures that have been validated
@@ -115,9 +103,31 @@ contract KomodoNotarize is Ownable{
                 numberOfSignatures++;
             }
         }
-
-        //if there is greater than 13 proper signatories then set the block hash
         if(numberOfSignatures >= requiredNotaries){
+            return true;
+        } else return false;
+
+    }
+
+    function setLatestBlock(NotarizedBlock memory _notarizedBlockDetail,
+        CurrencyState memory _currencyState,
+        bytes32 _notarizedBlockHash,
+        bytes32[] memory _rs,
+        bytes32[] memory _ss,
+        uint8[] memory _vs) public returns(bool){
+
+        require(!deprecated,"Contract has been deprecated");
+        require(komodoNotaries[msg.sender],"Only a notary can call this function");
+        require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
+        require(_notarizedBlockDetail.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
+
+        bytes memory serializedBlock = serializeBlock(_notarizedBlockDetail);
+        //check the hash of the data
+        //need to check the block hash matches the hashed notarized block
+        
+        
+        //if there is greater than 13 proper signatories then set the block hash
+        if(isNotarized(_notarizedBlockHash,_rs,_ss,_vs)){
             notarizedBlocks[_notarizedBlockDetail.notarizationHeight] = serializedBlock;
             lastBlockHeight = _notarizedBlockDetail.notarizationHeight;
             lastCurrencyState = _currencyState;
