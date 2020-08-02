@@ -173,6 +173,10 @@ contract KomodoNotarize is Ownable{
         return deSerializeBlock(notarizedBlocks[lastBlockHeight]);
 
     }
+    function getLastCurrencyState() public view returns(CurrencyState memory){
+        require(!deprecated,"Contract has been deprecated");
+        return lastCurrencyState;
+    }
 
     function getNotarizedBlock(uint32 _blockHeight) public view returns(NotarizedBlock memory){
 
