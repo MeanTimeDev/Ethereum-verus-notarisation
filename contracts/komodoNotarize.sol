@@ -14,12 +14,11 @@ contract KomodoNotarize is Ownable{
     bool public deprecated;
     address public upgradedAddress;
     //number of notaries required
-    uint8 requiredNotaries = 1;
+    uint8 requiredNotaries = 13;
 
     //list of all notarizers mapped to allow for quick searching
     mapping (address => bool) private komodoNotaries;
     //mapped blockdetails
-    //the
     mapping (uint32 => bytes) private notarizedBlocks;
     //used to record the number of notaries
     uint8 private notaryCount;
@@ -54,11 +53,25 @@ contract KomodoNotarize is Ownable{
         deprecated = false;
         notaryCount = 0;
         lastBlockHeight = 0;
+        //add in the owner as the first notary
+        address msgSender = _msgSender();
+        komodoNotaries[msgSender] = true;
+        notaryCount++;
     }
 
-    function addNotary(address _notary) public onlyOwner
-    returns(bool){
+    modifier onlyNotary() {
+        address msgSender = _msgSender();
+        require(komodoNotaries[msgSender] == true, "Caller is not a notary");
+        _;
+    }
 
+    function addNotary(address _notary,
+        bytes32 _notarizedAddressHash,
+        bytes32[] memory _rs,
+        bytes32[] memory _ss,
+        uint8[] memory _vs) public onlyNotary
+    returns(bool){
+        require(isNotarized(_notarizedAddressHash,_rs,_ss,_vs),"Function can only be executed by notaries");
         require(!deprecated,"Contract has been deprecated");
         //if the the komodoNotaries is full reject
         require(notaryCount < 60,"Cant have more than 60 notaries");
@@ -71,18 +84,27 @@ contract KomodoNotarize is Ownable{
 
     }
 
-    function removeNotary(address _notary)  public onlyOwner
+    function removeNotary(address _notary) public onlyNotary
     returns(bool){
 
         require(!deprecated,"Contract has been deprecated");
         //if the notary is not in the list then fail
         require(komodoNotaries[_notary] == true,"Notary does not exist");
-
+        //there must be at least one notary in the contract perhaps?
+        require(notaryCount > 1,"Must have more than one notary");
         //need to look at this no easy way to delete from a mapping
-        komodoNotaries[_notary] = false;
+        delete komodoNotaries[_notary];
         notaryCount--;
         return true;
 
+    }
+
+    //this function allows for intially expanding out the number of notaries
+    function currentNotariesRequired() public view returns(uint8){
+        if(notaryCount == 1) return 1;
+        uint halfNotaryCount = notaryCount/2;
+        if(halfNotaryCount > requiredNotaries) return requiredNotaries;
+        else return uint8(halfNotaryCount);
     }
 
     function isNotarized(bytes32 notarizedBlockHash,
@@ -103,7 +125,8 @@ contract KomodoNotarize is Ownable{
                 numberOfSignatures++;
             }
         }
-        if(numberOfSignatures >= requiredNotaries){
+        uint8 _requiredNotaries = currentNotariesRequired();
+        if(numberOfSignatures >= _requiredNotaries){
             return true;
         } else return false;
 
@@ -114,7 +137,7 @@ contract KomodoNotarize is Ownable{
         bytes32 _notarizedBlockHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
-        uint8[] memory _vs) public returns(bool){
+        uint8[] memory _vs) public onlyNotary returns(bool){
 
         require(!deprecated,"Contract has been deprecated");
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -191,6 +214,8 @@ contract KomodoNotarize is Ownable{
         _deserializedBlock.compactPower);
 
     }
+
+    /*** temporary code for use on test net only will be removed for production */
 
     function kill() public onlyOwner{
         selfdestruct(msg.sender);
