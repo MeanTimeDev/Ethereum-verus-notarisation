@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.5.16 <0.7.1;
+pragma solidity >=0.6.0 <0.7.0;
 import "./BLAKE2B/BLAKE2b.sol";
 pragma experimental ABIEncoderV2;
 
@@ -66,14 +66,24 @@ contract MMRProof{
         }
     }
 
-    function createHash(bytes32 testString) public returns(bytes32){
+    function createHash(bytes memory testString,bytes memory key) public returns(bytes32){
         uint64[8] memory blakeResult;
         bytes memory testInput = abi.encodePacked(testString);
-        verusKey = "";
-        blakeResult = blake2b.blake2b(testInput,verusKey,32);
+        
+        blakeResult = blake2b.blake2b(testInput,key,32);
         bytes memory hashInProgress = abi.encodePacked(blakeResult[0],blakeResult[1],blakeResult[2],blakeResult[3],
                 blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
         return bytesToBytes32(hashInProgress);
+    }
+
+    function create64Hash(bytes memory testString,bytes memory key) public returns(bytes memory){
+        uint64[8] memory blakeResult;
+        bytes memory testInput = abi.encodePacked(testString);
+        
+        blakeResult = blake2b.blake2b(testInput,key,64);
+        bytes memory hashInProgress = abi.encodePacked(blakeResult[0],blakeResult[1],blakeResult[2],blakeResult[3],
+                blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
+        return hashInProgress;
     }
 
     /*

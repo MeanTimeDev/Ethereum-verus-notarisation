@@ -43,7 +43,7 @@ contract VerusNotarizer{
         uint32 notarizationHeight;
         uint256 mmrRoot;
     }
-    /*
+  /*  
     struct CurrencyState{
         uint64[] reserveIn;
         uint64[] nativeIn;
@@ -52,7 +52,7 @@ contract VerusNotarizer{
         uint64[] fees;
         uint64[] conversionFees;
     }
-    */
+  */  
     // Notifies when the contract is deprecated
     event Deprecate(address newAddress);
     // Notifies when a new block hash is published
@@ -64,13 +64,13 @@ contract VerusNotarizer{
         notaryCount = 0;
         lastBlockHeight = 0;
         //add in the owner as the first notary
-        address msgSender = msg.sender();
+        address msgSender = msg.sender;
         komodoNotaries[msgSender] = true;
         notaryCount++;
     }
 
     modifier onlyNotary() {
-        address msgSender = msg.sender();
+        address msgSender = msg.sender;
         require(komodoNotaries[msgSender] == true, "Caller is not a notary");
         _;
     }
@@ -180,10 +180,11 @@ contract VerusNotarizer{
         return deSerializeData(notarizedDataEntries[lastBlockHeight]);
 
     }
+    /*
     function getLastCurrencyState() public view returns(CurrencyState memory){
         require(!deprecated,"Contract has been deprecated");
         return lastCurrencyState;
-    }
+    }*/
 
     function getNotarizedData(uint32 _blockHeight) public view returns(NotarizedData memory){
 
@@ -197,7 +198,7 @@ contract VerusNotarizer{
         return lastBlockHeight;
     }
 
-    function getAllBlockHeights() public view returns(uint32[]){
+    function getAllBlockHeights() public view returns(uint32[] memory){
         return blockHeights;
     }
 

@@ -1,6 +1,12 @@
+//const { default: Web3 } = require("web3");
+/*
 const Web3 = require('web3')
 const provider = new Web3.providers.HttpProvider('http://localhost:7545')
-const web3 = new Web3(provider)
+//const web3 = new Web3(provider)
+
+
+
+
 
 function toHex(str) {
  var hex = ''
@@ -15,3 +21,4 @@ let msg = 'I really did make this message'
 let signature = web3.eth.sign(addr, '0x' + toHex(msg))
 console.log(signature)
 
+*/
