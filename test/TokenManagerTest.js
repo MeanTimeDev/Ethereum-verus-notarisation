@@ -148,10 +148,13 @@ contract('VerusBridge',(accounts) => {
         const mmrProof = await MMRProof.new();
         const tokenManagerInstance = await TokenManager.deployed();
         const verusBridgeInstance = await VerusBridge.deployed(verusNotarizer.address,mmrProof.address,tokenManagerInstance.address);
-        let hashKey = "0x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f";
-        let generatedHash = await verusBridgeInstance.mmrHash.call("0x68656c6c6f",[]);
+        let hashKey = "0xbddd813c634239723171ef3fee98579b94964e3bb1cb3e427262c8c068d52319";
+        //let generatedHash = await verusBridgeInstance.mmrHash.call("0x61626364","0x566572757344656661756c7448617368");
+        //console.log(generatedHash);
+        let flipped = await verusBridgeInstance.mmrHash.call("0x61626364",[]);
+        //let stringBytes = await verusBridgeInstance.bytes32ToString(hashKey);
 
-        console.log(generatedHash);
+        console.log(flipped);
 
     });
 });

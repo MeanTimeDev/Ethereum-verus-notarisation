@@ -66,15 +66,40 @@ contract MMRProof{
         }
     }
 
-    function createHash(bytes memory testString,bytes memory key) public returns(bytes32){
+    function createHash(bytes memory toHash,bytes memory personalisation,bool flipped) public returns(bytes32){
         uint64[8] memory blakeResult;
-        bytes memory testInput = abi.encodePacked(testString);
-        
-        blakeResult = blake2b.blake2b(testInput,key,32);
+        bytes memory testInput = abi.encodePacked(toHash);
+        bytes memory key;
+        bytes memory salt;
+
+        blakeResult = blake2b.blake2b(testInput,key,salt,personalisation,32);
         bytes memory hashInProgress = abi.encodePacked(blakeResult[0],blakeResult[1],blakeResult[2],blakeResult[3],
                 blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
-        return bytesToBytes32(hashInProgress);
+
+        //we flip the bytes array to match up with Verus Hash    
+        bytes32 bytes32hash = bytesToBytes32(hashInProgress);   
+        if(flipped == true) bytes32hash = reverseBytes(bytes32hash);
+        return bytes32hash;
     }
+
+    function createHash(bytes memory toHash,bytes memory personalisation) public returns(bytes32){
+        return createHash(toHash,personalisation,false);
+    }
+
+    function reverseBytes(bytes32 _bytes32) public pure returns (bytes32) {
+        uint8 i = 0;
+        while(i < 32 && _bytes32[i] != 0) {
+            i++;
+        }
+        bytes memory bytesArray = new bytes(i);
+        for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
+            bytesArray[i] = _bytes32[(31-i)];
+        }
+        return bytesToBytes32(bytesArray);
+    }
+
+
+ 
 
     function create64Hash(bytes memory testString,bytes memory key) public returns(bytes memory){
         uint64[8] memory blakeResult;
@@ -85,28 +110,4 @@ contract MMRProof{
                 blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
         return hashInProgress;
     }
-
-    /*
-    function testMMR(string memory testString) public returns(bytes32){
-        uint64[8] memory blakeResult;
-        bytes memory testInput = bytes(testString);
-        verusKey = "";
-        blakeResult = blake2b.blake2b(testInput,verusKey,32);
-        bytes memory hashInProgress = abi.encodePacked(blakeResult[0],blakeResult[1],blakeResult[2],blakeResult[3],
-                blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
-        return bytesToBytes32(hashInProgress);
-    }
-
-    function testMMRBytes(bytes memory testInput) public returns(bytes32){
-        uint64[8] memory blakeResult;
-        verusKey = "";
-        blakeResult = blake2b.blake2b(testInput,verusKey,32);
-        bytes memory hashInProgress = abi.encodePacked(blakeResult[0],blakeResult[1],blakeResult[2],blakeResult[3],
-                blakeResult[4],blakeResult[5],blakeResult[6],blakeResult[7]);
-        return bytesToBytes32(hashInProgress);
-    }
-
-
-
-    */
 }

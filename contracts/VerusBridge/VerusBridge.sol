@@ -15,13 +15,19 @@ contract VerusBridge {
  
     //list of erc20 tokens that can be accessed,
     //the contract must be able to mint and burn coins on the contract
-    //list of addresses allowed to execute transactions
-    address[] private permittedAddresses;
     //defines the tokenManager which creates the erc20
     TokenManager tokenManager;
     VerusNotarizer verusNotarizer;
     MMRProof mmrProof;
+
+    uint256 feesHeld = 0;
+    uint256 ethHeld = 0;
+
     bytes verusKey = "VerusDefaultHash";
+    uint64 transactionsPerCall = 100;
+    string VRSCEthTokenName = ".eth.";
+    uint256 transactionFee = 100000000000000; //0.0001 eth
+
 
     //pending transactions array
     struct BridgeTransaction {
@@ -49,8 +55,17 @@ contract VerusBridge {
         
     }
 
-    function receiveFromVerusChain(BridgeTransaction[] memory _newTransactions, uint32 _hashIndex, bytes32[] memory _transactionsProof, uint32 _blockHeight) public returns(bytes32){
-        
+    function getTransactionsPerCall() public view returns(uint64){
+        return transactionsPerCall;
+    }
+
+    function sendEth(uint256 _ethAmount,address payable _targetAddress) private {
+        //do we take fees here????
+        require(_ethAmount >= address(this).balance,"Requested amount exceeds contract balance");
+        _targetAddress.transfer(_ethAmount);
+    }
+
+    function receiveFromVerusChain(BridgeTransaction[] memory _newTransactions, uint32 _hashIndex, bytes32[] memory _transactionsProof, uint32 _blockHeight) public returns(bytes32){   
         //check the transaction has not already been processed
         bytes32 newTransactionHash = createTransactionsHash(_newTransactions);
         require(!completedInboundTransactions[newTransactionHash].completed ,"Transactions have been already processed");
@@ -59,7 +74,13 @@ contract VerusBridge {
         
         //loop through the transactions and execute
         for(uint i = 0; i < _newTransactions.length; i++){
-            tokenManager.sendERC20Tokens(_newTransactions[i].tokenName,_newTransactions[i].tokenAmount,_newTransactions[i].targetAddress);
+            if(keccak256(abi.encodePacked(_newTransactions[i].tokenName)) == keccak256(abi.encodePacked(VRSCEthTokenName))) {
+                sendEth(_newTransactions[i].tokenAmount,payable(_newTransactions[i].targetAddress));
+                ethHeld -= _newTransactions[i].tokenAmount;
+            } else {
+                tokenManager.sendERC20Tokens(_newTransactions[i].tokenName,_newTransactions[i].tokenAmount,_newTransactions[i].targetAddress);
+            }
+            
             //create an array in storage of transactions as memory cant be added to a storage array
             completedInboundTransactions[newTransactionHash].blockNumber = block.number;
             completedInboundTransactions[newTransactionHash].includedTransactions.push(_newTransactions[i]);
@@ -70,10 +91,25 @@ contract VerusBridge {
         
     }
 
-    function sendToVerus(string memory _tokenName, uint256 _tokenAmount, address _targetAddress) public {
-        
-        //check if the token is registered, i should really use the contract address and do a lookup on it
-        
+    function sendEthToVerus(address _targetAddress) public payable returns(uint256){
+        //calculate amount of eth to send
+        require(msg.value > transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
+        uint256 amount = msg.value - transactionFee;
+        ethHeld += amount;
+        feesHeld += transactionFee;
+        _sendToVerus(VRSCEthTokenName,amount,_targetAddress);
+        return amount;
+    }
+
+    function sendERC20ToVerus(string memory _tokenName, uint256 _tokenAmount, address _targetAddress) public payable {
+        require(msg.value >= transactionFee,"Please send the appropriate transacion fee.");
+        require(keccak256(abi.encodePacked(_tokenName)) != keccak256(abi.encodePacked(VRSCEthTokenName)),"To send eth use sendEthToVerus");
+        feesHeld += msg.value;
+        //claim fees
+        _sendToVerus(_tokenName,_tokenAmount,_targetAddress);
+    }
+
+    function _sendToVerus(string memory _tokenName, uint256 _tokenAmount, address _targetAddress) private {
         //if the tokens have been approved for VerusBridge, approve the tokenManager contract to transfer them over
         address tokenAddress = tokenManager.getTokenAddress(_tokenName);
         Token token = Token(tokenAddress);
@@ -87,16 +123,14 @@ contract VerusBridge {
         pendingOutboundTransactions.push(BridgeTransaction(_targetAddress,_tokenName,_tokenAmount));
         if(pendingOutboundTransactions.length >= 10){
             //move the array to readyOutboundTransactions and 
+
             readyOutboundTransactions.push(pendingOutboundTransactions);
             delete pendingOutboundTransactions;
         }
     }
-
     /**
     returns a list of transactions to be processed on the verus chain
     */
-
-    
     
     function outboundTransactionsIndex() public view returns(uint){
         return readyOutboundTransactions.length;
@@ -155,7 +189,7 @@ contract VerusBridge {
     }
 
     function mmrHash(bytes memory toHash,bytes memory hashKey) public returns(bytes32){
-        bytes32 generatedHash = mmrProof.createHash(toHash,hashKey);
+        bytes32 generatedHash = mmrProof.createHash(toHash,hashKey,false);
         return generatedHash;
     }
 

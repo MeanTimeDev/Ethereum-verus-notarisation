@@ -300,6 +300,7 @@ event BlakeResult(uint64[8] blakeArray);
     uint64[8] memory out;
     //out = [uint64(0),uint64(0),uint64(0),uint64(0),uint64(0),uint64(0),uint64(0),uint64(0)];
     init(ctx, outlen, key, formatInput(salt), formatInput(personalization));
+    //break the input array into 128 byte chunks
     update(ctx, input);
     finalize(ctx, out);
     emit BlakeResult(out);
