@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Bridge between ethereum and verus
+
 pragma solidity >=0.5.16 <0.7.1;
 contract BLAKE2_Constants{
     /*

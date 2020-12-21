@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Bridge between ethereum and verus
+
 pragma solidity >=0.4.20;
 pragma experimental ABIEncoderV2;
 
@@ -15,8 +18,24 @@ contract TokenManager {
     mapping(string => hostedToken) vERC20Tokens;
     mapping(address => string) vERC20TokenNames;
 
+    address verusBridgeContract;
+    
+    constructor() public {
+        verusBridgeContract = address(0);
+    }
+    
+    function setVerusBridgeContract(address _verusBridgeContract) public {
+        require(verusBridgeContract == address(0),"verusBridgeContract Address has already been set.");
+        verusBridgeContract = _verusBridgeContract;
+    }
+    
+    function isVerusBridgeContract() private view returns(bool){
+        return msg.sender == verusBridgeContract;
+    }
+    
     //receive tokens that arent owned by the contract these would need to be authorised before transfer
     function receiveERC20Tokens(address contractAddress,uint256 tokenAmount) public {
+        
         //transfer the tokens to the contract address
         //if its not approved it wont work
         Token token = Token(contractAddress);
@@ -74,21 +93,17 @@ contract TokenManager {
         Token token = Token(contractAddress);
         return token.balanceOf(account);
     }
-    function approve(address contractAddress,address spender, uint256 amount) public {
-        Token token = Token(contractAddress);
-        token.approve(spender,amount);
-    }
     function allowance(address contractAddress,address owner, address spender) public view returns(uint256){
         Token token = Token(contractAddress);
         return token.allowance(owner,spender);
     }
 
-    function mintToken(address contractAddress,uint256 mintAmount,address recipient) public {
+    function mintToken(address contractAddress,uint256 mintAmount,address recipient) private {
         Token token = Token(contractAddress);
         token.mint(recipient,mintAmount);
     }
 
-    function burnToken(address contractAddress,uint burnAmount) public {
+    function burnToken(address contractAddress,uint burnAmount) private {
         Token token = Token(contractAddress);
         token.burn(burnAmount);
     }

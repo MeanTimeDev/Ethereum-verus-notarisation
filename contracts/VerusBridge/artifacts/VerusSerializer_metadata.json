@@ -1,0 +1,160 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "incoming",
+						"type": "bytes"
+					}
+				],
+				"name": "flipArray",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "anyAddress",
+						"type": "address"
+					}
+				],
+				"name": "serializeAddress",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "anyString",
+						"type": "string"
+					}
+				],
+				"name": "serializeString",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint32",
+						"name": "number",
+						"type": "uint32"
+					}
+				],
+				"name": "serializeUInt32",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "number",
+						"type": "uint64"
+					}
+				],
+				"name": "serializeUInt64",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "anyUint256",
+						"type": "uint256"
+					}
+				],
+				"name": "serializeUint256",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/VerusBridge/VerusSerializer.sol": "VerusSerializer"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/VerusBridge/VerusSerializer.sol": {
+			"keccak256": "0x82818e869d726b0d4ffa8b69ff527ab379eac3346efdda6aaad081926b88511c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cb669b971d3af9aa636f5e04d7ecf7b4d8d9be8c058d17cc59f135650d26e729",
+				"dweb:/ipfs/Qmed7z8dDnmvKauBR6iuD3xKaK9j9eibpk1hoofTqSL4zs"
+			]
+		}
+	},
+	"version": 1
+}

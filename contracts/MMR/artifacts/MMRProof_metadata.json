@@ -1,0 +1,282 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "newHash",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "eventType",
+						"type": "uint8"
+					}
+				],
+				"name": "HashEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "joinedValue",
+						"type": "bytes"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "eventType",
+						"type": "uint8"
+					}
+				],
+				"name": "JoinEvent",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "source",
+						"type": "bytes"
+					}
+				],
+				"name": "bytesToBytes32",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "result",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_mmrRoot",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_hashToCheck",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_hashIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "_branch",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "checkHashInRoot",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "testString",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "key",
+						"type": "bytes"
+					}
+				],
+				"name": "create64Hash",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "personalisation",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bool",
+						"name": "flipped",
+						"type": "bool"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "personalisation",
+						"type": "bytes"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_hashToCheck",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_hashIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "_branch",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "predictedRootHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_bytes32",
+						"type": "bytes32"
+					}
+				],
+				"name": "reverseBytes",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/MMR/MMRProof.sol": "MMRProof"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/MMR/BLAKE2B/BLAKE2b.sol": {
+			"keccak256": "0x4d71a146ba0bc968efa23a75b73c2ebad3a401271e1fac0268e9d063420320bc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4a9c81842925399c6781399207c035672cc00eaad1ea89938edef088f71c1652",
+				"dweb:/ipfs/QmWPGCmsNki7ovmECokRwtaKaKmE83oqfKtHvZjKGmpJya"
+			]
+		},
+		"localhost/contracts/MMR/BLAKE2B/BLAKE2b_Constants.sol": {
+			"keccak256": "0x5d2f148bb884ff85759a9bb563d1000c03038d5aa29c16a9d7a0f1f8ca378351",
+			"urls": [
+				"bzz-raw://c48c791d9857c3828fcc6abb0c6c8a6941e95f11dea53290781b1bb624e2dee7",
+				"dweb:/ipfs/QmaJAvYaDsGdczLPZncSfLbepe2LiawxK2Ws3hBhTkRvS7"
+			]
+		},
+		"localhost/contracts/MMR/MMRProof.sol": {
+			"keccak256": "0xab6f3d531af2569e8e86c86bdeb7aa75b068bc7914d6a6f68827f0414a31ceba",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cac8f28e6e3ea8e1938801dcb5404de87b0ae3b735677d0f2a32236f7b22f281",
+				"dweb:/ipfs/QmYjxJAmxR9JRSEjDbcobzuVjo2zaPit5veH2Fw7pNLoDF"
+			]
+		}
+	},
+	"version": 1
+}

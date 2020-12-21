@@ -1,0 +1,302 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint64[8]",
+						"name": "blakeArray",
+						"type": "uint64[8]"
+					}
+				],
+				"name": "BlakeResult",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64[16]",
+						"name": "v",
+						"type": "uint64[16]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "b",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "c",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "d",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "x",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint64",
+						"name": "y",
+						"type": "uint64"
+					}
+				],
+				"name": "G",
+				"outputs": [],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "IV",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "input",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "key",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "salt",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "personalization",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint64",
+						"name": "outlen",
+						"type": "uint64"
+					}
+				],
+				"name": "blake2b",
+				"outputs": [
+					{
+						"internalType": "uint64[8]",
+						"name": "",
+						"type": "uint64[8]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "input",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "key",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint64",
+						"name": "outlen",
+						"type": "uint64"
+					}
+				],
+				"name": "blake2b",
+				"outputs": [
+					{
+						"internalType": "uint64[8]",
+						"name": "",
+						"type": "uint64[8]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "input",
+						"type": "bytes"
+					}
+				],
+				"name": "formatInput",
+				"outputs": [
+					{
+						"internalType": "uint64[2]",
+						"name": "output",
+						"type": "uint64[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64[8]",
+						"name": "input",
+						"type": "uint64[8]"
+					}
+				],
+				"name": "formatOutput",
+				"outputs": [
+					{
+						"internalType": "bytes32[2]",
+						"name": "",
+						"type": "bytes32[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "a",
+						"type": "uint64"
+					}
+				],
+				"name": "getWords",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "b",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "a",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint256",
+						"name": "shift",
+						"type": "uint256"
+					}
+				],
+				"name": "shift_left",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "a",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint256",
+						"name": "shift",
+						"type": "uint256"
+					}
+				],
+				"name": "shift_right",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "b",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/MMR/BLAKE2B/BLAKE2b.sol": "BLAKE2b"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/MMR/BLAKE2B/BLAKE2b.sol": {
+			"keccak256": "0x10a7b9c7e923faf2805fd987853138bd5bb17ac38e23fe3256cd49b368f5e59b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f3ea0e6bda2d354bc288553cc5afc01bb8a961b98be7d2052b4f43e4aaf32373",
+				"dweb:/ipfs/QmQX1pRDEjfVbxDi3u5qnmQqMp889p7E3v9UqydKYs2Jau"
+			]
+		},
+		"localhost/contracts/MMR/BLAKE2B/BLAKE2b_Constants.sol": {
+			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://280bebb8fc2de921191d7e82e064816b7fa48a2adb0be175fdb6bf876d34abfc",
+				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
+			]
+		}
+	},
+	"version": 1
+}

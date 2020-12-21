@@ -219,7 +219,7 @@ event BlakeResult(uint64[8] blakeArray);
   }
 
 
-  function init(BLAKE2b_ctx memory ctx, uint64 outlen, bytes memory key, uint64[2] memory salt, uint64[2] memory person) internal{
+  function init(BLAKE2b_ctx memory ctx, uint64 outlen, bytes memory key, uint64[2] memory salt, uint64[2] memory person) internal view{
 
       if(outlen == 0 || outlen > 64 || key.length > 64) revert("Outlen must be greater than 0 and less than 64");
 
@@ -245,7 +245,7 @@ event BlakeResult(uint64[8] blakeArray);
   }
 
 
-  function update(BLAKE2b_ctx memory ctx, bytes memory input) internal {
+  function update(BLAKE2b_ctx memory ctx, bytes memory input) internal view{
 
     for(uint i = 0; i < input.length; i++){
       //If buffer is full, update byte counters and compress
@@ -270,7 +270,7 @@ event BlakeResult(uint64[8] blakeArray);
   }
 
 
-  function finalize(BLAKE2b_ctx memory ctx, uint64[8] memory out) internal {
+  function finalize(BLAKE2b_ctx memory ctx, uint64[8] memory out) internal view{
     // Add any uncounted bytes
     ctx.t += ctx.c;
 

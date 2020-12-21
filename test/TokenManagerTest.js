@@ -1,4 +1,9 @@
+const { getWeb3, getContractInstance } = require("./helper.js")
+const web3 = getWeb3()
+const getInstance = getContractInstance(web3)
 const assert = require('assert');
+const BigNumber = require('bignumber.js');
+
 
 const TokenManager = artifacts.require("TokenManager");
 const Token = artifacts.require("Token");
@@ -27,7 +32,7 @@ contract('TokenManager',(accounts) => {
 
         let sendTokens = await tokenManagerInstance.sendERC20Tokens("Test Coin 1",100,accounts[0]);
         const accountBalance = await tokenManagerInstance.balanceOf(coinAddress,accounts[0]);
-        
+
         assert.equal(accountBalance,100,"Didnt have 100 coins " + accountBalance);
         //check if it can burn tokens
         console.log(accountBalance);
@@ -118,11 +123,22 @@ contract('VerusBridge',(accounts) => {
 
 })
 
+0x6574682e74657374636f696e3130307837426566436345384138344263623831423730413433613532333336323742393034313539634562
+0x6574682e74657374636f696e0a307837426566436345384138344263623831423730413433613532333336323742393034313539634562
+*/
 contract('VerusBridge',(accounts) => {
     it('Ethereum created coin, outbound coin process',async () => {
         //create a coin
+
+        function increaseHexByOne(hex) {
+            let x = new BigNumber(hex)
+            let sum = x.plus(1)
+            let result = '0x' + sum.toString(16)
+            return result
+        }
+
         const testERC20Coin = await Token.new("eth.testcoin","TEST");
-        await testERC20Coin.mint(accounts[0],1000);
+        await testERC20Coin.mint(accounts[0],10000000);
         //add the coin to the token manager
         const verusNotarizerDeployed = await VerusNotarizer.deployed();
         const verusNotarizer = await VerusNotarizer.new();
@@ -132,14 +148,80 @@ contract('VerusBridge',(accounts) => {
         const verusBridgeInstance = await VerusBridge.deployed(verusNotarizer.address,mmrProof.address,tokenManagerInstance.address);
 
         await tokenManagerInstance.addExistingToken("eth.testcoin",testERC20Coin.address);
-        let ttresult = await testERC20Coin.approve(verusBridgeInstance.address,100);
+        let ttresult = await testERC20Coin.approve(verusBridgeInstance.address,20000);
         let allowance = await testERC20Coin.allowance(accounts[0],verusBridgeInstance.address);
-        let sendToVerus = await verusBridgeInstance.sendToVerus("eth.testcoin",100,"0x7BefCcE8A84Bcb81B70A43a5233627B904159cEb");
-     
+        /*
+        for(let i = 0; i <= 21; i++){
+            verusBridgeInstance.sendERC20ToVerus("eth.testcoin",(10 + i),"0x7BefCcE8A84Bcb81B70A43a5233627B904159cEb",{value: 100000000000000,from: accounts[0]});
+            if(i < 1) {
+                //build the string to hash
+                let hexToHash = Buffer.concat([Buffer.from("0x7BefCcE8A84Bcb81B70A43a5233627B904159cEb"),Buffer.from("eth.testcoin"),Buffer.from([10])]).toString('hex');        
+                console.log(i,":",hash + hexToHash);
+                hash = await web3.utils.keccak256("0x" + hash + hexToHash);
+            }
+        }
+
+
+        //let sendToVerus2 = await verusBridgeInstance.sendERC20ToVerus("eth.testcoin",10,"0x7BefCcE8A84Bcb81B70A43a5233627B904159cEb",{value: 100000000000000,from: accounts[0]});
+        let readyTransactions = await verusBridgeInstance.getPendingOutboundTransactions();
+        //console.log(readyTransactions);
+        let transactionHash = await verusBridgeInstance.getTransactionsHash(0);
+        console.log("transactions Hash 0:",transactionHash);
+        transactionHash = await verusBridgeInstance.getTransactionsHash(1);
+        console.log("transactions Hash 1:",transactionHash);
+
+        */
+        let amount = await verusBridgeInstance.sendEthToVerus("0x0584f1440d6F7e5AE5Ebe56D3ddE74B85dEFc0C7",{from: accounts[0],value:1000000000000000,gas: 3000000});
+        console.log("amount:",amount);
+        let transactions = await verusBridgeInstance.getPendingOutboundTransactions();
+        console.log("transactions:",transactions);
+        let feesHeld = await verusBridgeInstance.getFeesHeld();
+        let ethHeld = await verusBridgeInstance.getEthHeld();
+
+        console.log("fees:",feesHeld.toString()," eth:",ethHeld.toString());
+
+     /*   let storage = await web3.eth.getStorageAt(verusBridgeInstance.address,0);
+        console.log("storage token Manager Address:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,1);
+        console.log("storage verusNotarizer address???:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,2);
+        console.log("storage mmrProof???:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,3);
+        console.log("storage feesHeld:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,4);
+        console.log("storage ethHeld:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,5);
+        console.log("storage verusKey :",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,6);
+        console.log("storage transactions per call:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,7);
+        console.log("VRSCEthTokenName:",web3.utils.toAscii(storage));
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,8);
+        console.log("transaction fee:",storage);
+        
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,9);
+        console.log("pendingOutboundTransactions:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,10);
+        console.log("readyOutboundTransactions:",storage);*/
+        /*
+        let index = "0x000000000000000000000000000000000000000000000000000000000000000B";
+        let key = web3.utils.sha3(index,{"encoding":"hex"});
+        console.log(key);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,key);
+        console.log("readyOutboundTransactionsHashes 0:",storage);
+        console.log(increaseHexByOne(index));
+        let newKey = increaseHexByOne(web3.utils.sha3(index, {"encoding":"hex"}))
+        
+        console.log(key);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,newKey);
+        console.log("readyOutboundTransactionsHashes 0:",storage);
+        */
+        //let proof = await web3.eth.getProof(verusBridgeInstance.address,[key]);
+        //console.log(proof);
     });
 });
-*/
 
+/*
 contract('VerusBridge',(accounts) => {
     it('BLAKE2b test ',async () => {
         const verusNotarizerDeployed = await VerusNotarizer.deployed();
@@ -147,6 +229,9 @@ contract('VerusBridge',(accounts) => {
         const mmrProofDeployed = await MMRProof.deployed();
         const mmrProof = await MMRProof.new();
         const tokenManagerInstance = await TokenManager.deployed();
+        console.log("vnot",verusNotarizer.address);
+        console.log("mmr:",mmrProof.address);
+        console.log("tm:",tokenManagerInstance.address);
         const verusBridgeInstance = await VerusBridge.deployed(verusNotarizer.address,mmrProof.address,tokenManagerInstance.address);
         let hashKey = "0xbddd813c634239723171ef3fee98579b94964e3bb1cb3e427262c8c068d52319";
         //let generatedHash = await verusBridgeInstance.mmrHash.call("0x61626364","0x566572757344656661756c7448617368");
@@ -155,6 +240,23 @@ contract('VerusBridge',(accounts) => {
         //let stringBytes = await verusBridgeInstance.bytes32ToString(hashKey);
 
         console.log(flipped);
+        let accounts = await web3.eth.getAccounts();
+        console.log(accounts);
+        let storage = await web3.eth.getStorageAt(verusBridgeInstance.address,0);
+        console.log("storage token Manager Address:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,1);
+        console.log("storage verusNotarizer address???:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,2);
+        console.log("storage mmrProof???:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,3);
+        console.log("storage feesHeld:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,4);
+        console.log("storage ethHeld:",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,5);
+        console.log("storage verusKey :",storage);
+        storage = await web3.eth.getStorageAt(verusBridgeInstance.address,6);
+        console.log("storage transactions per call:",storage);
 
     });
-});
+    //attempt to 
+});*/

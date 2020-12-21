@@ -180,11 +180,7 @@ contract VerusNotarizer{
         return deSerializeData(notarizedDataEntries[lastBlockHeight]);
 
     }
-    /*
-    function getLastCurrencyState() public view returns(CurrencyState memory){
-        require(!deprecated,"Contract has been deprecated");
-        return lastCurrencyState;
-    }*/
+
 
     function getNotarizedData(uint32 _blockHeight) public view returns(NotarizedData memory){
 
@@ -232,20 +228,20 @@ contract VerusNotarizer{
     }
 
     /*** temporary code for use on test net only will be removed for production */
-
+/*
     function kill() public onlyNotary{
         selfdestruct(msg.sender);
     }
-
+*/
     /**
     * deprecate current contract
     */
+/*    
     function deprecate(address _upgradedAddress) public onlyNotary {
         require(!deprecated,"Contract has been deprecated");
         deprecated = true;
         upgradedAddress = _upgradedAddress;
         emit Deprecate(_upgradedAddress);
-
     }
-
+*/
 }
