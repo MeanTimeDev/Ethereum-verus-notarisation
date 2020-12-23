@@ -22,6 +22,11 @@ contract VerusBridge {
     MMRProof mmrProof;
     VerusSerializer verusSerialize;
 
+    //THE CONTRACT OWNER NEEDS TO BE REPLACED BY A SET OF NOTARIES
+    address contractOwner;
+    bool public deprecated = false; //indicates if the cotnract is deprecated
+    address public upgradedAddress;
+
     uint256 public feesHeld = 0;
     uint256 public ethHeld = 0;
 
@@ -59,6 +64,7 @@ contract VerusBridge {
     event TransactionsReady(uint256 index);
     
     constructor(address notarizerAddress,address mmrAddress,address tokenManagerAddress) public {
+        contractOwner = msg.sender;
         mmrProof =  MMRProof(mmrAddress);
         verusNotarizer = VerusNotarizer(notarizerAddress);
         tokenManager = TokenManager(tokenManagerAddress);
@@ -68,16 +74,22 @@ contract VerusBridge {
     }
 
     function getTransactionsPerCall() public view returns(uint64){
+        if(deprecated){
+            newBridge = VerusBridge(upgradedAddress);
+            return newBridge.getTransactionsPerCall();
+        }
         return transactionsPerCall;
     }
 
     function sendEth(uint256 _ethAmount,address payable _ethAddress) private {
+        require(!deprecated,"Contract has been deprecated");
         //do we take fees here????
         require(_ethAmount >= address(this).balance,"Requested amount exceeds contract balance");
         _ethAddress.transfer(_ethAmount);
     }
 
     function receiveFromVerusChain(BridgeTransaction[] memory _newTransactions, uint32 _hashIndex, bytes32[] memory _transactionsProof, uint32 _blockHeight) public returns(bytes32){   
+        require(!deprecated,"Contract has been deprecated");
         //check the transaction has not already been processed
         bytes32 newTransactionHash = createTransactionsHash(_newTransactions);
         require(!completedInboundTransactions[newTransactionHash].completed ,"Transactions have been already processed");
@@ -104,6 +116,7 @@ contract VerusBridge {
     }
 
     function sendEthToVerus(string memory _RAddress) public payable returns(uint256){
+        require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
         require(msg.value > transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
         uint256 amount = msg.value - transactionFee;
@@ -114,6 +127,7 @@ contract VerusBridge {
     }
 
     function sendERC20ToVerus(string memory _tokenName, uint256 _tokenAmount, string memory _RAddress) public payable {
+        require(!deprecated,"Contract has been deprecated");
         require(msg.value >= transactionFee,"Please send the appropriate transacion fee.");
         require(keccak256(abi.encodePacked(_tokenName)) != keccak256(abi.encodePacked(VRSCEthTokenName)),"To send eth use sendEthToVerus");
         feesHeld += msg.value;
@@ -122,6 +136,7 @@ contract VerusBridge {
     }
 
     function _sendToVerus(string memory _tokenName, uint256 _tokenAmount, string memory _RAddress) private {
+        
         //if the tokens have been approved for VerusBridge, approve the tokenManager contract to transfer them over
         address tokenAddress = tokenManager.getTokenAddress(_tokenName);
         Token token = Token(tokenAddress);
@@ -150,33 +165,32 @@ contract VerusBridge {
         }
     }
 
-    function testKeccak(string memory _tokenName, uint256 _tokenAmount, string memory _targetAddress) public view returns(bytes memory){
-        //return keccak256(abi.encodePacked(readyOutboundTransactionsHashes[readyOutboundTransactionsHashes.length - 1],_tokenName,_tokenAmount,_targetAddress));
-        //return keccak256(abi.encodePacked(readyOutboundTransactionsHashes[readyOutboundTransactionsHashes.length - 1],_tokenName,_tokenAmount,_targetAddress));
-        return abi.encodePacked(readyOutboundTransactionsHashes[readyOutboundTransactionsHashes.length - 1],_tokenName,_tokenAmount,_targetAddress);
-    
-    }
     /**
     returns a list of transactions to be processed on the verus chain
     */
     
     function outboundTransactionsIndex() public view returns(uint){
+        require(!deprecated,"Contract has been deprecated");
         return readyOutboundTransactions.length;
     }
 
     function getTransactionsHash(uint _tIndex) public view returns(bytes32){
+        require(!deprecated,"Contract has been deprecated");
         return readyOutboundTransactionsHashes[_tIndex];
     }
 
     function getTransactionsToProcess(uint _tIndex) public view returns(BridgeTransaction[] memory){
+        require(!deprecated,"Contract has been deprecated");
         return readyOutboundTransactions[_tIndex];
     }
 
     function getPendingOutboundTransactions() public view returns(BridgeTransaction[] memory){
+        require(!deprecated,"Contract has been deprecated");
         return pendingOutboundTransactions;
     }
 
     function getCompletedInboundTransaction(bytes32 transactionHash) public view returns(CompletedTransaction memory){
+        require(!deprecated,"Contract has been deprecated");
         return completedInboundTransactions[transactionHash];
     }
 
@@ -184,6 +198,7 @@ contract VerusBridge {
     deploy a new token
      */
     function createToken(string memory verusAddress,string memory ticker) public returns(address){
+        require(!deprecated,"Contract has been deprecated");
         return tokenManager.deployNewToken(verusAddress,ticker);
     }
 
@@ -192,7 +207,7 @@ contract VerusBridge {
         uint32 _hashIndex,
         bytes32[] memory _transactionsProof,
         uint32 _blockHeight) private returns(bool){
-        
+        require(!deprecated,"Contract has been deprecated");
         //loop through the transactions and create a hash of the list
         bytes32 hashedTransactions = createTransactionsHash(_newTransactions);
         //get the mmrRoot relating to the blockheight from the notarized data
@@ -204,6 +219,7 @@ contract VerusBridge {
     }
 
     function createTransactionsHash(BridgeTransaction[] memory _newTransactions) public returns(bytes32){
+        require(!deprecated,"Contract has been deprecated");
         bytes memory serializedTransactions = serializeTransactions(_newTransactions);
         //convert to bytes for hashing
 
@@ -213,6 +229,7 @@ contract VerusBridge {
 
 
     function serializeTransaction(BridgeTransaction memory _sendTransaction) public view returns(bytes memory){
+        require(!deprecated,"Contract has been deprecated");
         bytes memory serializedTransaction = abi.encodePacked(
             verusSerialize.serializeAddress(_sendTransaction.ethAddress),
             verusSerialize.serializeString(_sendTransaction.RAddress),
@@ -222,6 +239,7 @@ contract VerusBridge {
     }
 
     function serializeTransactions(BridgeTransaction[] memory _newTransactions) public view returns(bytes memory){
+        require(!deprecated,"Contract has been deprecated");
         bytes memory serializedTransactions;
         bytes memory serializedTransaction;
         for(uint i = 0; i < _newTransactions.length; i++){
@@ -234,30 +252,30 @@ contract VerusBridge {
 
 
     function mmrHash(bytes memory toHash,bytes memory hashKey) public returns(bytes32){
+        require(!deprecated,"Contract has been deprecated");
         bytes32 generatedHash = mmrProof.createHash(toHash,hashKey,false);
         return generatedHash;
     }
 
     function getTokenAddress(string memory tokenName) public view returns(address){
+        require(!deprecated,"Contract has been deprecated");
         return tokenManager.getTokenAddress(tokenName);
     }
 
     function getTokenName(address tokenAddress) public view returns(string memory){
+        require(!deprecated,"Contract has been deprecated");
         return tokenManager.getTokenName(tokenAddress);
     }
 
+    /**
+    * deprecate current contract
+    */
+    function deprecate(address _upgradedAddress) {
+        require(msg.sender == contractOwner,"Only the contract owner can deprecate this contract");
+        deprecated = true;
+        upgradedAddress = _upgradedAddress;
+        Deprecate(_upgradedAddress);
 
-    /** bytes concat helper function */
-    function concat(bytes memory self, bytes memory other) public pure returns (bytes memory) {
-        bytes memory ret = new bytes(self.length + other.length);
-        
-        (uint256 src, uint256 srcLen) = Memory.fromBytes(self);
-        (uint256 src2, uint256 src2Len) = Memory.fromBytes(other);
-        (uint256 dest,) = Memory.fromBytes(ret);
-        uint256 dest2 = dest + src2Len;
-        Memory.copy(src, dest, srcLen);
-        Memory.copy(src2, dest2, src2Len);
-     return ret;
     }
 
 }
