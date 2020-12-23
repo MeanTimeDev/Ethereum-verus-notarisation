@@ -117,6 +117,47 @@ contract VerusNotarizer{
         else return uint8(halfNotaryCount);
     }
 
+
+    function splitSignature(bytes sig)
+        internal
+        pure
+        returns (uint8, bytes32, bytes32)
+    {
+        require(sig.length == 65);
+
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        assembly {
+            // first 32 bytes, after the length prefix
+            r := mload(add(sig, 32))
+            // second 32 bytes
+            s := mload(add(sig, 64))
+            // final byte (first byte of the next 32 bytes)
+            v := byte(0, mload(add(sig, 96)))
+        }
+
+        return (v, r, s);
+    }
+
+    function isNotarized(bytes32 _notarizedDataHash,bytes65[] memory sigs) private view returns(bool){
+        bytes32[] memory rs;
+        bytes32[] memory ss;
+        uint8[] memory vs;
+
+        bytes32 r,s;
+        uint8 v;
+        //loop through the signatures array break them out to the 3 part signature
+        for(uint i=0;i<sigs.length;i++){
+            (v,r,s)splitSignature(sigs[i]);
+            rs[i] = r;
+            ss[i] = s;
+            vs[i] = i;
+        }
+        return isNotarized(_notarizedDataHash,rs,ss,vs);
+    }
+
     function isNotarized(bytes32 notarizedDataHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
