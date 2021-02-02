@@ -118,7 +118,7 @@ contract VerusNotarizer{
     }
 
 
-    function splitSignature(bytes sig)
+    function splitSignature(bytes memory sig)
         internal
         pure
         returns (uint8, bytes32, bytes32)
@@ -140,23 +140,23 @@ contract VerusNotarizer{
 
         return (v, r, s);
     }
-
+/*
     function isNotarized(bytes32 _notarizedDataHash,bytes65[] memory sigs) private view returns(bool){
         bytes32[] memory rs;
         bytes32[] memory ss;
         uint8[] memory vs;
-
-        bytes32 r,s;
+        bytes32 r;
+        bytes32 s;
         uint8 v;
         //loop through the signatures array break them out to the 3 part signature
         for(uint i=0;i<sigs.length;i++){
-            (v,r,s)splitSignature(sigs[i]);
+            (v,r,s) = splitSignature(sigs[i]);
             rs[i] = r;
             ss[i] = s;
             vs[i] = i;
         }
         return isNotarized(_notarizedDataHash,rs,ss,vs);
-    }
+    }*/
 
     function isNotarized(bytes32 notarizedDataHash,
         bytes32[] memory _rs,

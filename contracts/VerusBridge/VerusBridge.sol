@@ -6,10 +6,10 @@ pragma experimental ABIEncoderV2;
 
 import "../../node_modules/openzeppelin-solidity/contracts/access/Ownable.sol";
 import "./TokenManager.sol";
-import "../MMR/MMRProof.sol";
-import "../VerusNotarizer/VerusNotarizer.sol";
+import "../MMR/VerusProof.sol";
 import { Memory } from "../Standard/Memory.sol";
 import "./Token.sol";
+import "./VerusObjects.sol";
 import "./VerusSerializer.sol";
 
 contract VerusBridge {
@@ -18,259 +18,267 @@ contract VerusBridge {
     //the contract must be able to mint and burn coins on the contract
     //defines the tokenManager which creates the erc20
     TokenManager tokenManager;
-    VerusNotarizer verusNotarizer;
-    MMRProof mmrProof;
-    VerusSerializer verusSerialize;
+    VerusSerializer verusSerializer;
+    VerusProof verusProof;
 
     //THE CONTRACT OWNER NEEDS TO BE REPLACED BY A SET OF NOTARIES
     address contractOwner;
     bool public deprecated = false; //indicates if the cotnract is deprecated
     address public upgradedAddress;
-
     uint256 public feesHeld = 0;
     uint256 public ethHeld = 0;
 
     bytes verusKey = "VerusDefaultHash";
-    uint64 transactionsPerCall = 10;
-    string VRSCEthTokenName = ".eth.";
+    uint64 public transactionsPerCall = 2;
+
+    uint160 public VEth = uint160(0x0000000000000000000000000000000000000000);
     uint256 transactionFee = 100000000000000; //0.0001 eth
-
-
-    //pending transactions array
-    struct BridgeTransaction {
-        uint32 flags; //type of transfer 0,
-        address ethAddress; //ethereum destination address
-        string RAddress; //verus destination address
-        string tokenName; //destination currency id
-        uint256 tokenAmount; //token amount
-        uint256 fees; //network fees to be passed through
-        string returnToken; //for use for conversion between;
-    }
-
-    struct CompletedTransaction{
-        uint256 blockNumber;
-        BridgeTransaction[] includedTransactions;
-        bool completed;
-    }
-
-    BridgeTransaction[] private pendingOutboundTransactions;
-    BridgeTransaction[][] private readyOutboundTransactions;
-    //to allow for a singe proof for a block of transactions we generate a hash of the transactions in a block
-    //that can then be retrieved and used as a single proof of the transactions
-    bytes32[] private readyOutboundTransactionsHashes;
-
-    mapping (bytes32 => CompletedTransaction) private completedInboundTransactions;
-    event ReceivedFromVerus(BridgeTransaction transaction);
-    event TransactionsReady(uint256 index);
+    bytes32[] public readyExportSetHashes;
+    //used to store a list of currencies and an amount
     
-    constructor(address notarizerAddress,address mmrAddress,address tokenManagerAddress) public {
+    VerusObjects.CTransfer[] private _pendingExports;
+    VerusObjects.CTransferSet public pendingExportSet;
+    //the export set holds the summary of a set of exports
+    VerusObjects.CTransfer[][] private _readyExports;
+    VerusObjects.CTransferSet[] public readyExportSet;
+    VerusObjects.CTransferSet[] public processedImportSets;
+    //used for proving the export set
+    
+    mapping (bytes32 => uint) public processedImportSetHashes;
+    mapping (uint => uint[]) public readyExportsByBlock;
+    
+    event ReceivedTransfer(VerusObjects.CTransfer transaction);
+    event ExportsReady(uint256 index);
+    event Deprecate(address newAddress);
+    
+    constructor(address verusProofAddress,address tokenManagerAddress) public {
         contractOwner = msg.sender;
-        mmrProof =  MMRProof(mmrAddress);
-        verusNotarizer = VerusNotarizer(notarizerAddress);
+        verusProof =  VerusProof(verusProofAddress);
         tokenManager = TokenManager(tokenManagerAddress);
-        //initialise the hash array
-        readyOutboundTransactionsHashes.push(0x00);
-        
+        verusSerializer = new VerusSerializer();
+        _initializePendingExportSet();
     }
 
-    function getTransactionsPerCall() public view returns(uint64){
-        if(deprecated){
-            newBridge = VerusBridge(upgradedAddress);
-            return newBridge.getTransactionsPerCall();
-        }
-        return transactionsPerCall;
+
+    function _initializePendingExportSet() private{
+        pendingExportSet.version = 1;
+        pendingExportSet.flags = 1;
+        pendingExportSet.sourceSystemID = uint160(0x0000000000000000000000000000000000000000);
+        pendingExportSet.sourceHeightStart = 0; //reinitiate this to be overwritten at point of adding it to the array
+        pendingExportSet.sourceHeightEnd = 0;
+        pendingExportSet.destCurrencyId = uint160(0x0000000000000000000000000000000000000000); //default value till we know what to put in here
+        delete pendingExportSet.totalAmounts;
+        delete pendingExportSet.totalFees;
+        pendingExportSet.numInputs = 0;
+        pendingExportSet.hashReserveTransfer = 0x00;
+        pendingExportSet.firstInput = 0;
     }
 
-    function sendEth(uint256 _ethAmount,address payable _ethAddress) private {
-        require(!deprecated,"Contract has been deprecated");
-        //do we take fees here????
-        require(_ethAmount >= address(this).balance,"Requested amount exceeds contract balance");
-        _ethAddress.transfer(_ethAmount);
-    }
-
-    function receiveFromVerusChain(BridgeTransaction[] memory _newTransactions, uint32 _hashIndex, bytes32[] memory _transactionsProof, uint32 _blockHeight) public returns(bytes32){   
-        require(!deprecated,"Contract has been deprecated");
-        //check the transaction has not already been processed
-        bytes32 newTransactionHash = createTransactionsHash(_newTransactions);
-        require(!completedInboundTransactions[newTransactionHash].completed ,"Transactions have been already processed");
-        //check the transaction is in the mmr contains the relevant hash
-        //require(confirmTransactionInMMR(_newTransactions,_hashIndex,_transactionsProof,_blockHeight) == true,"Transactions are not in the MMR root hash");
-        
-        //loop through the transactions and execute
-        for(uint i = 0; i < _newTransactions.length; i++){
-            if(keccak256(abi.encodePacked(_newTransactions[i].tokenName)) == keccak256(abi.encodePacked(VRSCEthTokenName))) {
-                sendEth(_newTransactions[i].tokenAmount,payable(_newTransactions[i].ethAddress));
-                ethHeld -= _newTransactions[i].tokenAmount;
-            } else {
-                tokenManager.sendERC20Tokens(_newTransactions[i].tokenName,_newTransactions[i].tokenAmount,_newTransactions[i].ethAddress);
-            }
-            
-            //create an array in storage of transactions as memory cant be added to a storage array
-            completedInboundTransactions[newTransactionHash].blockNumber = block.number;
-            completedInboundTransactions[newTransactionHash].includedTransactions.push(_newTransactions[i]);
-            emit ReceivedFromVerus(_newTransactions[i]);
-        }
-
-        return newTransactionHash;
-        
-    }
-
-    function sendEthToVerus(string memory _RAddress) public payable returns(uint256){
+    function exportETH(uint160 _destination,uint64 _nFees,uint160 _secondReserveID) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
         require(msg.value > transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
         uint256 amount = msg.value - transactionFee;
         ethHeld += amount;
         feesHeld += transactionFee;
-        _addOutboundTransaction(VRSCEthTokenName,amount,_RAddress);
+        //create a new Bridge Transaction
+        uint32 flags = 0;
+        uint160 feeCurrencyID = 0;
+        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination); 
+        
+        VerusObjects.CTransfer memory newTransaction = VerusObjects.CTransfer(flags,
+            feeCurrencyID,
+            _nFees,
+            transferDestination,
+            uint64(amount),
+            VEth,
+            _secondReserveID);
+        _createExports(newTransaction);
+
         return amount;
     }
 
-    function sendERC20ToVerus(string memory _tokenName, uint256 _tokenAmount, string memory _RAddress) public payable {
+    //nFees and secondReserveID are used to send the tokens/eth on
+    function exportERC20(uint64 _amount,address _tokenAddress,uint160 _destination,uint160 _destCurrencyID,uint64 _nFees,uint160 _secondReserveID) public payable {
+        //check that they are not attempting to send Eth
         require(!deprecated,"Contract has been deprecated");
-        require(msg.value >= transactionFee,"Please send the appropriate transacion fee.");
-        require(keccak256(abi.encodePacked(_tokenName)) != keccak256(abi.encodePacked(VRSCEthTokenName)),"To send eth use sendEthToVerus");
+        require(msg.value >= transactionFee + _nFees,"Please send the appropriate transaction fee.");
+        require(_destination != VEth,"To send eth use exportETH");
+        //check there are enough fees sent
         feesHeld += msg.value;
-        //claim fees
-        _sendToVerus(_tokenName,_tokenAmount,_RAddress);
-    }
-
-    function _sendToVerus(string memory _tokenName, uint256 _tokenAmount, string memory _RAddress) private {
-        
-        //if the tokens have been approved for VerusBridge, approve the tokenManager contract to transfer them over
-        address tokenAddress = tokenManager.getTokenAddress(_tokenName);
-        Token token = Token(tokenAddress);
+        Token token = Token(_tokenAddress);
         uint256 allowedTokens = token.allowance(msg.sender,address(this));
-        require( allowedTokens >= _tokenAmount,"This contract must have an allowance of greater than or equal to the number of tokens");
+        require( uint64(allowedTokens) >= _amount,"This contract must have an allowance of greater than or equal to the number of tokens");
         //transfer the tokens to this contract
-        token.transferFrom(msg.sender,address(this),_tokenAmount); 
-        token.approve(address(tokenManager),_tokenAmount);  
+        token.transferFrom(msg.sender,address(this),uint256(_amount)); 
+        token.approve(address(tokenManager),uint256(_amount));  
         //give an approval for the tokenmanagerinstance to spend the tokens
-        tokenManager.receiveERC20Tokens(_tokenName,_tokenAmount);
-        pendingOutboundTransactions.push(BridgeTransaction(0,address(0),_RAddress,_tokenName,_tokenAmount,0,""));
-        //create a hash of the transaction values and add that to the last value 
-        //of the readyOutboundTransactionsHashes;
-        _addOutboundTransaction(_tokenName,_tokenAmount,_RAddress);
+        tokenManager.exportERC20Tokens(_tokenAddress,uint256(_amount));
+
+        uint32 flags = 0;
+        uint160 feeCurrencyID = 0;
+        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination); 
+        VerusObjects.CTransfer memory newTransaction = VerusObjects.CTransfer(flags,feeCurrencyID,_nFees,transferDestination,_amount,_destCurrencyID,_secondReserveID);
+        //create the BridgeTransaction 
+        _createExports(newTransaction);
     }
 
-    function _addOutboundTransaction(string memory _tokenName,uint256 _tokenAmount,string memory _RAddress) private {
-        readyOutboundTransactionsHashes[readyOutboundTransactionsHashes.length - 1] = 
-            keccak256(abi.encodePacked(readyOutboundTransactionsHashes[readyOutboundTransactionsHashes.length - 1],_tokenName,_tokenAmount,_RAddress));
-        if(pendingOutboundTransactions.length >= transactionsPerCall){
-            //move the array to readyOutboundTransactions
-            readyOutboundTransactions.push(pendingOutboundTransactions);
-            readyOutboundTransactionsHashes.push(0x00);
-            delete pendingOutboundTransactions;
-            emit TransactionsReady(readyOutboundTransactions.length - 1);
+    function _createExports(VerusObjects.CTransfer memory newTransaction) private {
+        _pendingExports.push(newTransaction);    
+        //update the pendingTransactionSet
+        //loop through the total amounts 
+        
+        //loop through the totalAmounts and append if the currency exists
+        bool currencyExists = false;
+        for(uint i = 0;i<pendingExportSet.totalAmounts.length;i++){
+            if(pendingExportSet.totalAmounts[i].currency == newTransaction.destCurrencyID){
+                pendingExportSet.totalAmounts[i].amount += newTransaction.amount;
+                currencyExists = true;
+            }
         }
+        
+        if(!currencyExists){
+            pendingExportSet.totalAmounts.push(VerusObjects.CCurrencyValueMap(newTransaction.destCurrencyID,newTransaction.amount));
+        }
+        if(newTransaction.nFees > 0){
+            bool feesExists = false;
+            for(uint i = 0;i<pendingExportSet.totalFees.length;i++){
+                if(pendingExportSet.totalFees[i].currency == newTransaction.destCurrencyID){
+                    pendingExportSet.totalFees[i].amount += newTransaction.nFees;
+                    feesExists = true;
+                }
+            }
+            if(!feesExists){
+                pendingExportSet.totalFees.push(VerusObjects.CCurrencyValueMap(newTransaction.destCurrencyID,newTransaction.amount));
+            }
+        }
+        
+        pendingExportSet.numInputs++;
+        pendingExportSet.hashReserveTransfer = uint256(verusProof.createHash(verusSerializer.serializeCTransfers(_pendingExports),verusKey));
+        
+        //if we are ready to release
+        if(_pendingExports.length >= transactionsPerCall){
+            //add the transactions to the ready export
+            _readyExports.push(_pendingExports);
+            //clear the pending array
+            delete _pendingExports;
+
+            //prepare and push the exportSet
+            pendingExportSet.sourceHeightStart = uint32(block.number);
+            //add to the transactionSet Array
+            readyExportSet.push(pendingExportSet);
+            //add the block to the mapping
+            readyExportsByBlock[block.number].push(_readyExports.length - 1);
+            //hash the exportSet and add it to to the array for proof purposes
+            _initializePendingExportSet();
+            //emit an event       
+            emit ExportsReady(_readyExports.length - 1);     
+        }
+        
     }
+
+    /***
+     * Import from Verus functions
+     ***/
+    function createImports(VerusObjects.CTransfer[] memory _newTransfers,
+        VerusObjects.CTransferSet memory _newTransferSet,
+        bytes32[] memory _transfersProof, 
+        uint32 _blockHeight, 
+        uint32 _hashIndex) public returns(bytes32){
+        require(!deprecated,"Contract has been deprecated");
+        //check the transaction has not already been processed
+        
+        //check that the transfers match the transfer set
+        bytes32 hashedTransactions = verusProof.createHash(verusSerializer.serializeCTransfers(_newTransfers),verusKey);
+        require(uint256(hashedTransactions) == _newTransferSet.hashReserveTransfer,"Hashed Transfers do not match those in the hashed Transfer set");
+        
+        //check the transaction is in the mmr contains the relevant hash
+        //require(verusProof.proveTransferSet(_newTransferSet,_transfersProof,_blockHeight,_hashIndex),"Unable to prove transfer set");   
+
+        //loop through the transactions and execute
+        for(uint i = 0; i < _newTransfers.length; i++){
+            //handle eth transactions
+            if(_newTransfers[i].destCurrencyID == VEth) {
+                //cast the destination as an ethAddress
+                sendEth(_newTransfers[i].amount,payable(address(_newTransfers[i].destination.destination)));
+                ethHeld -= _newTransfers[i].amount;
+            } else {
+                //handle erc20 transactions   
+                tokenManager.importERC20Tokens(_newTransfers[i].destCurrencyID,
+                    _newTransfers[i].amount,
+                    _newTransfers[i].destination.destination);
+            }
+        }
+        //add the hashedTransactions to allow for a lookup on processed 
+        //??? need to check on what are the odds of the hash being the same for a transfer set
+
+        processedImportSetHashes[hashedTransactions] = block.number;
+        
+    }
+    
 
     /**
-    returns a list of transactions to be processed on the verus chain
+    returns a list of exports to be processed on the verus chain
     */
     
-    function outboundTransactionsIndex() public view returns(uint){
+    function pendingExports() public view returns(VerusObjects.CTransfer[] memory){
         require(!deprecated,"Contract has been deprecated");
-        return readyOutboundTransactions.length;
+        return _pendingExports;
+    }
+    
+    function getReadyExportsIndex() public view returns(uint){
+        require(!deprecated,"Contract has been deprecated");
+        return _readyExports.length - 1;
+    }
+    function getReadyExports(uint _eIndex) public view returns(VerusObjects.CTransfer[] memory){
+        require(!deprecated,"Contract has been deprecated");
+        return _readyExports[_eIndex];
     }
 
-    function getTransactionsHash(uint _tIndex) public view returns(bytes32){
+    VerusObjects.CTransfer[][] tempExports;
+    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CTransfer[][] memory){
         require(!deprecated,"Contract has been deprecated");
-        return readyOutboundTransactionsHashes[_tIndex];
-    }
-
-    function getTransactionsToProcess(uint _tIndex) public view returns(BridgeTransaction[] memory){
-        require(!deprecated,"Contract has been deprecated");
-        return readyOutboundTransactions[_tIndex];
-    }
-
-    function getPendingOutboundTransactions() public view returns(BridgeTransaction[] memory){
-        require(!deprecated,"Contract has been deprecated");
-        return pendingOutboundTransactions;
-    }
-
-    function getCompletedInboundTransaction(bytes32 transactionHash) public view returns(CompletedTransaction memory){
-        require(!deprecated,"Contract has been deprecated");
-        return completedInboundTransactions[transactionHash];
-    }
-
-    /**
-    deploy a new token
-     */
-    function createToken(string memory verusAddress,string memory ticker) public returns(address){
-        require(!deprecated,"Contract has been deprecated");
-        return tokenManager.deployNewToken(verusAddress,ticker);
-    }
-
-
-    function confirmTransactionInMMR(BridgeTransaction[] memory _newTransactions, 
-        uint32 _hashIndex,
-        bytes32[] memory _transactionsProof,
-        uint32 _blockHeight) private returns(bool){
-        require(!deprecated,"Contract has been deprecated");
-        //loop through the transactions and create a hash of the list
-        bytes32 hashedTransactions = createTransactionsHash(_newTransactions);
-        //get the mmrRoot relating to the blockheight from the notarized data
-        VerusNotarizer.NotarizedData memory verusNotarizedData = verusNotarizer.getNotarizedData(_blockHeight);
-        bytes32 mmrRootHash = bytes32(verusNotarizedData.mmrRoot);
-        //check the proof and return the result
-        if (mmrRootHash == mmrProof.predictedRootHash(hashedTransactions,_hashIndex,_transactionsProof)) return true;
-        else return false;
-    }
-
-    function createTransactionsHash(BridgeTransaction[] memory _newTransactions) public returns(bytes32){
-        require(!deprecated,"Contract has been deprecated");
-        bytes memory serializedTransactions = serializeTransactions(_newTransactions);
-        //convert to bytes for hashing
-
-        bytes32 hashedTransactions = mmrProof.createHash(serializedTransactions,verusKey);
-        return hashedTransactions;
-    }
-
-
-    function serializeTransaction(BridgeTransaction memory _sendTransaction) public view returns(bytes memory){
-        require(!deprecated,"Contract has been deprecated");
-        bytes memory serializedTransaction = abi.encodePacked(
-            verusSerialize.serializeAddress(_sendTransaction.ethAddress),
-            verusSerialize.serializeString(_sendTransaction.RAddress),
-            verusSerialize.serializeString(_sendTransaction.tokenName),
-            verusSerialize.serializeUint256(_sendTransaction.tokenAmount));
-        return serializedTransaction;
-    }
-
-    function serializeTransactions(BridgeTransaction[] memory _newTransactions) public view returns(bytes memory){
-        require(!deprecated,"Contract has been deprecated");
-        bytes memory serializedTransactions;
-        bytes memory serializedTransaction;
-        for(uint i = 0; i < _newTransactions.length; i++){
-            serializedTransaction = serializeTransaction(_newTransactions[i]);
-            if(serializedTransactions.length > 0) serializedTransactions = concat(serializedTransaction,serializedTransaction);
-            else serializedTransactions = serializedTransaction;
+        //retrieve the bridge transactions
+        uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
+        //loop through the array and add to the outgoing array
+        VerusObjects.CTransfer[][] memory output = new VerusObjects.CTransfer[][](eIndexes.length);
+        for(uint i = 0; i < eIndexes.length; i++){
+            output[eIndexes[i]] = _readyExports[eIndexes[i]];
         }
-        return serializedTransactions;
+        return output;
     }
 
-
-    function mmrHash(bytes memory toHash,bytes memory hashKey) public returns(bytes32){
+    function getReadyExportsSetByBlock(uint _blockNumber) public view returns(VerusObjects.CTransferSet[] memory){
         require(!deprecated,"Contract has been deprecated");
-        bytes32 generatedHash = mmrProof.createHash(toHash,hashKey,false);
-        return generatedHash;
+        //retrieve the bridge transactions
+        uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
+        //loop through the array and add to the outgoing array
+        VerusObjects.CTransferSet[] memory output = new VerusObjects.CTransferSet[](eIndexes.length);
+        for(uint i = 0; i < eIndexes.length; i++){
+            output[eIndexes[i]] = readyExportSet[eIndexes[i]];
+        }
+        return output;
     }
-
-    function getTokenAddress(string memory tokenName) public view returns(address){
+    
+    function sendEth(uint256 _ethAmount,address payable _ethAddress) private {
         require(!deprecated,"Contract has been deprecated");
-        return tokenManager.getTokenAddress(tokenName);
+        //do we take fees here????
+        require(_ethAmount <= address(this).balance,"Requested amount exceeds contract balance");
+        _ethAddress.transfer(_ethAmount);
+    }
+    
+    function testSerializeCTransfer(VerusObjects.CTransfer memory testC) public view returns(bytes memory){
+        return verusSerializer.serializeCTransfer(testC);
     }
 
-    function getTokenName(address tokenAddress) public view returns(string memory){
-        require(!deprecated,"Contract has been deprecated");
-        return tokenManager.getTokenName(tokenAddress);
+    function testHashCTransfer(VerusObjects.CTransfer memory testC) public returns(bytes32){
+         return verusProof.createHash(verusSerializer.serializeCTransfer(testC));
     }
-
+    
     /**
     * deprecate current contract
     */
-    function deprecate(address _upgradedAddress) {
+    function deprecate(address _upgradedAddress) public {
         require(msg.sender == contractOwner,"Only the contract owner can deprecate this contract");
         deprecated = true;
         upgradedAddress = _upgradedAddress;

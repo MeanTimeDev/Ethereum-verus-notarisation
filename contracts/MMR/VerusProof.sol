@@ -1,20 +1,37 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.6.0 <0.7.0;
-import "./BLAKE2B/BLAKE2b.sol";
+pragma solidity >=0.6.0;
 pragma experimental ABIEncoderV2;
+import "./BLAKE2b/BLAKE2b.sol";
+import "../VerusBridge/VerusObjects.sol";
+import "../VerusBridge/VerusSerializer.sol";
+import "../VerusNotarizer/VerusNotarizer.sol";
 
-contract MMRProof{
+contract VerusProof{
 
     uint256 mmrRoot;
     BLAKE2b blake2b;
+    VerusNotarizer verusNotarizer;
+    VerusSerializer verusSerializer;
     bytes verusKey = "VerusDefaultHash";
     event JoinEvent(bytes joinedValue,uint8 eventType);
     event HashEvent(bytes32 newHash,uint8 eventType);
 
-    constructor() public{
+    constructor(address notarizerAddress) public{
         blake2b = new BLAKE2b();
+        verusNotarizer = VerusNotarizer(notarizerAddress);   
+    }
+
+    function proveTransferSet(VerusObjects.CTransferSet memory _setToProve,bytes32[] memory _transfersProof,uint32 _hashIndex,uint32 _blockHeight)public returns(bool){
+        bytes32 transferSetHash = createHash(verusSerializer.serializeCTransferSet(_setToProve),verusKey);
+        
+        //get the notarized block for that block height ? could it work if its greater than that blockheight
+        VerusNotarizer.NotarizedData memory verusNotarizedData = verusNotarizer.getNotarizedData(_blockHeight);
+        bytes32 mmrRootHash = bytes32(verusNotarizedData.mmrRoot);
+        
+        if (mmrRootHash == predictedRootHash(transferSetHash,_hashIndex,_transfersProof)) return true;
+        else return false;
     }
 
     function predictedRootHash(bytes32 _hashToCheck,uint _hashIndex,bytes32[] memory _branch) public returns(bytes32){
@@ -79,11 +96,16 @@ contract MMRProof{
         //we flip the bytes array to match up with Verus Hash    
         bytes32 bytes32hash = bytesToBytes32(hashInProgress);   
         if(flipped == true) bytes32hash = reverseBytes(bytes32hash);
+        emit HashEvent(bytes32hash,1);
         return bytes32hash;
     }
 
     function createHash(bytes memory toHash,bytes memory personalisation) public returns(bytes32){
         return createHash(toHash,personalisation,false);
+    }
+    
+    function createHash(bytes memory toHash) public returns(bytes32){
+        return createHash(toHash,verusKey,false);
     }
 
     function reverseBytes(bytes32 _bytes32) public pure returns (bytes32) {
@@ -97,9 +119,6 @@ contract MMRProof{
         }
         return bytesToBytes32(bytesArray);
     }
-
-
- 
 
     function create64Hash(bytes memory testString,bytes memory key) public returns(bytes memory){
         uint64[8] memory blakeResult;

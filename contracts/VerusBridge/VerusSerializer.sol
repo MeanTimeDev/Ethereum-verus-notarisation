@@ -3,6 +3,7 @@
 
 pragma solidity >=0.6.0 < 0.7.0;
 pragma experimental ABIEncoderV2;   
+import "./VerusObjects.sol";
 
 contract VerusSerializer {
 
@@ -22,8 +23,27 @@ contract VerusSerializer {
         //naturally BigEndian
         return abi.encodePacked(anyBytes20);
     }
+    function serializeUint8(uint8 number) public pure returns(bytes memory){
+        bytes memory be = abi.encodePacked(number);
+        return(flipArray(be));
+    }
     
-    function serializeUint256(uint256 number) public pure returns(bytes memory){
+    function serializeUint16(uint16 number) public pure returns(bytes memory){
+        bytes memory be = abi.encodePacked(number);
+        return(flipArray(be));
+    }
+    
+    function serializeUint32(uint32 number) public pure returns(bytes memory){
+        bytes memory be = abi.encodePacked(number);
+        return(flipArray(be));
+    }
+
+    function serializeInt64(int64 number) public pure returns(bytes memory){
+        bytes memory be = abi.encodePacked(number);
+        return(flipArray(be));
+    }
+
+    function serializeUint64(uint64 number) public pure returns(bytes memory){
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
     }
@@ -33,51 +53,63 @@ contract VerusSerializer {
         return(flipArray(be));
     }
 
-    function serializeUInt32(uint32 number) public pure returns(bytes memory){
-        bytes memory be = abi.encodePacked(number);
-        return(flipArray(be));
-    }
-    
-    function serializeUInt64(uint64 number) public pure returns(bytes memory){
+    function serializeUint256(uint256 number) public pure returns(bytes memory){
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
     }
 
-    //deserialize functions    
-
-    function deSerializeAddress(bytes memory encoded) public pure returns(address){
-        //naturally littleEndian
-        return abi.decodePacked("address",flipArray(encoded));
+    function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
+         return abi.encodePacked(serializeUint8(uint8(ctd.transferType)),serializeUint160(ctd.destination));
+    }
+     
+    function serializeCCurrencyValueMap(VerusObjects.CCurrencyValueMap memory _ccvm) public pure returns(bytes memory){
+         return abi.encodePacked(serializeUint160(_ccvm.currency),serializeUint64(_ccvm.amount));
     }
     
-    function deSerializeString(bytes memory encoded) public pure returns(string){
-        //naturally BigEndian
-        return abi.decodePacked("string",encoded);
-    }
-
-    function deSerializeBytes20(bytes memory encoded) public pure returns(bytes20){
-        //naturally BigEndian
-        return abi.decodePacked("Bytes20",encoded);
-    }
-    
-    function deSerializeUint256(bytes memory encoded) public pure returns(uint256){
-        return abi.decodePacked("uint256",flipArray(encoded));    
-    }
-
-    function deSerializeUint160(bytes memory encoded) public pure returns(uint160){
-        return abi.decodePacked("uint160",flipArray(encoded));    
-    }
-
-    function deSerializeUInt32(bytes memory encoded) public pure returns(uint32){
-        return abi.decodePacked("uint32",flipArray(encoded));    
+    function serializeCCurrencyValueMaps(VerusObjects.CCurrencyValueMap[] memory _ccvms) public pure returns(bytes memory){
+        bytes memory inProgress;
+        inProgress = serializeUint256(_ccvms.length);
+        for(uint i=0; i < _ccvms.length; i++){
+            inProgress = abi.encodePacked(inProgress,serializeCCurrencyValueMap(_ccvms[i]));
+        }
+        return inProgress;
     }
     
-    function deSerializeUInt64(bytes memory encoded) public pure returns(uint64){
-        return abi.decodePacked("uint32",flipArray(encoded));    
+    function serializeCTransfer(VerusObjects.CTransfer memory ct) public pure returns(bytes memory){
+        return abi.encodePacked(serializeUint32(ct.flags),
+            serializeUint160(ct.feeCurrencyID),
+            serializeUint64(ct.nFees),
+            serializeCTransferDestination(ct.destination),
+            serializeUint64(ct.amount),
+            serializeUint160(ct.destCurrencyID),
+            serializeUint160(ct.secondReserveID));
     }
-
-
-
+    
+    function serializeCTransfers(VerusObjects.CTransfer[] memory _bts) public pure returns(bytes memory){
+        bytes memory inProgress;
+        
+        inProgress = serializeUint256(_bts.length);
+        for(uint i=0; i < _bts.length; i++){
+            inProgress = abi.encodePacked(inProgress,serializeCTransfer(_bts[i]));
+        }
+        return inProgress;
+    }
+    
+    function serializeCTransferSet(VerusObjects.CTransferSet memory cts) public pure returns(bytes memory){
+        return abi.encodePacked(
+            serializeUint16(cts.version),
+            serializeUint16(cts.flags),
+            serializeUint160(cts.sourceSystemID),
+            serializeUint32(cts.sourceHeightStart),
+            serializeUint32(cts.sourceHeightEnd),
+            serializeUint160(cts.destCurrencyId),
+            serializeCCurrencyValueMaps(cts.totalAmounts),
+            serializeCCurrencyValueMaps(cts.totalFees),
+            serializeUint32(cts.numInputs),
+            serializeUint256(cts.hashReserveTransfer),
+            serializeUint32(cts.firstInput));
+    }
+    
     function flipArray(bytes memory incoming) public pure returns(bytes memory){
         uint256 len;
         len = incoming.length;
@@ -89,6 +121,5 @@ contract VerusSerializer {
         }
         return output;
     }
-
 
 }

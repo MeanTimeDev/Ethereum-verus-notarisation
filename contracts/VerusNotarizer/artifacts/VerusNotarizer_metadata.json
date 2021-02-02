@@ -497,11 +497,11 @@
 	},
 	"sources": {
 		"localhost/contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x09bb19319f85255ebfbc902b6c921f83ab4b41a77a8e606133f673261694a479",
+			"keccak256": "0x5d68e9204b9e16acd5c28a3e9e403c98874ca1b4629cac5ac34a08fc762d1bc7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a116db84b10ea9adb63b61edefbbf571a044634a4117c809a034535ca5c0e5c9",
-				"dweb:/ipfs/Qma26a3LAT1DuQMgwbZMte7sThxmnrGC5odzPWkLqS18VP"
+				"bzz-raw://2fa5e07529848dea40654c04420dab27d146660d855c36ed70ea76a2322dac71",
+				"dweb:/ipfs/Qmbwehaq18NfVztkFefcHsxjsnWvwjroXJPymriHvWnU8W"
 			]
 		}
 	},

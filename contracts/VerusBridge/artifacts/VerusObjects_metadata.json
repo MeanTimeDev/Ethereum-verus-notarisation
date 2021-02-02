@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/VerusBridge/VerusObjects.sol": "VerusObjects"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/VerusBridge/VerusObjects.sol": {
+			"keccak256": "0xf983cd5bcbe8b0d3362b7cdc013281c0f84e797a3c5d27317378b67a9c3569e4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://49acc68d267b2e51602cc8525f2cb37cb0993850e9c2a6ef64b2437f4f3fd590",
+				"dweb:/ipfs/QmXneFrBBLXbfgZ1gKxMhC8aN72bWuEFKMeB3TtoZZRJic"
+			]
+		}
+	},
+	"version": 1
+}
