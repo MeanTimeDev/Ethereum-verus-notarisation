@@ -7,10 +7,12 @@ pragma experimental ABIEncoderV2;
 import "../../node_modules/openzeppelin-solidity/contracts/access/Ownable.sol";
 import "./TokenManager.sol";
 import "../MMR/VerusProof.sol";
+import "../MMR/VerusBLAKE2b.sol";
 import { Memory } from "../Standard/Memory.sol";
 import "./Token.sol";
 import "./VerusObjects.sol";
 import "./VerusSerializer.sol";
+import "../VerusNotarizer/VerusNotarizer.sol";
 
 contract VerusBridge {
  
@@ -20,6 +22,8 @@ contract VerusBridge {
     TokenManager tokenManager;
     VerusSerializer verusSerializer;
     VerusProof verusProof;
+    VerusBLAKE2b blake2b;
+    VerusNotarizer verusNotarizer;
 
     //THE CONTRACT OWNER NEEDS TO BE REPLACED BY A SET OF NOTARIES
     address contractOwner;
@@ -28,53 +32,37 @@ contract VerusBridge {
     uint256 public feesHeld = 0;
     uint256 public ethHeld = 0;
 
-    bytes verusKey = "VerusDefaultHash";
     uint64 public transactionsPerCall = 2;
 
     uint160 public VEth = uint160(0x0000000000000000000000000000000000000000);
     uint256 transactionFee = 100000000000000; //0.0001 eth
-    bytes32[] public readyExportSetHashes;
+    //used to prove the transfers the index of this corresponds to the index of the 
+    bytes32[] public readyExportHashes;
     //used to store a list of currencies and an amount
     
-    VerusObjects.CTransfer[] private _pendingExports;
-    VerusObjects.CTransferSet public pendingExportSet;
+    VerusObjects.CReserveTransfer[] private _pendingExports;
     //the export set holds the summary of a set of exports
-    VerusObjects.CTransfer[][] private _readyExports;
-    VerusObjects.CTransferSet[] public readyExportSet;
-    VerusObjects.CTransferSet[] public processedImportSets;
+    VerusObjects.CReserveTransfer[][] private _readyExports;
     //used for proving the export set
     
     mapping (bytes32 => uint) public processedImportSetHashes;
     mapping (uint => uint[]) public readyExportsByBlock;
+    mapping (address => uint256) public claimableFees;
     
-    event ReceivedTransfer(VerusObjects.CTransfer transaction);
+    event ReceivedTransfer(VerusObjects.CReserveTransfer transaction);
     event ExportsReady(uint256 index);
     event Deprecate(address newAddress);
     
-    constructor(address verusProofAddress,address tokenManagerAddress) public {
+    constructor(address verusProofAddress,address tokenManagerAddress,address verusSerializerAddress,address verusBLAKE2bAddress,address verusNotarizerAddress) public {
         contractOwner = msg.sender;
         verusProof =  VerusProof(verusProofAddress);
         tokenManager = TokenManager(tokenManagerAddress);
-        verusSerializer = new VerusSerializer();
-        _initializePendingExportSet();
+        verusSerializer = VerusSerializer(verusSerializerAddress);
+        blake2b = VerusBLAKE2b(verusBLAKE2bAddress);
+        verusNotarizer = VerusNotarizer(VerusNotarizerAddress);
     }
 
-
-    function _initializePendingExportSet() private{
-        pendingExportSet.version = 1;
-        pendingExportSet.flags = 1;
-        pendingExportSet.sourceSystemID = uint160(0x0000000000000000000000000000000000000000);
-        pendingExportSet.sourceHeightStart = 0; //reinitiate this to be overwritten at point of adding it to the array
-        pendingExportSet.sourceHeightEnd = 0;
-        pendingExportSet.destCurrencyId = uint160(0x0000000000000000000000000000000000000000); //default value till we know what to put in here
-        delete pendingExportSet.totalAmounts;
-        delete pendingExportSet.totalFees;
-        pendingExportSet.numInputs = 0;
-        pendingExportSet.hashReserveTransfer = 0x00;
-        pendingExportSet.firstInput = 0;
-    }
-
-    function exportETH(uint160 _destination,uint64 _nFees,uint160 _secondReserveID) public payable returns(uint256){
+    function exportETH(uint160 _destination,int64 _nFees,uint160 _secondReserveID,uint160 _gatewayID,uint160 _gatewayCode) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
         require(msg.value > transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
@@ -84,11 +72,11 @@ contract VerusBridge {
         //create a new Bridge Transaction
         uint32 flags = 0;
         uint160 feeCurrencyID = 0;
-        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination); 
+        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination,_gatewayID,_gatewayCode,_nFees); 
         
-        VerusObjects.CTransfer memory newTransaction = VerusObjects.CTransfer(flags,
+        VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(flags,
             feeCurrencyID,
-            _nFees,
+            uint64(_nFees),
             transferDestination,
             uint64(amount),
             VEth,
@@ -99,10 +87,10 @@ contract VerusBridge {
     }
 
     //nFees and secondReserveID are used to send the tokens/eth on
-    function exportERC20(uint64 _amount,address _tokenAddress,uint160 _destination,uint160 _destCurrencyID,uint64 _nFees,uint160 _secondReserveID) public payable {
+    function exportERC20(uint64 _amount,address _tokenAddress,uint160 _destination,uint160 _destCurrencyID,int64 _nFees,uint160 _secondReserveID,uint160 _gatewayID,uint160 _gatewayCode) public payable {
         //check that they are not attempting to send Eth
         require(!deprecated,"Contract has been deprecated");
-        require(msg.value >= transactionFee + _nFees,"Please send the appropriate transaction fee.");
+        require(msg.value >= transactionFee + uint64(_nFees),"Please send the appropriate transaction fee.");
         require(_destination != VEth,"To send eth use exportETH");
         //check there are enough fees sent
         feesHeld += msg.value;
@@ -117,60 +105,30 @@ contract VerusBridge {
 
         uint32 flags = 0;
         uint160 feeCurrencyID = 0;
-        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination); 
-        VerusObjects.CTransfer memory newTransaction = VerusObjects.CTransfer(flags,feeCurrencyID,_nFees,transferDestination,_amount,_destCurrencyID,_secondReserveID);
+        VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(1,_destination,_gatewayID,_gatewayCode,_nFees); 
+        VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(flags,feeCurrencyID,uint64(_nFees),transferDestination,_amount,_destCurrencyID,_secondReserveID);
         //create the BridgeTransaction 
         _createExports(newTransaction);
     }
 
-    function _createExports(VerusObjects.CTransfer memory newTransaction) private {
+    function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
+        bytes32 hashedTransactions;
+
         _pendingExports.push(newTransaction);    
-        //update the pendingTransactionSet
         //loop through the total amounts 
         
         //loop through the totalAmounts and append if the currency exists
-        bool currencyExists = false;
-        for(uint i = 0;i<pendingExportSet.totalAmounts.length;i++){
-            if(pendingExportSet.totalAmounts[i].currency == newTransaction.destCurrencyID){
-                pendingExportSet.totalAmounts[i].amount += newTransaction.amount;
-                currencyExists = true;
-            }
-        }
-        
-        if(!currencyExists){
-            pendingExportSet.totalAmounts.push(VerusObjects.CCurrencyValueMap(newTransaction.destCurrencyID,newTransaction.amount));
-        }
-        if(newTransaction.nFees > 0){
-            bool feesExists = false;
-            for(uint i = 0;i<pendingExportSet.totalFees.length;i++){
-                if(pendingExportSet.totalFees[i].currency == newTransaction.destCurrencyID){
-                    pendingExportSet.totalFees[i].amount += newTransaction.nFees;
-                    feesExists = true;
-                }
-            }
-            if(!feesExists){
-                pendingExportSet.totalFees.push(VerusObjects.CCurrencyValueMap(newTransaction.destCurrencyID,newTransaction.amount));
-            }
-        }
-        
-        pendingExportSet.numInputs++;
-        pendingExportSet.hashReserveTransfer = uint256(verusProof.createHash(verusSerializer.serializeCTransfers(_pendingExports),verusKey));
-        
-        //if we are ready to release
         if(_pendingExports.length >= transactionsPerCall){
             //add the transactions to the ready export
             _readyExports.push(_pendingExports);
+            hashedTransactions = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_pendingExports));
+            //create a hash of the transactions for proo
+            readyExportHashes.push(hashedTransactions);
             //clear the pending array
             delete _pendingExports;
-
-            //prepare and push the exportSet
-            pendingExportSet.sourceHeightStart = uint32(block.number);
-            //add to the transactionSet Array
-            readyExportSet.push(pendingExportSet);
             //add the block to the mapping
             readyExportsByBlock[block.number].push(_readyExports.length - 1);
-            //hash the exportSet and add it to to the array for proof purposes
-            _initializePendingExportSet();
+            
             //emit an event       
             emit ExportsReady(_readyExports.length - 1);     
         }
@@ -180,48 +138,49 @@ contract VerusBridge {
     /***
      * Import from Verus functions
      ***/
-    function createImports(VerusObjects.CTransfer[] memory _newTransfers,
-        VerusObjects.CTransferSet memory _newTransferSet,
-        bytes32[] memory _transfersProof, 
-        uint32 _blockHeight, 
-        uint32 _hashIndex) public returns(bytes32){
-        require(!deprecated,"Contract has been deprecated");
-        //check the transaction has not already been processed
-        
-        //check that the transfers match the transfer set
-        bytes32 hashedTransactions = verusProof.createHash(verusSerializer.serializeCTransfers(_newTransfers),verusKey);
-        require(uint256(hashedTransactions) == _newTransferSet.hashReserveTransfer,"Hashed Transfers do not match those in the hashed Transfer set");
-        
-        //check the transaction is in the mmr contains the relevant hash
-        //require(verusProof.proveTransferSet(_newTransferSet,_transfersProof,_blockHeight,_hashIndex),"Unable to prove transfer set");   
+     
 
-        //loop through the transactions and execute
-        for(uint i = 0; i < _newTransfers.length; i++){
+    function submitImports(VerusObjects.CReserveTransferImport[] memory _imports) public returns (bool){
+        //loop through the transfers and process
+        for(uint i = 0; i < _imports.length; i++){
+            _createImports(_imports[i]);
+        }
+    }
+
+    function _createImports(VerusObjects.CReserveTransferImport memory _import) private returns(bool){
+        //TO DO
+        //prove the transaction
+        // require(verusProof.proveTransaction(_import.txid,_import.partialtransactionproof,_import.txoutnum,_import.height));
+        //check the transfers were in the hash.
+        for(uint i = 0; i < _import.transfers.length; i++){
             //handle eth transactions
-            if(_newTransfers[i].destCurrencyID == VEth) {
+            if(_import.transfers[i].destCurrencyID == VEth) {
                 //cast the destination as an ethAddress
-                sendEth(_newTransfers[i].amount,payable(address(_newTransfers[i].destination.destination)));
-                ethHeld -= _newTransfers[i].amount;
+                sendEth(_import.transfers[i].amount,payable(address(_import.transfers[i].destination.destination)));
+                ethHeld -= _import.transfers[i].amount;
             } else {
                 //handle erc20 transactions   
-                tokenManager.importERC20Tokens(_newTransfers[i].destCurrencyID,
-                    _newTransfers[i].amount,
-                    _newTransfers[i].destination.destination);
+                tokenManager.importERC20Tokens(_import.transfers[i].destCurrencyID,
+                    _import.transfers[i].amount,
+                    _import.transfers[i].destination.destination);
             }
+            //handle the distributions of the fees
+            //add them into the fees array to be claimed by the message sender
+            if(_import.transfers[i].fees > 0 && _import.transfers[i].feeCurrencyID == VEth){
+                claimableFees[msg.sender] = claimableFees[msg.sender] + _import.transfers[i].fees;
+            }
+            //could there be a scenario where more fees are paid here than there are funds for
+            //if its a create token situation how do we handle that
+            //probably best to just allow tokens to be created as a seperate operation
         }
-        //add the hashedTransactions to allow for a lookup on processed 
-        //??? need to check on what are the odds of the hash being the same for a transfer set
-
-        processedImportSetHashes[hashedTransactions] = block.number;
-        
+        return true;
     }
-    
 
     /**
     returns a list of exports to be processed on the verus chain
     */
     
-    function pendingExports() public view returns(VerusObjects.CTransfer[] memory){
+    function pendingExports() public view returns(VerusObjects.CReserveTransfer[] memory){
         require(!deprecated,"Contract has been deprecated");
         return _pendingExports;
     }
@@ -230,36 +189,60 @@ contract VerusBridge {
         require(!deprecated,"Contract has been deprecated");
         return _readyExports.length - 1;
     }
-    function getReadyExports(uint _eIndex) public view returns(VerusObjects.CTransfer[] memory){
+
+    function getReadyExports(uint _eIndex) public view returns(VerusObjects.CReserveTransfer[] memory){
         require(!deprecated,"Contract has been deprecated");
         return _readyExports[_eIndex];
     }
+    
+    
+    function getReadyExportsByRange(uint _startBlock,uint _endBlock) public view returns(VerusObjects.CReserveTransferSet[] memory){
+        VerusObjects.CReserveTransferSet[] memory output;
+        //if they are both 0 return the latest in the array
+        uint tIndex = 0;
+        if(_startBlock == 0 && _endBlock == 0) {
+            output[tIndex] = VerusObjects.CReserveTransferSet(block.number,
+            readyExportHashes[_readyExports.length-1],
+            _readyExports.length-1,
+            _readyExports[_readyExports.length-1]);
+            return output;
+            
+        }
+        //loop through the array of block heights and create an array of arrays
+        uint[] memory transferIndexList;
+        
+        while(_startBlock <= _endBlock){
+            if(readyExportsByBlock[_startBlock].length > 0){
+                transferIndexList = readyExportsByBlock[_startBlock];
+               //loop through and add create a CReserveTransferSet for each instance;
+                for(uint i = 0; i < transferIndexList.length; i++){
+                    //_readyExports[transferIndexList[i]]; //this is the export transfers
+                    output[i] = VerusObjects.CReserveTransferSet(
+                        _startBlock,
+                        readyExportHashes[transferIndexList[i]],
+                        transferIndexList[i],
+                        _readyExports[transferIndexList[i]]);
+                }
+                tIndex++;
+            }
+            _startBlock++;
+        }
+        return output;        
+    }
 
-    VerusObjects.CTransfer[][] tempExports;
-    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CTransfer[][] memory){
+    
+    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CReserveTransfer[][] memory){
         require(!deprecated,"Contract has been deprecated");
         //retrieve the bridge transactions
         uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
         //loop through the array and add to the outgoing array
-        VerusObjects.CTransfer[][] memory output = new VerusObjects.CTransfer[][](eIndexes.length);
+        VerusObjects.CReserveTransfer[][] memory output = new VerusObjects.CReserveTransfer[][](eIndexes.length);
         for(uint i = 0; i < eIndexes.length; i++){
             output[eIndexes[i]] = _readyExports[eIndexes[i]];
         }
         return output;
     }
-
-    function getReadyExportsSetByBlock(uint _blockNumber) public view returns(VerusObjects.CTransferSet[] memory){
-        require(!deprecated,"Contract has been deprecated");
-        //retrieve the bridge transactions
-        uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
-        //loop through the array and add to the outgoing array
-        VerusObjects.CTransferSet[] memory output = new VerusObjects.CTransferSet[](eIndexes.length);
-        for(uint i = 0; i < eIndexes.length; i++){
-            output[eIndexes[i]] = readyExportSet[eIndexes[i]];
-        }
-        return output;
-    }
-    
+ 
     function sendEth(uint256 _ethAmount,address payable _ethAddress) private {
         require(!deprecated,"Contract has been deprecated");
         //do we take fees here????
@@ -267,23 +250,35 @@ contract VerusBridge {
         _ethAddress.transfer(_ethAmount);
     }
     
-    function testSerializeCTransfer(VerusObjects.CTransfer memory testC) public view returns(bytes memory){
-        return verusSerializer.serializeCTransfer(testC);
+    function claimFees() public returns(uint256){
+        require(!deprecated,"Contract has been deprecated");
+        if(claimableFees[msg.sender] > 0 ){
+            sendEth(claimableFees[msg.sender],msg.sender);
+        }
+        return claimableFees[msg.sender];
+
     }
 
-    function testHashCTransfer(VerusObjects.CTransfer memory testC) public returns(bytes32){
-         return verusProof.createHash(verusSerializer.serializeCTransfer(testC));
-    }
-    
     /**
     * deprecate current contract
     */
-    function deprecate(address _upgradedAddress) public {
-        require(msg.sender == contractOwner,"Only the contract owner can deprecate this contract");
+    function deprecate(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public {
+        require(verusNotarizer.isNotary(msg.sender),"Only a notary can deprecate this contract");
+        bytes32 testingAddressHash = blake2b.createHash(_upgradedAddress);
+        require(testingAddressHash == _addressHash,"Hashed address does not match address hash passed in");
+        require(verusNotarizer.isNotarized(_addressHash, _rs, _ss, _vs),"Deprecation requires the address to be notarized");
         deprecated = true;
         upgradedAddress = _upgradedAddress;
         Deprecate(_upgradedAddress);
-
     }
+
+    function deprecate(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(address){
+        if(notarizedDeprecation(_upgradedAddress, _addressHash, _vs, _rs, _ss)){
+            deprecated = true;
+            upgradedAddress = _upgradedAddress;
+            Deprecate(_upgradedAddress);
+        }
+    }
+
 
 }

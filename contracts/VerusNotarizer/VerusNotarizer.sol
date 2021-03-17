@@ -4,9 +4,13 @@
 pragma solidity >=0.6.0 <0.7.0;
 pragma experimental ABIEncoderV2;
 
+import "../VerusBridge/VerusObjects.sol";
+import "../VerusBridge/VerusSerializer.sol";
+import "../MMR/VerusBLAKE2b.sol";
 
 contract VerusNotarizer{
 
+    uint160 ethCurrencyID = 0;
     //last notarized blockheight
     uint32 public lastBlockHeight;
     //CurrencyState private lastCurrencyState;
@@ -15,51 +19,27 @@ contract VerusNotarizer{
     address public upgradedAddress;
     //number of notaries required
     uint8 requiredNotaries = 13;
+    VerusBLAKE2b blake2b;
+    VerusSerializer verusSerializer;
 
     //list of all notarizers mapped to allow for quick searching
-    mapping (address => bool) private komodoNotaries;
+    mapping (address => bool) public komodoNotaries;
     //mapped blockdetails
-    mapping (uint32 => bytes) public notarizedDataEntries;
+    mapping (uint32 => VerusObjects.CPBaaSNotarization) public notarizedDataEntries;
+    mapping (uint32 => uint256) public notarizedStateRoots;
     uint32[] public blockHeights;
     //used to record the number of notaries
     uint8 private notaryCount;
 
-    struct NotarizedData{
-        uint32 version;
-        uint32 protocol;
-        uint160 currencyID;
-        uint160 notaryDest;
-        uint32 notarizationHeight;
-        uint256 mmrRoot;
-        uint256 notarizationPreHash;
-        uint256 compactPower;
-    }
-
-    struct TestData{
-        uint32 version;
-        uint32 protocol;
-        uint160 currencyID;
-        uint160 notaryDest;
-        uint32 notarizationHeight;
-        uint256 mmrRoot;
-    }
-  /*  
-    struct CurrencyState{
-        uint64[] reserveIn;
-        uint64[] nativeIn;
-        uint64[] reserveOut;
-        uint64[] conversionPrice;
-        uint64[] fees;
-        uint64[] conversionFees;
-    }
-  */  
     // Notifies when the contract is deprecated
     event Deprecate(address newAddress);
     // Notifies when a new block hash is published
-    event NewBlock(NotarizedData notarizedData,uint64 notarizedDataHeight);
+    event NewBlock(VerusObjects.CPBaaSNotarization,uint32 notarizedDataHeight);
     event signedAddress(address signedAddress);
 
-    constructor() public {
+    constructor(address verusBLAKE2bAddress,address verusSerializerAddress) public {
+        verusSerializer = VerusSerializer(verusSerializerAddress);
+        blake2b = VerusBLAKE2b(verusBLAKE2bAddress);
         deprecated = false;
         notaryCount = 0;
         lastBlockHeight = 0;
@@ -73,6 +53,12 @@ contract VerusNotarizer{
         address msgSender = msg.sender;
         require(komodoNotaries[msgSender] == true, "Caller is not a notary");
         _;
+    }
+    
+    function amIaNotary() public view returns(bool){
+        address msgSender = msg.sender;
+        if(komodoNotaries[msgSender] == true) return true;
+        else return false;
     }
 
     function addNotary(address _notary,
@@ -94,10 +80,14 @@ contract VerusNotarizer{
 
     }
 
-    function removeNotary(address _notary) public onlyNotary
+    function removeNotary(address _notary,bytes32 _notarizedAddressHash,
+        bytes32[] memory _rs,
+        bytes32[] memory _ss,
+        uint8[] memory _vs) public onlyNotary
     returns(bool){
 
         require(!deprecated,"Contract has been deprecated");
+        require(isNotarized(_notarizedAddressHash,_rs,_ss,_vs),"Function can only be executed by notaries");
         //if the notary is not in the list then fail
         require(komodoNotaries[_notary] == true,"Notary does not exist");
         //there must be at least one notary in the contract perhaps?
@@ -140,28 +130,11 @@ contract VerusNotarizer{
 
         return (v, r, s);
     }
-/*
-    function isNotarized(bytes32 _notarizedDataHash,bytes65[] memory sigs) private view returns(bool){
-        bytes32[] memory rs;
-        bytes32[] memory ss;
-        uint8[] memory vs;
-        bytes32 r;
-        bytes32 s;
-        uint8 v;
-        //loop through the signatures array break them out to the 3 part signature
-        for(uint i=0;i<sigs.length;i++){
-            (v,r,s) = splitSignature(sigs[i]);
-            rs[i] = r;
-            ss[i] = s;
-            vs[i] = i;
-        }
-        return isNotarized(_notarizedDataHash,rs,ss,vs);
-    }*/
 
     function isNotarized(bytes32 notarizedDataHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
-        uint8[] memory _vs) private view returns(bool){
+        uint8[] memory _vs) public view returns(bool){
         
         address signingAddress;
         //total number of signatures that have been validated
@@ -183,7 +156,27 @@ contract VerusNotarizer{
 
     }
 
-    function setLatestData(NotarizedData memory _notarizedDataDetail,
+    function checkRecoverSigner(bytes32 notarizedDataHash,bytes32 rs,bytes32 ss,uint8 vs) public returns (address){
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, notarizedDataHash));
+        address recoveredAddress =  ecrecover(prefixedHash, vs, rs, ss);
+        emit signedAddress(recoveredAddress);
+        return recoveredAddress;
+    }
+    
+    function checkKeccak(bytes32 notarizedDataHash) public pure returns(bytes32){
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, notarizedDataHash));
+        return prefixedHash;
+    }
+    
+    function checkRecoverSigner2(bytes32 prefixedHash,bytes32 rs,bytes32 ss,uint8 vs) public returns (address){
+        address recoveredAddress =  ecrecover(prefixedHash, vs, rs, ss);
+        emit signedAddress(recoveredAddress);
+        return recoveredAddress;
+    }
+    
+    function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
         bytes32 _notarizedDataHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
@@ -192,19 +185,30 @@ contract VerusNotarizer{
         require(!deprecated,"Contract has been deprecated");
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
         require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
-        require(_notarizedDataDetail.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
+        require(_pbaasNotarization.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
 
-        bytes memory serializedBlock = serializeData(_notarizedDataDetail);
+        bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
+        bytes32 hashedNotarization = blake2b.createHash(serializedNotarisation);
+        require(hashedNotarization == _notarizedDataHash,"Hash of serialized notarization does not match.");
         //check the hash of the data
         //need to check the block hash matches the hashed notarized block
-        
+                
         //if there is greater than 13 proper signatories then set the block hash
         if(isNotarized(_notarizedDataHash,_rs,_ss,_vs)){
-            notarizedDataEntries[_notarizedDataDetail.notarizationHeight] = serializedBlock;
-            blockHeights.push(_notarizedDataDetail.notarizationHeight);
-            lastBlockHeight = _notarizedDataDetail.notarizationHeight;
+            //loop through the notarized data to retrieve the relevant CProofRoot
+            for(uint i = 0 ; i < _pbaasNotarization.proofRoots.length;i++){
+                if(_pbaasNotarization.proofRoots[i].currencyId == ethCurrencyID){
+                    notarizedStateRoots[_pbaasNotarization.notarizationHeight] =  _pbaasNotarization.proofRoots[i].proofRoot.stateRoot;       
+                    blockHeights.push(_pbaasNotarization.notarizationHeight);
+                    if(lastBlockHeight <_pbaasNotarization.notarizationHeight){
+                        lastBlockHeight = _pbaasNotarization.notarizationHeight;
+                    }
+                }
+            }
+            
+
             //lastCurrencyState = _currencyState;
-            emit NewBlock(_notarizedDataDetail,lastBlockHeight);
+            emit NewBlock(_pbaasNotarization,lastBlockHeight);
             return true;
         } else return false;
     }
@@ -214,18 +218,16 @@ contract VerusNotarizer{
         return addr;
     }
 
-
-    function getLastNotarizedData() public view returns(NotarizedData memory){
+    function getLastNotarizedData() public view returns(VerusObjects.CPBaaSNotarization memory){
 
         require(!deprecated,"Contract has been deprecated");
-        return deSerializeData(notarizedDataEntries[lastBlockHeight]);
+        return notarizedDataEntries[lastBlockHeight];
 
     }
 
+    function getNotarizedData(uint32 _blockHeight) public view returns(VerusObjects.CPBaaSNotarization memory){
 
-    function getNotarizedData(uint32 _blockHeight) public view returns(NotarizedData memory){
-
-        return deSerializeData(notarizedDataEntries[_blockHeight]);
+        return notarizedDataEntries[_blockHeight];
 
     }
 
@@ -239,50 +241,20 @@ contract VerusNotarizer{
         return blockHeights;
     }
 
-    function deSerializeData(bytes memory _serializedBlock) private pure returns(NotarizedData memory){
-        NotarizedData memory deserializedBlock;
-
-        (deserializedBlock.version,
-        deserializedBlock.protocol,
-        deserializedBlock.currencyID,
-        deserializedBlock.notaryDest,
-        deserializedBlock.notarizationHeight,
-        deserializedBlock.mmrRoot,
-        deserializedBlock.notarizationPreHash,
-        deserializedBlock.compactPower
-        ) = abi.decode(_serializedBlock,(uint32,uint32,uint160,uint160,uint32,uint256,uint256,uint256));
-
-        return deserializedBlock;
+    function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(bool){
+        require(verusNotarizer.isNotary(msg.sender),"Only a notary can deprecate this contract");
+        bytes32 testingAddressHash = blake2b.createHash(abi.encodePacked(_upgradedAddress));
+        require(testingAddressHash == _addressHash,"Hashed address does not match address hash passed in");
+        require(verusNotarizer.isNotarized(_addressHash, _rs, _ss, _vs),"Deprecation requires the address to be notarized");
+        return(true);
     }
 
-    function serializeData(NotarizedData memory _deserializedBlock) private pure returns(bytes memory){
-
-        return abi.encode(_deserializedBlock.version,
-        _deserializedBlock.protocol,
-        _deserializedBlock.currencyID,
-        _deserializedBlock.notaryDest,
-        _deserializedBlock.notarizationHeight,
-        _deserializedBlock.mmrRoot,
-        _deserializedBlock.notarizationPreHash,
-        _deserializedBlock.compactPower);
-
+    function deprecate(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(address){
+        if(notarizedDeprecation(_upgradedAddress, _addressHash, _vs, _rs, _ss)){
+            deprecated = true;
+            upgradedAddress = _upgradedAddress;
+            Deprecate(_upgradedAddress);
+        }
     }
 
-    /*** temporary code for use on test net only will be removed for production */
-/*
-    function kill() public onlyNotary{
-        selfdestruct(msg.sender);
-    }
-*/
-    /**
-    * deprecate current contract
-    */
-/*    
-    function deprecate(address _upgradedAddress) public onlyNotary {
-        require(!deprecated,"Contract has been deprecated");
-        deprecated = true;
-        upgradedAddress = _upgradedAddress;
-        emit Deprecate(_upgradedAddress);
-    }
-*/
 }

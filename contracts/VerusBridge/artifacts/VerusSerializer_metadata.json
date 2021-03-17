@@ -154,6 +154,21 @@
 										"internalType": "uint160",
 										"name": "destination",
 										"type": "uint160"
+									},
+									{
+										"internalType": "uint160",
+										"name": "gatewayID",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint160",
+										"name": "gatewayCode",
+										"type": "uint160"
+									},
+									{
+										"internalType": "int64",
+										"name": "fees",
+										"type": "int64"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -176,143 +191,12 @@
 								"type": "uint160"
 							}
 						],
-						"internalType": "struct VerusObjects.CTransfer",
+						"internalType": "struct VerusObjects.CReserveTransfer",
 						"name": "ct",
 						"type": "tuple"
 					}
 				],
-				"name": "serializeCTransfer",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"components": [
-							{
-								"internalType": "uint8",
-								"name": "transferType",
-								"type": "uint8"
-							},
-							{
-								"internalType": "uint160",
-								"name": "destination",
-								"type": "uint160"
-							}
-						],
-						"internalType": "struct VerusObjects.CTransferDestination",
-						"name": "ctd",
-						"type": "tuple"
-					}
-				],
-				"name": "serializeCTransferDestination",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"components": [
-							{
-								"internalType": "uint16",
-								"name": "version",
-								"type": "uint16"
-							},
-							{
-								"internalType": "uint16",
-								"name": "flags",
-								"type": "uint16"
-							},
-							{
-								"internalType": "uint160",
-								"name": "sourceSystemID",
-								"type": "uint160"
-							},
-							{
-								"internalType": "uint32",
-								"name": "sourceHeightStart",
-								"type": "uint32"
-							},
-							{
-								"internalType": "uint32",
-								"name": "sourceHeightEnd",
-								"type": "uint32"
-							},
-							{
-								"internalType": "uint160",
-								"name": "destCurrencyId",
-								"type": "uint160"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint160",
-										"name": "currency",
-										"type": "uint160"
-									},
-									{
-										"internalType": "uint64",
-										"name": "amount",
-										"type": "uint64"
-									}
-								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
-								"name": "totalAmounts",
-								"type": "tuple[]"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint160",
-										"name": "currency",
-										"type": "uint160"
-									},
-									{
-										"internalType": "uint64",
-										"name": "amount",
-										"type": "uint64"
-									}
-								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
-								"name": "totalFees",
-								"type": "tuple[]"
-							},
-							{
-								"internalType": "uint32",
-								"name": "numInputs",
-								"type": "uint32"
-							},
-							{
-								"internalType": "uint256",
-								"name": "hashReserveTransfer",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint32",
-								"name": "firstInput",
-								"type": "uint32"
-							}
-						],
-						"internalType": "struct VerusObjects.CTransferSet",
-						"name": "cts",
-						"type": "tuple"
-					}
-				],
-				"name": "serializeCTransferSet",
+				"name": "serializeCReserveTransfer",
 				"outputs": [
 					{
 						"internalType": "bytes",
@@ -353,6 +237,21 @@
 										"internalType": "uint160",
 										"name": "destination",
 										"type": "uint160"
+									},
+									{
+										"internalType": "uint160",
+										"name": "gatewayID",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint160",
+										"name": "gatewayCode",
+										"type": "uint160"
+									},
+									{
+										"internalType": "int64",
+										"name": "fees",
+										"type": "int64"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -375,12 +274,58 @@
 								"type": "uint160"
 							}
 						],
-						"internalType": "struct VerusObjects.CTransfer[]",
+						"internalType": "struct VerusObjects.CReserveTransfer[]",
 						"name": "_bts",
 						"type": "tuple[]"
 					}
 				],
-				"name": "serializeCTransfers",
+				"name": "serializeCReserveTransfers",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint8",
+								"name": "transferType",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint160",
+								"name": "destination",
+								"type": "uint160"
+							},
+							{
+								"internalType": "uint160",
+								"name": "gatewayID",
+								"type": "uint160"
+							},
+							{
+								"internalType": "uint160",
+								"name": "gatewayCode",
+								"type": "uint160"
+							},
+							{
+								"internalType": "int64",
+								"name": "fees",
+								"type": "int64"
+							}
+						],
+						"internalType": "struct VerusObjects.CTransferDestination",
+						"name": "ctd",
+						"type": "tuple"
+					}
+				],
+				"name": "serializeCTransferDestination",
 				"outputs": [
 					{
 						"internalType": "bytes",
@@ -572,19 +517,19 @@
 	},
 	"sources": {
 		"localhost/contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xf983cd5bcbe8b0d3362b7cdc013281c0f84e797a3c5d27317378b67a9c3569e4",
+			"keccak256": "0x6e722a0bfc1190846bddab494b975def67df820957110167cef7bc9f58643999",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://49acc68d267b2e51602cc8525f2cb37cb0993850e9c2a6ef64b2437f4f3fd590",
-				"dweb:/ipfs/QmXneFrBBLXbfgZ1gKxMhC8aN72bWuEFKMeB3TtoZZRJic"
+				"bzz-raw://a02233a281ccad55798e68ba54493f6a195bdc2b3f260acca1293d6bd3d4f58c",
+				"dweb:/ipfs/QmXfL5Mn3nsQHgHQKpEceSMVPz9FtBURifQwCrjZD9vJf6"
 			]
 		},
 		"localhost/contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x9ff778dd78727bb5473def8682303b48e73dd7216c6f38c27f011bb9388b832c",
+			"keccak256": "0x1cb97657e8058de811e750357a8cc9727d7f10907f25782f90d81adcaf044d08",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5fdb4a318eb32ccc73a0f6ef99e4d5f4c9ce8ae2434d0ac6923960a08525b0f8",
-				"dweb:/ipfs/QmUe1VxJ11mN381q1Wv4kPWSNRZXmEM5PwU22vfLMcTQew"
+				"bzz-raw://51e8096f7c5a2a0d81f07237ca1c5805f2a35943e9748e83525ebf9980a75f74",
+				"dweb:/ipfs/QmWo6A7iTunX4HqW8XPiXFVMkEt17koFyZPCDtZx1JFGwa"
 			]
 		}
 	},
