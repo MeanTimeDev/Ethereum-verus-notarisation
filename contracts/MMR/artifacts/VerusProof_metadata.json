@@ -11,6 +11,16 @@
 						"internalType": "address",
 						"name": "notarizerAddress",
 						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "verusBLAKE2b",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "verusSerializerAddress",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -34,44 +44,6 @@
 				],
 				"name": "HashEvent",
 				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "bytes",
-						"name": "joinedValue",
-						"type": "bytes"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint8",
-						"name": "eventType",
-						"type": "uint8"
-					}
-				],
-				"name": "JoinEvent",
-				"type": "event"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "source",
-						"type": "bytes"
-					}
-				],
-				"name": "bytesToBytes32",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "result",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
 			},
 			{
 				"inputs": [
@@ -110,102 +82,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "bytes",
-						"name": "testString",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "key",
-						"type": "bytes"
-					}
-				],
-				"name": "create64Hash",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "personalisation",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bool",
-						"name": "flipped",
-						"type": "bool"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "personalisation",
-						"type": "bytes"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "bytes32",
 						"name": "_hashToCheck",
 						"type": "bytes32"
@@ -236,19 +112,34 @@
 				"inputs": [
 					{
 						"internalType": "bytes32",
-						"name": "_bytes32",
+						"name": "notarisationHash",
 						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "_transfersProof",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_hashIndex",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_blockHeight",
+						"type": "uint32"
 					}
 				],
-				"name": "reverseBytes",
+				"name": "proveTransaction",
 				"outputs": [
 					{
-						"internalType": "bytes32",
+						"internalType": "bool",
 						"name": "",
-						"type": "bytes32"
+						"type": "bool"
 					}
 				],
-				"stateMutability": "pure",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -265,7 +156,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/MMR/VerusProof.sol": "VerusProof"
+			"contracts/MMR/VerusProof.sol": "VerusProof"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -279,7 +170,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/MMR/BLAKE2b/BLAKE2b.sol": {
+		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
 			"keccak256": "0x10a7b9c7e923faf2805fd987853138bd5bb17ac38e23fe3256cd49b368f5e59b",
 			"license": "MIT",
 			"urls": [
@@ -287,7 +178,7 @@
 				"dweb:/ipfs/QmQX1pRDEjfVbxDi3u5qnmQqMp889p7E3v9UqydKYs2Jau"
 			]
 		},
-		"localhost/contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
+		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
 			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
 			"license": "MIT",
 			"urls": [
@@ -295,36 +186,44 @@
 				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
 			]
 		},
-		"localhost/contracts/MMR/VerusProof.sol": {
-			"keccak256": "0xa897ce38fee2c3276210f217901823369ddd983de9a35280d815cd0c93dc1e8f",
+		"contracts/MMR/VerusBLAKE2b.sol": {
+			"keccak256": "0x7326b2169bdb6a4ede3fabefa4d8f231ea3e5c9da2bec7263390bd747f2a614e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://63e4a41f0e282ec3787f9c223235d83cd373d0b3fcb6c65ae89b13207565870e",
-				"dweb:/ipfs/QmPJ2YMWb1HViSEFr5cfiLd7hmyXP5eoxf8J4gj449mhjZ"
+				"bzz-raw://6e96c8d8e6056e9cfb27584839a049cc6cdfa301c1806c8b48418266d892dfd7",
+				"dweb:/ipfs/Qmd8sPEkS26VCNUhsJanXHyRdHFmH5fEJiCAoyUggWxGBP"
 			]
 		},
-		"localhost/contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x6e722a0bfc1190846bddab494b975def67df820957110167cef7bc9f58643999",
+		"contracts/MMR/VerusProof.sol": {
+			"keccak256": "0x24334b9d06fa363b49f321b242f363fe13bd26cb7ec2ea1e6a4d8c0041fa4bdc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a02233a281ccad55798e68ba54493f6a195bdc2b3f260acca1293d6bd3d4f58c",
-				"dweb:/ipfs/QmXfL5Mn3nsQHgHQKpEceSMVPz9FtBURifQwCrjZD9vJf6"
+				"bzz-raw://0e1fbc04e2cc5bdcc58a36b4d07ea2dc77d05bb68f5678207e0e98d954dab592",
+				"dweb:/ipfs/QmSXgNZNafXHzjUNEexdevY4LGS6QcDbourZ3Wu4N3RgNG"
 			]
 		},
-		"localhost/contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xcc5e38c1bbc3ba8a6a664dd5e72e798404419fb090a54bcf015f3fc3c354a50d",
+		"contracts/VerusBridge/VerusObjects.sol": {
+			"keccak256": "0x51efd419bd3ec61b91e3860464656f83a6bb8559e95a5c9b54858046c7987620",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f086d6ccc1e0995f4d6dffef40cd52f6b7b3437ca6afe46a36b0a7b916cf81ea",
-				"dweb:/ipfs/QmUX4iFb2im1HzsSTcN6kPju2kTbZ5yN8rSBnrVVoeeVcG"
+				"bzz-raw://7d8961f8f6c1de883ba28841d791ef68bbf61902a83a387d2207aab02751cf5c",
+				"dweb:/ipfs/QmSDnUE7JioVpfPxyAk4zvcd7CfwngXBMNv417pQv3Cd5x"
 			]
 		},
-		"localhost/contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x5d68e9204b9e16acd5c28a3e9e403c98874ca1b4629cac5ac34a08fc762d1bc7",
+		"contracts/VerusBridge/VerusSerializer.sol": {
+			"keccak256": "0x08b4f8570675e6f0ca98b3018df830d029f0625f777b1005158c497e18f6f0e6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2fa5e07529848dea40654c04420dab27d146660d855c36ed70ea76a2322dac71",
-				"dweb:/ipfs/Qmbwehaq18NfVztkFefcHsxjsnWvwjroXJPymriHvWnU8W"
+				"bzz-raw://44095499778c2f9a4731e19faa25e2c281b225eb150758e644d625e590cc5a61",
+				"dweb:/ipfs/QmTA11KE1cBDLuYT5avK8PrtnuFvK1oBZ6roRsbXbfxJdV"
+			]
+		},
+		"contracts/VerusNotarizer/VerusNotarizer.sol": {
+			"keccak256": "0xc769c3570002f5edb121f837456c4c8194f2e94c2a617ba7cda68d68e49bd3e8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4426a7d2b00fd6eaaf6fdb2b30c15ddc9cc52da6902c29cf3f5e9f53c2df5668",
+				"dweb:/ipfs/QmYiR7vVKU5Ga7g7hGQz7tRiC899MecZgVUKWTz1TQPphD"
 			]
 		}
 	},

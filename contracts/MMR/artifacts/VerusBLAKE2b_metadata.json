@@ -1,0 +1,225 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "source",
+						"type": "bytes"
+					}
+				],
+				"name": "bytesToBytes32",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "result",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "testString",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "key",
+						"type": "bytes"
+					}
+				],
+				"name": "create64Hash",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "personalisation",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bool",
+						"name": "flipped",
+						"type": "bool"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bool",
+						"name": "flipped",
+						"type": "bool"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "toHash",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "personalisation",
+						"type": "bytes"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_bytes32",
+						"type": "bytes32"
+					}
+				],
+				"name": "reverseBytes",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/MMR/VerusBLAKE2b.sol": "VerusBLAKE2b"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
+			"keccak256": "0x10a7b9c7e923faf2805fd987853138bd5bb17ac38e23fe3256cd49b368f5e59b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f3ea0e6bda2d354bc288553cc5afc01bb8a961b98be7d2052b4f43e4aaf32373",
+				"dweb:/ipfs/QmQX1pRDEjfVbxDi3u5qnmQqMp889p7E3v9UqydKYs2Jau"
+			]
+		},
+		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
+			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://280bebb8fc2de921191d7e82e064816b7fa48a2adb0be175fdb6bf876d34abfc",
+				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
+			]
+		},
+		"contracts/MMR/VerusBLAKE2b.sol": {
+			"keccak256": "0x7326b2169bdb6a4ede3fabefa4d8f231ea3e5c9da2bec7263390bd747f2a614e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6e96c8d8e6056e9cfb27584839a049cc6cdfa301c1806c8b48418266d892dfd7",
+				"dweb:/ipfs/Qmd8sPEkS26VCNUhsJanXHyRdHFmH5fEJiCAoyUggWxGBP"
+			]
+		}
+	},
+	"version": 1
+}

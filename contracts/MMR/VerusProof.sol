@@ -43,7 +43,6 @@ contract VerusProof{
         require(_branch.length > 0,"Branch must be longer than 0");
         uint branchLength = _branch.length;
         bytes32 hashInProgress;
-        uint64[8] memory blakeResult;
         bytes memory joined;
         hashInProgress = blake2b.bytesToBytes32(abi.encodePacked(_hashToCheck));
 

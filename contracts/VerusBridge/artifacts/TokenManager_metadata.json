@@ -388,7 +388,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/TokenManager.sol": "TokenManager"
+			"contracts/VerusBridge/TokenManager.sol": "TokenManager"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -402,7 +402,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/Token.sol": {
+		"contracts/VerusBridge/Token.sol": {
 			"keccak256": "0xc9d054b4ad1642089cf76fd4c524de6c3ba2334390ebc7caa0a90e3af858b932",
 			"license": "MIT",
 			"urls": [
@@ -410,7 +410,7 @@
 				"dweb:/ipfs/QmXstFC8QtNSWnRix5SFmFDa9XiKH66o9T7o7YwRdKwadU"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/TokenManager.sol": {
+		"contracts/VerusBridge/TokenManager.sol": {
 			"keccak256": "0x691943f6b9414ae3cda0ee0321305716f3b2a7044dae048262aa981ee2f56cef",
 			"license": "MIT",
 			"urls": [
@@ -418,7 +418,7 @@
 				"dweb:/ipfs/QmRb477x9Z2v9x4bB3dnCUArWgN3Mrcsq2F5bqBSfKcVv9"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/VerusAddressCalculator.sol": {
+		"contracts/VerusBridge/VerusAddressCalculator.sol": {
 			"keccak256": "0xf80a2904c035dce5ab5346bc7c807913a0ddbf19b5c9d7d8892b92981c7b6fbd",
 			"license": "MIT",
 			"urls": [
@@ -426,7 +426,7 @@
 				"dweb:/ipfs/QmfFQoKYZebsuLmm1w3YA6Gym7MKGKmA3jMuLxwGUKBYe9"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/node_modules/openzeppelin-solidity/contracts/GSN/Context.sol": {
+		"node_modules/openzeppelin-solidity/contracts/GSN/Context.sol": {
 			"keccak256": "0x28a51874088c4eab8de88cdab67386d28bd93fe81a74601710870c1ace8dbcf8",
 			"license": "MIT",
 			"urls": [
@@ -434,7 +434,7 @@
 				"dweb:/ipfs/QmTdre4apVg7z93e8A14HzdMb1d3iW98KMNbrWTHnVy6py"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {
+		"node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {
 			"keccak256": "0xc7831d3668c6c2017e1d1aa893e74a06e0b312bebe3861c314a853cd157567b5",
 			"license": "MIT",
 			"urls": [
@@ -442,7 +442,7 @@
 				"dweb:/ipfs/QmeKphSzZun8D44HXWma8kLQy2fs6RA4EYSxrwGB8EwCtu"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol": {
+		"node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol": {
 			"keccak256": "0xfec8849eddd43c0300f6c9e5c31f1eac7eae16843b213d4c0219a424cd28a3d9",
 			"license": "MIT",
 			"urls": [
@@ -450,7 +450,7 @@
 				"dweb:/ipfs/QmWsweUSKMFvJZaLivLp43uMnD5Hz54kxRGTsWtc7Kixpq"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
+		"node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
 			"keccak256": "0x0212ebc746f60a8352065a0e812a2e0fda32980a6260fecaf6fb4e147fa7aa47",
 			"license": "MIT",
 			"urls": [
@@ -458,7 +458,7 @@
 				"dweb:/ipfs/Qma2F9JT4UrrvFV8zEqJgtbGh89seGLRXpYWFk2cZQxdbC"
 			]
 		},
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/node_modules/openzeppelin-solidity/contracts/utils/Address.sol": {
+		"node_modules/openzeppelin-solidity/contracts/utils/Address.sol": {
 			"keccak256": "0x50acdb22470f258eed61844484c51ecd5e07d5955e1bf0d8a79504c0eb90161d",
 			"license": "MIT",
 			"urls": [

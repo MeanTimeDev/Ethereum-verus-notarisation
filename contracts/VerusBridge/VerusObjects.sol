@@ -16,37 +16,63 @@ library VerusObjects {
     }
 
     struct CTransferDestination {
-        uint8 CTDType;
-        uint160 destination;
-        uint160 gatewayID;
-        uint160 gatewayCode;
-        int64 fees;
+        uint32 destinationtype;
+        address destinationaddress;
     }
 
-    //pending transactions array
     struct CReserveTransfer {
-        uint32 flags; //type of transfer 0,
-        uint160 feeCurrencyID; //fees are paid in this currency
-        uint64 nFees; //cross chain network fees
-        CTransferDestination destination; //destination address
-        uint64 amount;
+        uint32 version;
+        CCurrencyValueMap currencyvalues;
+        uint32 flags;
+        bool preconvert;
+        address feecurrencyid;
+        uint256 fees;
+        address destinationcurrencyid;
+        CTransferDestination destination;
         uint160 destCurrencyID;
         uint160 secondReserveID;
     }
 
-    struct CReserveTransferSet {
-        uint height;
-        bytes32 txid; //this is actually the hash of the transfers that can be used for proof
-        uint txoutnum; //index of the transfers in the exports array
-        CReserveTransfer[] transfers;
-    }
-    
     struct CReserveTransferImport {
         uint height;
         bytes32 txid; //this is actually the hash of the transfers that can be used for proof
         uint txoutnum; //index of the transfers in the exports array
-        bytes32[] partialtransactionproof; 
+        CCrossChainExport exportinfo;
+        bytes32[] partialtransactionproof;  //partial transaction prroof is for the 
         CReserveTransfer[] transfers;
+    }
+
+/*
+    struct CCrossChainExport {
+        uint8 version;
+        uint32 flags;
+        uint160 sourceSystemID;
+        uint32 sourceHeightStart;
+        uint32 sourceHeightEnd;
+        uint160 destSystemID;
+        uint160 destCurrencyID;
+        int32 numInputs;
+        CCurrencyValueMap totalAmounts;
+        CCurrencyValueMap totalFees;
+        uint256 hashReserveTransfers; // hashtransfers
+        CTransferDestination exporter; //reward address
+        int32 firstInput;
+    }*/
+
+    struct CCrossChainExport {
+        uint8 version;
+        uint32 flags;
+        uint160 sourcesystemid;
+        uint32 sourceheightstart;
+        uint32 sourceheightend;
+        uint160 destinationsystemid;
+        uint160 destinationcurrencyid;
+        int32 numinputs;
+        CCurrencyValueMap totalamounts;
+        CCurrencyValueMap totalfees;
+        uint256 hashtransfers; // hashtransfers
+        address rewardaddress; //reward address
+        int32 firstinput;
     }
 
     /** Notarisation objects */
@@ -90,6 +116,14 @@ library VerusObjects {
         int64[] fees;              // fee values in native (or reserve if specified) coins for reserve transaction fees for the block
         int64[] conversionFees;    // total of only conversion fees, which will accrue to the conversion transaction
     }
+/*
+    struct CIdentitySignature {
+        uint8 verion;
+        uint32 blockHeight;
+        bytes65[] signatures;
+    }*/
+
+
 /*
     struct CIdentitySignature{
         uint8 version;

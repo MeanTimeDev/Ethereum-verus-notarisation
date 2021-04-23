@@ -9,6 +9,10 @@ contract VerusSerializer {
 
     //serialize functions
 
+    function serializeBool(bool anyBool) public pure returns(bytes memory){
+        return abi.encodePacked(anyBool);
+    }
+
     function serializeAddress(address anyAddress) public pure returns(bytes memory){
         //naturally littleEndian
         return flipArray(abi.encodePacked(anyAddress));
@@ -43,7 +47,12 @@ contract VerusSerializer {
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
     }
-
+    
+    function serializeInt32(int32 number) public pure returns(bytes memory){
+        bytes memory be = abi.encodePacked(number);
+        return(flipArray(be));
+    }
+    
     function serializeInt64(int64 number) public pure returns(bytes memory){
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
@@ -72,7 +81,7 @@ contract VerusSerializer {
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
     }
-
+/*
     function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
          return abi.encodePacked(serializeUint8(uint8(ctd.CTDType)),
             serializeUint160(ctd.destination),
@@ -80,7 +89,11 @@ contract VerusSerializer {
             serializeUint160(ctd.gatewayCode),
             serializeInt64(ctd.fees));
     }
-     
+*/
+    function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
+        return abi.encodePacked(serializeUint32(ctd.destinationtype),serializeAddress(ctd.destinationaddress));
+    }   
+
     function serializeCCurrencyValueMap(VerusObjects.CCurrencyValueMap memory _ccvm) public pure returns(bytes memory){
          return abi.encodePacked(serializeUint160(_ccvm.currency),serializeUint64(_ccvm.amount));
     }
@@ -95,13 +108,15 @@ contract VerusSerializer {
     }
     
     function serializeCReserveTransfer(VerusObjects.CReserveTransfer memory ct) public pure returns(bytes memory){
-        return abi.encodePacked(serializeUint32(ct.flags),
-            serializeUint160(ct.feeCurrencyID),
-            serializeUint64(ct.nFees),
-            serializeCTransferDestination(ct.destination),
-            serializeUint64(ct.amount),
-            serializeUint160(ct.destCurrencyID),
-            serializeUint160(ct.secondReserveID));
+        return abi.encodePacked(
+            serializeUint32(ct.version),
+            serializeCCurrencyValueMap(ct.currencyvalues),
+            serializeUint32(ct.flags),
+            serializeBool(ct.preconvert),
+            serializeAddress(ct.feecurrencyid),
+            serializeUint256(ct.fees),
+            serializeAddress(ct.destinationcurrencyid),
+            serializeCTransferDestination(ct.destination));
     }
     
     function serializeCReserveTransfers(VerusObjects.CReserveTransfer[] memory _bts) public pure returns(bytes memory){
@@ -198,21 +213,21 @@ contract VerusSerializer {
     }
 
     function serializeCCrossChainExport(VerusObjects.CCrossChainExport memory _ccce) public pure returns(bytes memory){
-        return abi.encodePacked(
+        bytes memory part1 = abi.encodePacked(
             serializeUint8(_ccce.version),
             serializeUint32(_ccce.flags),
-            serializeUint160(_ccce.sourceSystemID),
-            serializeUint32(_ccce.sourceHeightStart),
-            serializeUint32(_ccce.sourceHeightEnd),
-            serializeUint160(_ccce.destSystemID),
-            serializeUint160(_ccce.destCurrencyID),
-            serializeInt32(_ccce.numInputs),
-            serializeCCurrencyValueMap(_ccce.totalAmounts),
-            serializeCCurrencyValueMap(_ccce.totalFees),
-            serializeUint256(_ccce.hashReserveTransfers),
-            serializeCTransferDestination(_ccce.exporter),
-            serizializeInt32(_ccce.firstInput)
-        );
+            serializeUint160(_ccce.sourcesystemid),
+            serializeUint32(_ccce.sourceheightstart),
+            serializeUint32(_ccce.sourceheightend),
+            serializeUint160(_ccce.destinationsystemid),
+            serializeUint160(_ccce.destinationcurrencyid));
+        bytes memory part2 = abi.encodePacked(serializeInt32(_ccce.numinputs),
+            serializeCCurrencyValueMap(_ccce.totalamounts),
+            serializeCCurrencyValueMap(_ccce.totalfees),
+            serializeUint256(_ccce.hashtransfers),
+            serializeAddress(_ccce.rewardaddress),
+            serializeInt32(_ccce.firstinput));
+        return abi.encodePacked(part1,part2);
     }
 
     function flipArray(bytes memory incoming) public pure returns(bytes memory){

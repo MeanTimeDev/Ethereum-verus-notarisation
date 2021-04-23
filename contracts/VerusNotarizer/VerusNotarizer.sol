@@ -55,10 +55,15 @@ contract VerusNotarizer{
         _;
     }
     
+        
+    function isNotary(address _notary) public view returns(bool) {
+        if(komodoNotaries[_notary] == true) return true;
+        else return false;
+    }
+    
     function amIaNotary() public view returns(bool){
         address msgSender = msg.sender;
-        if(komodoNotaries[msgSender] == true) return true;
-        else return false;
+        return isNotary(msgSender);
     }
 
     function addNotary(address _notary,
@@ -79,6 +84,7 @@ contract VerusNotarizer{
         return true;
 
     }
+
 
     function removeNotary(address _notary,bytes32 _notarizedAddressHash,
         bytes32[] memory _rs,
@@ -241,15 +247,15 @@ contract VerusNotarizer{
         return blockHeights;
     }
 
-    function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(bool){
-        require(verusNotarizer.isNotary(msg.sender),"Only a notary can deprecate this contract");
+    function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(bool){
+        require(isNotary(msg.sender),"Only a notary can deprecate this contract");
         bytes32 testingAddressHash = blake2b.createHash(abi.encodePacked(_upgradedAddress));
         require(testingAddressHash == _addressHash,"Hashed address does not match address hash passed in");
-        require(verusNotarizer.isNotarized(_addressHash, _rs, _ss, _vs),"Deprecation requires the address to be notarized");
+        require(isNotarized(_addressHash, _rs, _ss, _vs),"Deprecation requires the address to be notarized");
         return(true);
     }
 
-    function deprecate(address _upgradedAddress,bytes32 _addressHash,bytes32[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(address){
+    function deprecate(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(address){
         if(notarizedDeprecation(_upgradedAddress, _addressHash, _vs, _rs, _ss)){
             deprecated = true;
             upgradedAddress = _upgradedAddress;

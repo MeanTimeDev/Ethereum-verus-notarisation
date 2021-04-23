@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/VerusObjects.sol": "VerusObjects"
+			"contracts/VerusBridge/VerusObjects.sol": "VerusObjects"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -32,12 +32,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/../../../../Volumes/Untitled - Data/Users/james/dev/komodo-notarisation-solidity/contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x3fff88f0d2dfb4cbbc997ccc5376d5a878c42a1b22eea2582d478cc103f03580",
+		"contracts/VerusBridge/VerusObjects.sol": {
+			"keccak256": "0xaabb045a3f6b9616f5054a8307969364fce4c766b875ad3ba9c6413529da7944",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32c910bfe16ddd3c081a4c4a28a0ad97196f66aa589e67b542a60549d292a2e0",
-				"dweb:/ipfs/QmVSeQsB7Mc4eWUV2Drzp2LLW6WQaD9y4ttJiuqGCuVEGd"
+				"bzz-raw://ccb5d913080d872e51f4547f52d48b65e6c7dea2c9c48121f9981b8638fc292c",
+				"dweb:/ipfs/QmXQRrEpohvzWqs7zH6n1NWkvpMpywnupv7WfQDfHupA4s"
 			]
 		}
 	},
