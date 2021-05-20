@@ -58,6 +58,15 @@ contract VerusSerializer {
         return(flipArray(be));
     }
 
+    function serializeInt32Array(int32[] memory numbers) public pure returns(bytes memory){
+        bytes memory be;
+        be = serializeUint256(numbers.length);
+        for(uint i = 0;i < numbers.length; i++){
+            be = abi.encodePacked(be,numbers[i]);
+        }
+        return be;
+    }
+
     function serializeInt64Array(int64[] memory numbers) public pure returns(bytes memory){
         bytes memory be;
         be = serializeUint256(numbers.length);
@@ -91,7 +100,7 @@ contract VerusSerializer {
     }
 */
     function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
-        return abi.encodePacked(serializeUint32(ctd.destinationtype),serializeAddress(ctd.destinationaddress));
+        return abi.encodePacked(serializeUint32(ctd.destinationtype),serializeUint160(ctd.destinationaddress));
     }   
 
     function serializeCCurrencyValueMap(VerusObjects.CCurrencyValueMap memory _ccvm) public pure returns(bytes memory){
@@ -112,10 +121,9 @@ contract VerusSerializer {
             serializeUint32(ct.version),
             serializeCCurrencyValueMap(ct.currencyvalues),
             serializeUint32(ct.flags),
-            serializeBool(ct.preconvert),
-            serializeAddress(ct.feecurrencyid),
+            serializeUint160(ct.feecurrencyid),
             serializeUint256(ct.fees),
-            serializeAddress(ct.destinationcurrencyid),
+            serializeUint160(ct.destCurrencyID),
             serializeCTransferDestination(ct.destination));
     }
     
@@ -167,16 +175,18 @@ contract VerusSerializer {
 
     function serializeCCoinbaseCurrencyState(VerusObjects.CCoinbaseCurrencyState memory _cccs) public pure returns(bytes memory){
         return abi.encodePacked(
-            serializeInt64(_cccs.nativeOut),
-            serializeInt64(_cccs.nativeFees),
-            serializeInt64(_cccs.nativeConversionFees),
+            serializeInt64(_cccs.primaryCurrencyOut),
+            serializeInt64(_cccs.preconvertedOut),
+            serializeInt64(_cccs.primaryCurrencyFees),
+            serializeInt64(_cccs.primaryCurrencyConversionFees),
             serializeInt64Array(_cccs.reserveIn),
-            serializeInt64Array(_cccs.nativeIn),
+            serializeInt64Array(_cccs.primaryCurrencyIn),
             serializeInt64Array(_cccs.reserveOut),
             serializeInt64Array(_cccs.conversionPrice),
             serializeInt64Array(_cccs.viaConversionPrice),
             serializeInt64Array(_cccs.fees),
-            serializeInt64Array(_cccs.conversionFees)
+            serializeInt64Array(_cccs.conversionFees),
+            serializeInt32Array(_cccs.priorWeights)
         );
     }
 

@@ -370,7 +370,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/VerusBridge/Token.sol": "Token"
+			"contracts/VerusBridge/Token.sol": "Token"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -384,7 +384,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/VerusBridge/Token.sol": {
+		"contracts/VerusBridge/Token.sol": {
 			"keccak256": "0xc9d054b4ad1642089cf76fd4c524de6c3ba2334390ebc7caa0a90e3af858b932",
 			"license": "MIT",
 			"urls": [
@@ -392,44 +392,44 @@
 				"dweb:/ipfs/QmXstFC8QtNSWnRix5SFmFDa9XiKH66o9T7o7YwRdKwadU"
 			]
 		},
-		"localhost/node_modules/openzeppelin-solidity/contracts/GSN/Context.sol": {
-			"keccak256": "0xdb26cbf4d028490f49831a7865c2fe1b28db44b535ca8d343785a3b768aae183",
+		"node_modules/openzeppelin-solidity/contracts/GSN/Context.sol": {
+			"keccak256": "0x28a51874088c4eab8de88cdab67386d28bd93fe81a74601710870c1ace8dbcf8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://840b14ce0315c47d49ba328f1f9fa7654ded1c9e1559e6c5e777a7b2dc28bf0a",
-				"dweb:/ipfs/QmTLLabn4wcfGro9LEmUXUN2nwKqZSotXMvjDCLXEnLtZP"
+				"bzz-raw://89e718826e727bef405ddef902f98a6061ecf1b11baca10836e45f19288afbec",
+				"dweb:/ipfs/QmTdre4apVg7z93e8A14HzdMb1d3iW98KMNbrWTHnVy6py"
 			]
 		},
-		"localhost/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {
-			"keccak256": "0x9a9cf02622cd7a64261b10534fc3260449da25c98c9e96d1b4ae8110a20e5806",
+		"node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {
+			"keccak256": "0xc7831d3668c6c2017e1d1aa893e74a06e0b312bebe3861c314a853cd157567b5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2df142592d1dc267d9549049ee3317fa190d2f87eaa565f86ab05ec83f7ab8f5",
-				"dweb:/ipfs/QmSkJtcfWo7c42KnL5hho6GFxK6HRNV91XABx1P7xDtfLV"
+				"bzz-raw://2b939c0010d2a980f1477335d38f5e18f2dbb5eea827c36088370fd42b5161d8",
+				"dweb:/ipfs/QmeKphSzZun8D44HXWma8kLQy2fs6RA4EYSxrwGB8EwCtu"
 			]
 		},
-		"localhost/node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol": {
-			"keccak256": "0x91e0bd6a6762d2a1700dab0849de8422611355100576c4beef1e80d82a4104a0",
+		"node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0xfec8849eddd43c0300f6c9e5c31f1eac7eae16843b213d4c0219a424cd28a3d9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://73bbd77af0a8b07255d2ffa20728bcf13b116007c9ddac5d37046cfabb0e1e02",
-				"dweb:/ipfs/QmRgZgWCWCSMTTaok6o4QvWA6MgB4goS8qpb3sN7bAvaZ9"
+				"bzz-raw://e379c3e760f5717939fbb285a99ef9ea3085c6515df01541c93fe8df5acdf673",
+				"dweb:/ipfs/QmWsweUSKMFvJZaLivLp43uMnD5Hz54kxRGTsWtc7Kixpq"
 			]
 		},
-		"localhost/node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0x5c26b39d26f7ed489e555d955dcd3e01872972e71fdd1528e93ec164e4f23385",
+		"node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x0212ebc746f60a8352065a0e812a2e0fda32980a6260fecaf6fb4e147fa7aa47",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://efdc632af6960cf865dbc113665ea1f5b90eab75cc40ec062b2f6ae6da582017",
-				"dweb:/ipfs/QmfAZFDuG62vxmAN9DnXApv7e7PMzPqi4RkqqZHLMSQiY5"
+				"bzz-raw://0958150db8e904f6158eef40f42a5f84d034b3ce6b03ac30c223dc4cea6243f6",
+				"dweb:/ipfs/Qma2F9JT4UrrvFV8zEqJgtbGh89seGLRXpYWFk2cZQxdbC"
 			]
 		},
-		"localhost/node_modules/openzeppelin-solidity/contracts/utils/Address.sol": {
-			"keccak256": "0xf5fa8cbdffa5ef8be49b246b5628facc30b71707e78a45d80d93b64eff3fe390",
+		"node_modules/openzeppelin-solidity/contracts/utils/Address.sol": {
+			"keccak256": "0x50acdb22470f258eed61844484c51ecd5e07d5955e1bf0d8a79504c0eb90161d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://774e78a9ff32792cc95db4d2ceaf3a7965bb7f0bea5e6cb7cff182b450d44b37",
-				"dweb:/ipfs/QmRRMC4uj7eAcLW7chynA3sNEYULMFazdLwQHKHQPyzAbA"
+				"bzz-raw://69609651cb8040218ea95311de20379988e907d82170dc5a4654779e5f93b686",
+				"dweb:/ipfs/QmWKR69YfyRNebEcvehJoKAqKNnhk2LXtkBJH5XE9W3Cyy"
 			]
 		}
 	},

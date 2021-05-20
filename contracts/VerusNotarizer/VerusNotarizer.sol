@@ -60,11 +60,11 @@ contract VerusNotarizer{
         if(komodoNotaries[_notary] == true) return true;
         else return false;
     }
-    
+    /*
     function amIaNotary() public view returns(bool){
         address msgSender = msg.sender;
         return isNotary(msgSender);
-    }
+    }*/
 
     function addNotary(address _notary,
         bytes32 _notarizedAddressHash,
@@ -161,7 +161,7 @@ contract VerusNotarizer{
         } else return false;
 
     }
-
+/*
     function checkRecoverSigner(bytes32 notarizedDataHash,bytes32 rs,bytes32 ss,uint8 vs) public returns (address){
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, notarizedDataHash));
@@ -174,13 +174,13 @@ contract VerusNotarizer{
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, notarizedDataHash));
         return prefixedHash;
-    }
-    
+    }*/
+    /*
     function checkRecoverSigner2(bytes32 prefixedHash,bytes32 rs,bytes32 ss,uint8 vs) public returns (address){
         address recoveredAddress =  ecrecover(prefixedHash, vs, rs, ss);
         emit signedAddress(recoveredAddress);
         return recoveredAddress;
-    }
+    }*/
     
     function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
         bytes32 _notarizedDataHash,
@@ -236,17 +236,7 @@ contract VerusNotarizer{
         return notarizedDataEntries[_blockHeight];
 
     }
-
-    function getLastBlockHeight() public view returns(uint32){
-
-        require(!deprecated,"Contract has been deprecated");
-        return lastBlockHeight;
-    }
-
-    function getAllBlockHeights() public view returns(uint32[] memory){
-        return blockHeights;
-    }
-
+    
     function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(bool){
         require(isNotary(msg.sender),"Only a notary can deprecate this contract");
         bytes32 testingAddressHash = blake2b.createHash(abi.encodePacked(_upgradedAddress));

@@ -17,20 +17,28 @@ library VerusObjects {
 
     struct CTransferDestination {
         uint32 destinationtype;
-        address destinationaddress;
+        uint160 destinationaddress;
     }
 
     struct CReserveTransfer {
         uint32 version;
         CCurrencyValueMap currencyvalues;
         uint32 flags;
-        bool preconvert;
-        address feecurrencyid;
+        uint160 feecurrencyid;
         uint256 fees;
-        address destinationcurrencyid;
         CTransferDestination destination;
         uint160 destCurrencyID;
         uint160 secondReserveID;
+        uint160 destSystemID;
+    }
+
+    //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
+    
+    struct CReserveTransferSet {
+        uint position;
+        uint blockHeight;
+        bytes32 exportHash;
+        CReserveTransfer[] transfers;
     }
 
     struct CReserveTransferImport {
@@ -41,23 +49,6 @@ library VerusObjects {
         bytes32[] partialtransactionproof;  //partial transaction prroof is for the 
         CReserveTransfer[] transfers;
     }
-
-/*
-    struct CCrossChainExport {
-        uint8 version;
-        uint32 flags;
-        uint160 sourceSystemID;
-        uint32 sourceHeightStart;
-        uint32 sourceHeightEnd;
-        uint160 destSystemID;
-        uint160 destCurrencyID;
-        int32 numInputs;
-        CCurrencyValueMap totalAmounts;
-        CCurrencyValueMap totalFees;
-        uint256 hashReserveTransfers; // hashtransfers
-        CTransferDestination exporter; //reward address
-        int32 firstInput;
-    }*/
 
     struct CCrossChainExport {
         uint8 version;
@@ -77,12 +68,6 @@ library VerusObjects {
 
     /** Notarisation objects */
 
-    struct CChainNotarizationData {
-        uint32 version;
-        int32 lastConfirmed; // last confirmed notarization
-        int32[][] forks; // chains that represent alternate branches from the last confirmed notarization
-        int32 bestChain; // index in forks of the chain, beginning with the last confirmed notarization, that has the most power
-    }
 
     struct CProofRoot{
         int16 version;                        // to enable future data types with various functions
@@ -105,47 +90,28 @@ library VerusObjects {
     }
 
     struct CCoinbaseCurrencyState {
-        int64 nativeOut;                      // converted native output, emitted is stored in parent class
-        int64 nativeFees;
-        int64 nativeConversionFees;
+        int64 primaryCurrencyOut;
+        int64 preconvertedOut;
+        int64 primaryCurrencyFees;
+        int64 primaryCurrencyConversionFees;
         int64[] reserveIn;         // reserve currency converted to native
-        int64[] nativeIn;          // native currency converted to reserve
+        int64[] primaryCurrencyIn;
         int64[] reserveOut;        // output can have both normal and reserve output value, if non-0, this is spent by the required output transactions
         int64[] conversionPrice;   // calculated price in reserve for all conversions * 100000000
         int64[] viaConversionPrice; // the via conversion stage prices
         int64[] fees;              // fee values in native (or reserve if specified) coins for reserve transaction fees for the block
         int64[] conversionFees;    // total of only conversion fees, which will accrue to the conversion transaction
-    }
-/*
-    struct CIdentitySignature {
-        uint8 verion;
-        uint32 blockHeight;
-        bytes65[] signatures;
-    }*/
-
-
-/*
-    struct CIdentitySignature{
-        uint8 version;
-        uint32 blockHeight;
-        bytes65[] signatures;
+        int32[] priorWeights;
     }
 
-    struct Signatures {
-        uint160 cIdentityID;
-        CIdentitySignature cIdentitySignature;
-    }
-
-    struct CPartialProof {
-        int8 version;
-        int8 CPPtype;
-        CMMRProof txProof;
-        CTransactionComponentProof[] components;
-    }
-*/
     struct CUTXORef {
         uint256 hash;
         uint32 n;
+    }
+
+    struct CNodeData {
+        string networkAddress;
+        uint160 nodeIdentity;
     }
 
     struct CPBaaSNotarization {
@@ -160,17 +126,22 @@ library VerusObjects {
         uint32 prevHeight;
         CurrencyStates[] currencyStates;
         ProofRoots[] proofRoots;
+        CNodeData[] nodes;
     }
-/*
-    struct CNotaryEvidence {
-        uint8 version;
-        uint8 CNEtype;
-        uint160 systemID;
-        bytes32 output; //hash of the notarisation
-        bool confirmed;
-        Signatures[] signatures;
-        //evidence; not needed as we dont eneed to prove the notarisation far too complicated to try adn deal with
+    //represents the output from the pbaas rpc
+    struct Notarization {
+        uint32 index;
+        bytes32 txid;
+        uint32 vout;
+        CPBaaSNotarization notarization;
+        CNodeData[] nodes;
+    }
 
-    }*/
-
+    struct CChainNotarizationData {
+        uint32 version;
+        Notarization[] notarizations;
+        int32[][] forks; // chains that represent alternate branches from the last confirmed notarization
+        int32 lastConfirmedHeight; // last confirmed notarization
+        int32 bestChain; // index in forks of the chain, beginning with the last confirmed notarization, that has the most power
+    }
 }
