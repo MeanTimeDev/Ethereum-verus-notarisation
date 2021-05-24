@@ -37,16 +37,18 @@ contract VerusNotarizer{
     event NewBlock(VerusObjects.CPBaaSNotarization,uint32 notarizedDataHeight);
     event signedAddress(address signedAddress);
 
-    constructor(address verusBLAKE2bAddress,address verusSerializerAddress) public {
-        verusSerializer = VerusSerializer(verusSerializerAddress);
-        blake2b = VerusBLAKE2b(verusBLAKE2bAddress);
+    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] _notaries) public {
+        verusSerializer = VerusSerializer(_verusSerializerAddress);
+        blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
         deprecated = false;
         notaryCount = 0;
         lastBlockHeight = 0;
         //add in the owner as the first notary
         address msgSender = msg.sender;
-        komodoNotaries[msgSender] = true;
-        notaryCount++;
+        for(uint i =0; i < _notaries.length; i++){
+            komodoNotaries[_notaries[i]] = true;
+            notaryCount++;
+        }
     }
 
     modifier onlyNotary() {
@@ -65,7 +67,7 @@ contract VerusNotarizer{
         address msgSender = msg.sender;
         return isNotary(msgSender);
     }*/
-
+/*
     function addNotary(address _notary,
         bytes32 _notarizedAddressHash,
         bytes32[] memory _rs,
@@ -103,7 +105,7 @@ contract VerusNotarizer{
         notaryCount--;
         return true;
 
-    }
+    }*/
 
     //this function allows for intially expanding out the number of notaries
     function currentNotariesRequired() public view returns(uint8){
@@ -114,12 +116,12 @@ contract VerusNotarizer{
     }
 
 
-    function splitSignature(bytes memory sig)
+    function splitSignature(bytes memory _sig)
         internal
         pure
         returns (uint8, bytes32, bytes32)
     {
-        require(sig.length == 65);
+        require(_sig.length == 65);
 
         bytes32 r;
         bytes32 s;
@@ -127,17 +129,17 @@ contract VerusNotarizer{
 
         assembly {
             // first 32 bytes, after the length prefix
-            r := mload(add(sig, 32))
+            r := mload(add(_sig, 32))
             // second 32 bytes
-            s := mload(add(sig, 64))
+            s := mload(add(_sig, 64))
             // final byte (first byte of the next 32 bytes)
-            v := byte(0, mload(add(sig, 96)))
+            v := byte(0, mload(add(_sig, 96)))
         }
 
         return (v, r, s);
     }
 
-    function isNotarized(bytes32 notarizedDataHash,
+    function isNotarized(bytes32 _notarizedDataHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
         uint8[] memory _vs) public view returns(bool){
@@ -150,7 +152,7 @@ contract VerusNotarizer{
         //does the hash in the hashedBlocks match the komodoBlockHash passed in
         for(uint i = 0; i < _rs.length; i++){
             //if the address is in the notary array increment the number of signatures
-            signingAddress = recoverSigner(notarizedDataHash, _vs[i], _rs[i], _ss[i]);
+            signingAddress = recoverSigner(_notarizedDataHash, _vs[i], _rs[i], _ss[i]);
             if(komodoNotaries[signingAddress]) {
                 numberOfSignatures++;
             }
@@ -184,9 +186,10 @@ contract VerusNotarizer{
     
     function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
         bytes32 _notarizedDataHash,
+        uint8[] memory _vs,
         bytes32[] memory _rs,
-        bytes32[] memory _ss,
-        uint8[] memory _vs) public onlyNotary returns(bool){
+        bytes32[] memory _ss
+        ) public onlyNotary returns(bool){
 
         require(!deprecated,"Contract has been deprecated");
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -219,8 +222,8 @@ contract VerusNotarizer{
         } else return false;
     }
 
-    function recoverSigner(bytes32 h, uint8 v, bytes32 r, bytes32 s) private pure returns (address) {
-        address addr = ecrecover(h, v, r, s);
+    function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {
+        address addr = ecrecover(_h, _v, _r, _s);
         return addr;
     }
 
