@@ -37,7 +37,7 @@ contract VerusNotarizer{
     event NewBlock(VerusObjects.CPBaaSNotarization,uint32 notarizedDataHeight);
     event signedAddress(address signedAddress);
 
-    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] _notaries) public {
+    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] memory _notaries) public {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
         blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
         deprecated = false;

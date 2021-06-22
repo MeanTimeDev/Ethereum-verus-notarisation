@@ -232,8 +232,8 @@ contract VerusSerializer {
             serializeUint160(_ccce.destinationsystemid),
             serializeUint160(_ccce.destinationcurrencyid));
         bytes memory part2 = abi.encodePacked(serializeInt32(_ccce.numinputs),
-            serializeCCurrencyValueMap(_ccce.totalamounts),
-            serializeCCurrencyValueMap(_ccce.totalfees),
+            serializeCCurrencyValueMaps(_ccce.totalamounts),
+            serializeCCurrencyValueMaps(_ccce.totalfees),
             serializeUint256(_ccce.hashtransfers),
             serializeAddress(_ccce.rewardaddress),
             serializeInt32(_ccce.firstinput));

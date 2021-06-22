@@ -9,13 +9,18 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "verusBLAKE2bAddress",
+						"name": "_verusBLAKE2bAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "verusSerializerAddress",
+						"name": "_verusSerializerAddress",
 						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_notaries",
+						"type": "address[]"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -57,9 +62,9 @@
 										"type": "uint32"
 									},
 									{
-										"internalType": "address",
+										"internalType": "uint160",
 										"name": "destinationaddress",
-										"type": "address"
+										"type": "uint160"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -352,45 +357,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_notary",
-						"type": "address"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "_notarizedAddressHash",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "bytes32[]",
-						"name": "_rs",
-						"type": "bytes32[]"
-					},
-					{
-						"internalType": "bytes32[]",
-						"name": "_ss",
-						"type": "bytes32[]"
-					},
-					{
-						"internalType": "uint8[]",
-						"name": "_vs",
-						"type": "uint8[]"
-					}
-				],
-				"name": "addNotary",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
@@ -496,9 +462,9 @@
 										"type": "uint32"
 									},
 									{
-										"internalType": "address",
+										"internalType": "uint160",
 										"name": "destinationaddress",
-										"type": "address"
+										"type": "uint160"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -798,9 +764,9 @@
 										"type": "uint32"
 									},
 									{
-										"internalType": "address",
+										"internalType": "uint160",
 										"name": "destinationaddress",
-										"type": "address"
+										"type": "uint160"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -1074,7 +1040,7 @@
 				"inputs": [
 					{
 						"internalType": "bytes32",
-						"name": "notarizedDataHash",
+						"name": "_notarizedDataHash",
 						"type": "bytes32"
 					},
 					{
@@ -1183,9 +1149,9 @@
 								"type": "uint32"
 							},
 							{
-								"internalType": "address",
+								"internalType": "uint160",
 								"name": "destinationaddress",
-								"type": "address"
+								"type": "uint160"
 							}
 						],
 						"internalType": "struct VerusObjects.CTransferDestination",
@@ -1361,45 +1327,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_notary",
-						"type": "address"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "_notarizedAddressHash",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "bytes32[]",
-						"name": "_rs",
-						"type": "bytes32[]"
-					},
-					{
-						"internalType": "bytes32[]",
-						"name": "_ss",
-						"type": "bytes32[]"
-					},
-					{
-						"internalType": "uint8[]",
-						"name": "_vs",
-						"type": "uint8[]"
-					}
-				],
-				"name": "removeNotary",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"components": [
 							{
 								"internalType": "uint32",
@@ -1419,9 +1346,9 @@
 										"type": "uint32"
 									},
 									{
-										"internalType": "address",
+										"internalType": "uint160",
 										"name": "destinationaddress",
-										"type": "address"
+										"type": "uint160"
 									}
 								],
 								"internalType": "struct VerusObjects.CTransferDestination",
@@ -1693,6 +1620,11 @@
 						"type": "bytes32"
 					},
 					{
+						"internalType": "uint8[]",
+						"name": "_vs",
+						"type": "uint8[]"
+					},
+					{
 						"internalType": "bytes32[]",
 						"name": "_rs",
 						"type": "bytes32[]"
@@ -1701,11 +1633,6 @@
 						"internalType": "bytes32[]",
 						"name": "_ss",
 						"type": "bytes32[]"
-					},
-					{
-						"internalType": "uint8[]",
-						"name": "_vs",
-						"type": "uint8[]"
 					}
 				],
 				"name": "setLatestData",
@@ -1785,27 +1712,27 @@
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x266a1f6e15d7992ace25c284604cf98561efee6df934893d95f6158b13c49d08",
+			"keccak256": "0x61e32e2802f5f894dc71d039eb31b1276d496510b918f40a1c49002487de7e8c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://33ad198d7d79458ca428acbd4482d3b56511ef394a538f8cff0e30b95242cf06",
-				"dweb:/ipfs/QmPHWvpFELQpentw2GX1iXczeAN7X8b1tJ7rd5aGTu4B7t"
+				"bzz-raw://bba5a4a43ee63265cd29a935ec59e048e36a59ebcb0cf4e3013547f231ddef4a",
+				"dweb:/ipfs/QmWNze5EaHLhvSeYC9N5tMuJueBC9wYZCWPtksAuTuaSwu"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x3f74edc9ac03027f32c3efe47ae7589d5682c8b9c8b8de52713cdd47df9ccafb",
+			"keccak256": "0xa76b0e3d1b24c31e16824350998de89bb1250f9df245688b5fa8d93ed16bd6f0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ea2a7454dbe396e3cf0b337225779e21eb20412c75f7ad3dfd62a4043ba74623",
-				"dweb:/ipfs/Qma4tebgcKGXjDWad5gu9Sowrgi7GjioDYcbwPZdL3L78t"
+				"bzz-raw://445d581fa988f2e14e969e326923d1f03897ed73d138cff5ac925d497f4b48b6",
+				"dweb:/ipfs/Qmd6WNST7g6cYzp82AaUeWStUHoMg9uZQEyMw4CvVmRQnK"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x20c2096d38f26a8a42cd5bce66ca03997891558014d18dd37da7ac3c367ff2e6",
+			"keccak256": "0x06d2a324d9133903d6c8689ba02193b225382e201dfcc6b404a48d2aa29a46d8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0827bca25b90ec40899f79f68abe686e7fe02fffad20b28ea3f198175829523f",
-				"dweb:/ipfs/QmYZWqHwNBrqQ8MYGcLS4HGAqaEmoNQ1TJ38rJm7L5zoAQ"
+				"bzz-raw://b01b984f66a0975bf69a8edd5bd8ba964b1d05b65e99a2cf4bb13a3ef4143e14",
+				"dweb:/ipfs/QmSaw5sBjFxToe8p5ugYwFgVhVNDFfGK7cHQtAhyZ4QpHh"
 			]
 		}
 	},

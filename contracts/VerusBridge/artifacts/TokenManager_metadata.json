@@ -27,7 +27,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					}
 				],
@@ -46,17 +46,17 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "_owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "_spender",
 						"type": "address"
 					}
 				],
@@ -75,12 +75,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "account",
+						"name": "_account",
 						"type": "address"
 					}
 				],
@@ -99,7 +99,7 @@
 				"inputs": [
 					{
 						"internalType": "uint160",
-						"name": "destinationCurrencyID",
+						"name": "_destinationCurrencyID",
 						"type": "uint160"
 					}
 				],
@@ -118,17 +118,17 @@
 				"inputs": [
 					{
 						"internalType": "uint160",
-						"name": "destinationCurrencyID",
+						"name": "_destinationCurrencyID",
 						"type": "uint160"
 					},
 					{
 						"internalType": "string",
-						"name": "tokenName",
+						"name": "_tokenName",
 						"type": "string"
 					},
 					{
 						"internalType": "string",
-						"name": "symbol",
+						"name": "_symbol",
 						"type": "string"
 					}
 				],
@@ -166,12 +166,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "tokenAmount",
+						"name": "_tokenAmount",
 						"type": "uint256"
 					}
 				],
@@ -184,12 +184,12 @@
 				"inputs": [
 					{
 						"internalType": "uint160",
-						"name": "destCurrencyID",
+						"name": "_destCurrencyID",
 						"type": "uint160"
 					},
 					{
 						"internalType": "uint256",
-						"name": "tokenAmount",
+						"name": "_tokenAmount",
 						"type": "uint256"
 					}
 				],
@@ -202,7 +202,7 @@
 				"inputs": [
 					{
 						"internalType": "string",
-						"name": "tokenName",
+						"name": "_tokenName",
 						"type": "string"
 					}
 				],
@@ -221,17 +221,17 @@
 				"inputs": [
 					{
 						"internalType": "uint160",
-						"name": "destCurrencyID",
+						"name": "_destCurrencyID",
 						"type": "uint160"
 					},
 					{
 						"internalType": "uint64",
-						"name": "tokenAmount",
+						"name": "_tokenAmount",
 						"type": "uint64"
 					},
 					{
 						"internalType": "uint160",
-						"name": "destination",
+						"name": "_destination",
 						"type": "uint160"
 					}
 				],
@@ -250,17 +250,17 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "tokenAmount",
+						"name": "_tokenAmount",
 						"type": "uint256"
 					},
 					{
 						"internalType": "address",
-						"name": "destinationAddress",
+						"name": "_destinationAddress",
 						"type": "address"
 					}
 				],
@@ -279,7 +279,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					}
 				],
@@ -298,7 +298,7 @@
 				"inputs": [
 					{
 						"internalType": "uint160",
-						"name": "destinationCurrencyID",
+						"name": "_destinationCurrencyID",
 						"type": "uint160"
 					}
 				],
@@ -317,7 +317,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "contractAddress",
+						"name": "_contractAddress",
 						"type": "address"
 					}
 				],
@@ -411,11 +411,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0x691943f6b9414ae3cda0ee0321305716f3b2a7044dae048262aa981ee2f56cef",
+			"keccak256": "0xe88359769e4a0911911565c6ca5ba23ef17de7faa78f5a00bc8e9d9038a0e958",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://75050e396c2f69d2123bc08c42af4f4aadb029ebbe52568db3e77dc10987c82f",
-				"dweb:/ipfs/QmRb477x9Z2v9x4bB3dnCUArWgN3Mrcsq2F5bqBSfKcVv9"
+				"bzz-raw://e10c1e020c370aeb3653ade24edca85ad001a5c072d0b8acdfdb5635b18eda3f",
+				"dweb:/ipfs/QmbypBqjgtzUFJcYhAYwXnNpfm7FYy2grF7FDVcTBSTg24"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {

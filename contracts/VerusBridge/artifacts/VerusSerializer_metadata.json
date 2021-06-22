@@ -219,9 +219,9 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap",
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 								"name": "totalamounts",
-								"type": "tuple"
+								"type": "tuple[]"
 							},
 							{
 								"components": [
@@ -236,14 +236,31 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap",
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 								"name": "totalfees",
-								"type": "tuple"
+								"type": "tuple[]"
 							},
 							{
 								"internalType": "uint256",
 								"name": "hashtransfers",
 								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint160",
+										"name": "currency",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint64",
+										"name": "amount",
+										"type": "uint64"
+									}
+								],
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"name": "totalburned",
+								"type": "tuple[]"
 							},
 							{
 								"internalType": "address",
@@ -1513,19 +1530,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x61e32e2802f5f894dc71d039eb31b1276d496510b918f40a1c49002487de7e8c",
+			"keccak256": "0xd9e76005e3b7e6a2a078e88befb07a02153d4b57d557250d7082b023161667c1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bba5a4a43ee63265cd29a935ec59e048e36a59ebcb0cf4e3013547f231ddef4a",
-				"dweb:/ipfs/QmWNze5EaHLhvSeYC9N5tMuJueBC9wYZCWPtksAuTuaSwu"
+				"bzz-raw://1d4bda1a588e57c6ba7680221ab5f87beb49c08bc2cffc76895dec2108cded1f",
+				"dweb:/ipfs/QmXA8zuaqGVsaceYKhCH92Zhb2bor8Kr5zKR4NYEo1mqxJ"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xa76b0e3d1b24c31e16824350998de89bb1250f9df245688b5fa8d93ed16bd6f0",
+			"keccak256": "0x013c95a6b67faf94302472f70fbc7902cf358615154c077d665304e5e9bedc0b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://445d581fa988f2e14e969e326923d1f03897ed73d138cff5ac925d497f4b48b6",
-				"dweb:/ipfs/Qmd6WNST7g6cYzp82AaUeWStUHoMg9uZQEyMw4CvVmRQnK"
+				"bzz-raw://43b1c13bc94fe854a9076d170936c9e60df62356e4234b5561a99287ebaff576",
+				"dweb:/ipfs/Qmc29EMDaFezGu8qx7wdhwmbc4cgRxkHPCziafs9vHEmF1"
 			]
 		}
 	},

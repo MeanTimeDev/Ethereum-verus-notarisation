@@ -46,7 +46,7 @@ library VerusObjects {
         bytes32 txid; //this is actually the hash of the transfers that can be used for proof
         uint txoutnum; //index of the transfers in the exports array
         CCrossChainExport exportinfo;
-        bytes32[] partialtransactionproof;  //partial transaction prroof is for the 
+        bytes32[] partialtransactionproof;  //partial transaction proof is for the 
         CReserveTransfer[] transfers;
     }
 
@@ -59,9 +59,10 @@ library VerusObjects {
         uint160 destinationsystemid;
         uint160 destinationcurrencyid;
         int32 numinputs;
-        CCurrencyValueMap totalamounts;
-        CCurrencyValueMap totalfees;
+        CCurrencyValueMap[] totalamounts;
+        CCurrencyValueMap[] totalfees;
         uint256 hashtransfers; // hashtransfers
+        CCurrencyValueMap[] totalburned;
         address rewardaddress; //reward address
         int32 firstinput;
     }

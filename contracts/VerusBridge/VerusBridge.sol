@@ -35,12 +35,20 @@ contract VerusBridge {
     uint64 public transactionsPerCall = 2;
 
     uint160 public VEth = uint160(0x0000000000000000000000000000000000000000);
+    uint160 public EthSystemID = uint160(0x0000000000000000000000000000000000000000);
+    uint160 public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
+    //does this need to be set 
+    uint160 public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
     uint256 transactionFee = 100000000000000; //0.0001 eth
     //used to prove the transfers the index of this corresponds to the index of the 
     bytes32[] public readyExportHashes;
-    //used to store a list of currencies and an amount
+    //
     
+    //used to store a list of currencies and an amount
     VerusObjects.CReserveTransfer[] private _pendingExports;
+    uint[] _pendingBlockHeights;
+    
+    //stores the blockheight of each pending transfer
     //the export set holds the summary of a set of exports
     VerusObjects.CReserveTransfer[][] private _readyExports;
     //used for proving the export set
@@ -125,16 +133,39 @@ contract VerusBridge {
         _createExports(newTransaction);
     }
 
+    function _createExports2(VerusObjects.CReserveTransfer memory newTransaction) private {
+        uint currentHeight = block.number;
+        uint exportsIndex;
+        
+
+        //check if the current block height has a set of transfers associated with it if so add to the existing array
+        if((exportsIndex = readyExportsByBlock[currentHeight].length) > 0) {
+            //append to an existing array of transfers
+            _readyExports[exportsIndex].push(newTransaction);
+        }
+        else {            
+            _readyExports.push(new VerusObjects.CReserveTransfer[](0));
+            exportsIndex = _readyExports.length - 1;
+            _readyExports[exportsIndex].push(newTransaction);
+            readyExportsByBlock[currentHeight].push(exportsIndex);
+        }
+        //create a cross chain export, serialize it and hash it
+        
+    }
+
+
+
     function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
         bytes32 hashedTransactions;
 
         _pendingExports.push(newTransaction);    
-        //loop through the total amounts 
+        _pendingBlockHeights.push(block.number);
         
         //loop through the totalAmounts and append if the currency exists
         if(_pendingExports.length >= transactionsPerCall){
             //add the transactions to the ready export
             _readyExports.push(_pendingExports);
+            //should actually create an mmr not
             hashedTransactions = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_pendingExports));
             //create a hash of the transactions for proo
             readyExportHashes.push(hashedTransactions);
@@ -147,6 +178,71 @@ contract VerusBridge {
             emit ExportsReady(_readyExports.length - 1);     
         }
         
+    }
+    
+    //create a cross chain export and serialize it for hashing 
+    function _createCCrossChainExportHash(uint exportIndex)private returns (VerusObjects.CCrossChainExport memory){
+        bytes32 hashedTransfers;
+        uint160[] memory currencyAmountAddresses;
+        
+        uint160[] memory currencyFeesAddresses;
+        //create a hash of the transfers and then 
+        hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]));
+
+        //create the Cross ChainExport to then serialize and hash
+
+        VerusObjects.CCrossChainExport memory workingCCE;
+        workingCCE.version = 1;
+        workingCCE.flags = 3;
+        //need to pick up the 
+        workingCCE.sourceheightstart = uint32(block.number);
+        workingCCE.sourceheightend =uint32(block.number);
+        workingCCE.sourcesystemid = EthSystemID;
+        workingCCE.destinationsystemid = VerusSystemId;
+        workingCCE.destinationcurrencyid = VEth;
+        workingCCE.numinputs = int32(_readyExports[exportIndex].length);
+        //loop through the array and create totals of the amounts and fees
+
+        for(uint i = 0; i < _readyExports[exportIndex].length; i++){
+            
+            //this may need looking at its a loop within a loop which is never good
+            uint160 currencyAddress = _readyExports[exportIndex][i].currencyvalues.currency;
+            uint64 currencyAmount = _readyExports[exportIndex][i].currencyvalues.amount;
+            bool currencyExists = false;
+            for(uint j = 0; j < workingCCE.totalamounts.length; j++){
+                if(workingCCE.totalamounts[j].currency == currencyAddress) {
+                    workingCCE.totalamounts[j].amount += currencyAmount;
+                    currencyExists = true;
+                    break;
+                }
+            }
+            if(currencyExists == false){
+                workingCCE.totalamounts[workingCCE.totalamounts.length].currency = currencyAddress;
+                workingCCE.totalamounts[workingCCE.totalamounts.length].currency = currencyAmount;
+            }    
+            
+            uint160 feecurrency = _readyExports[exportIndex][i].feecurrencyid;
+            uint64 feeamount = uint64(_readyExports[exportIndex][i].fees);
+            currencyExists = false;
+            for(uint k = 0; k < workingCCE.totalfees.length; k++){
+                if(workingCCE.totalfees[k].currency == feecurrency) {
+                    workingCCE.totalfees[k].amount += feeamount;
+                    currencyExists = true;
+                    break;
+                }
+            }
+            if(currencyExists == false){
+                workingCCE.totalfees[workingCCE.totalfees.length].currency = feecurrency;
+                workingCCE.totalfees[workingCCE.totalfees.length].currency = feeamount;
+            }
+            
+        }
+    
+        workingCCE.hashtransfers = uint256(hashedTransfers);
+        workingCCE.totalburned[0].currency = 0;
+        workingCCE.totalburned[0].amount = 0;
+        workingCCE.rewardaddress = address(RewardAddress);
+        workingCCE.firstinput = 0;
     }
 
     /***
@@ -189,6 +285,8 @@ contract VerusBridge {
         }
         return true;
     }
+
+    
 
     /**
     returns a list of exports to be processed on the verus chain
