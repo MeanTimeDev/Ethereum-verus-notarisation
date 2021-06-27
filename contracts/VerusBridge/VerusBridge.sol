@@ -42,7 +42,8 @@ contract VerusBridge {
     uint256 transactionFee = 100000000000000; //0.0001 eth
     //used to prove the transfers the index of this corresponds to the index of the 
     bytes32[] public readyExportHashes;
-    //
+    uint CBCurrencyTypes = 0;
+    uint CBFeesTypes = 0;
     
     //used to store a list of currencies and an amount
     VerusObjects.CReserveTransfer[] private _pendingExports;
@@ -50,7 +51,7 @@ contract VerusBridge {
     
     //stores the blockheight of each pending transfer
     //the export set holds the summary of a set of exports
-    VerusObjects.CReserveTransfer[][] private _readyExports;
+    VerusObjects.CReserveTransfer[][] public _readyExports;
     //used for proving the export set
     
     mapping (bytes32 => uint) public processedImportSetHashes;
@@ -133,7 +134,7 @@ contract VerusBridge {
         _createExports(newTransaction);
     }
 
-    function _createExports2(VerusObjects.CReserveTransfer memory newTransaction) private {
+    function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
         uint currentHeight = block.number;
         uint exportsIndex;
         
@@ -141,20 +142,28 @@ contract VerusBridge {
         //check if the current block height has a set of transfers associated with it if so add to the existing array
         if((exportsIndex = readyExportsByBlock[currentHeight].length) > 0) {
             //append to an existing array of transfers
-            _readyExports[exportsIndex].push(newTransaction);
+            //
+            _readyExports[exportsIndex-1].push(newTransaction);
         }
-        else {            
-            _readyExports.push(new VerusObjects.CReserveTransfer[](0));
-            exportsIndex = _readyExports.length - 1;
-            _readyExports[exportsIndex].push(newTransaction);
-            readyExportsByBlock[currentHeight].push(exportsIndex);
+        else {
+            
+            _pendingExports.push(newTransaction);
+            _readyExports.push(_pendingExports);
+            readyExportsByBlock[currentHeight].push(_readyExports.length-1);
+            delete _pendingExports;
         }
         //create a cross chain export, serialize it and hash it
+        //VerusObjects.CCrossChainExport memory CCCE = _createCCrossChainExport(exportsIndex);
+        //create a hash of the CCCE
+        //bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
+        //bytes32 hashedCCE = blake2b.createHash(serializedCCE);
+        //add the hashed value
+        //readyExportHashes[exportsIndex] = hashedCCE;
         
     }
 
 
-
+/*
     function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
         bytes32 hashedTransactions;
 
@@ -178,14 +187,11 @@ contract VerusBridge {
             emit ExportsReady(_readyExports.length - 1);     
         }
         
-    }
+    }*/
     
     //create a cross chain export and serialize it for hashing 
-    function _createCCrossChainExportHash(uint exportIndex)private returns (VerusObjects.CCrossChainExport memory){
+    function _createCCrossChainExport(uint exportIndex) public returns (VerusObjects.CCrossChainExport memory){
         bytes32 hashedTransfers;
-        uint160[] memory currencyAmountAddresses;
-        
-        uint160[] memory currencyFeesAddresses;
         //create a hash of the transfers and then 
         hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]));
 
@@ -203,46 +209,66 @@ contract VerusBridge {
         workingCCE.numinputs = int32(_readyExports[exportIndex].length);
         //loop through the array and create totals of the amounts and fees
 
+        //how to calculate the length of the CCurrencyValueMap arrays before the can be created
+
+        uint160[] currencyAddresses;
+        uint64[] currencyAmounts;
+        uint160[] feesCurrencies;
+        uint64[] feesAmounts;
+
         for(uint i = 0; i < _readyExports[exportIndex].length; i++){
             
-            //this may need looking at its a loop within a loop which is never good
             uint160 currencyAddress = _readyExports[exportIndex][i].currencyvalues.currency;
             uint64 currencyAmount = _readyExports[exportIndex][i].currencyvalues.amount;
             bool currencyExists = false;
-            for(uint j = 0; j < workingCCE.totalamounts.length; j++){
-                if(workingCCE.totalamounts[j].currency == currencyAddress) {
-                    workingCCE.totalamounts[j].amount += currencyAmount;
+            for(uint j = 0; j < currencyAddresses.length; j++){
+                if(currencyAddresses[j] == currencyAddress) {
+                    currencyAmounts[j] += currencyAmount;
                     currencyExists = true;
                     break;
                 }
             }
             if(currencyExists == false){
-                workingCCE.totalamounts[workingCCE.totalamounts.length].currency = currencyAddress;
-                workingCCE.totalamounts[workingCCE.totalamounts.length].currency = currencyAmount;
+                currencyAddresses.push(currencyAddress);
+                currencyAmounts.push(currencyAmount);
             }    
             
             uint160 feecurrency = _readyExports[exportIndex][i].feecurrencyid;
             uint64 feeamount = uint64(_readyExports[exportIndex][i].fees);
             currencyExists = false;
-            for(uint k = 0; k < workingCCE.totalfees.length; k++){
-                if(workingCCE.totalfees[k].currency == feecurrency) {
-                    workingCCE.totalfees[k].amount += feeamount;
+            for(uint k = 0; k < feesCurrencies.length; k++){
+                if(feesCurrencies[k] == feecurrency) {
+                    feesAmounts[k] += feeamount;
                     currencyExists = true;
                     break;
                 }
             }
             if(currencyExists == false){
-                workingCCE.totalfees[workingCCE.totalfees.length].currency = feecurrency;
-                workingCCE.totalfees[workingCCE.totalfees.length].currency = feeamount;
+                feesCurrencies.push(feecurrency);
+                feesAmounts.push(feeamount);
             }
             
         }
     
+        //create the total amounts arrays
+        workingCCE.totalamounts = new VerusObjects.CCurrencyValueMap[](currencyAddresses.length);
+        for(uint l = 0; l < currencyAddresses.length ; l++){
+            workingCCE.totalamounts[l] = VerusObjects.CCurrencyValueMap(currencyAddresses[l],currencyAmounts[l]);
+        }
+        
+        workingCCE.totalfees = new VerusObjects.CCurrencyValueMap[](feesCurrencies.length);
+        for(uint l = 0; l < feesCurrencies.length ; l++){
+            workingCCE.totalfees[l] = VerusObjects.CCurrencyValueMap(feesCurrencies[l],feesAmounts[l]);
+        }
+    
         workingCCE.hashtransfers = uint256(hashedTransfers);
-        workingCCE.totalburned[0].currency = 0;
-        workingCCE.totalburned[0].amount = 0;
+        VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0,0);
+        
+        workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
+        workingCCE.totalburned[0] = totalburnedCCVM;
         workingCCE.rewardaddress = address(RewardAddress);
         workingCCE.firstinput = 0;
+        return workingCCE;
     }
 
     /***

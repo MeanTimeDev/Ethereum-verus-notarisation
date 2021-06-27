@@ -148,11 +148,265 @@
 			},
 			{
 				"inputs": [],
+				"name": "EthSystemID",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "RewardAddress",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "VEth",
 				"outputs": [
 					{
 						"internalType": "uint160",
 						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "VerusSystemId",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "exportIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "_createCCrossChainExport",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint8",
+								"name": "version",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint32",
+								"name": "flags",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint160",
+								"name": "sourcesystemid",
+								"type": "uint160"
+							},
+							{
+								"internalType": "uint32",
+								"name": "sourceheightstart",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint32",
+								"name": "sourceheightend",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint160",
+								"name": "destinationsystemid",
+								"type": "uint160"
+							},
+							{
+								"internalType": "uint160",
+								"name": "destinationcurrencyid",
+								"type": "uint160"
+							},
+							{
+								"internalType": "int32",
+								"name": "numinputs",
+								"type": "int32"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint160",
+										"name": "currency",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint64",
+										"name": "amount",
+										"type": "uint64"
+									}
+								],
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"name": "totalamounts",
+								"type": "tuple[]"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint160",
+										"name": "currency",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint64",
+										"name": "amount",
+										"type": "uint64"
+									}
+								],
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"name": "totalfees",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "hashtransfers",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint160",
+										"name": "currency",
+										"type": "uint160"
+									},
+									{
+										"internalType": "uint64",
+										"name": "amount",
+										"type": "uint64"
+									}
+								],
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"name": "totalburned",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "address",
+								"name": "rewardaddress",
+								"type": "address"
+							},
+							{
+								"internalType": "int32",
+								"name": "firstinput",
+								"type": "int32"
+							}
+						],
+						"internalType": "struct VerusObjects.CCrossChainExport",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "_readyExports",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "version",
+						"type": "uint32"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint160",
+								"name": "currency",
+								"type": "uint160"
+							},
+							{
+								"internalType": "uint64",
+								"name": "amount",
+								"type": "uint64"
+							}
+						],
+						"internalType": "struct VerusObjects.CCurrencyValueMap",
+						"name": "currencyvalues",
+						"type": "tuple"
+					},
+					{
+						"internalType": "uint32",
+						"name": "flags",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint160",
+						"name": "feecurrencyid",
+						"type": "uint160"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fees",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint32",
+								"name": "destinationtype",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint160",
+								"name": "destinationaddress",
+								"type": "uint160"
+							}
+						],
+						"internalType": "struct VerusObjects.CTransferDestination",
+						"name": "destination",
+						"type": "tuple"
+					},
+					{
+						"internalType": "uint160",
+						"name": "destCurrencyID",
+						"type": "uint160"
+					},
+					{
+						"internalType": "uint160",
+						"name": "secondReserveID",
+						"type": "uint160"
+					},
+					{
+						"internalType": "uint160",
+						"name": "destSystemID",
 						"type": "uint160"
 					}
 				],
@@ -898,9 +1152,9 @@
 												"type": "uint64"
 											}
 										],
-										"internalType": "struct VerusObjects.CCurrencyValueMap",
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 										"name": "totalamounts",
-										"type": "tuple"
+										"type": "tuple[]"
 									},
 									{
 										"components": [
@@ -915,14 +1169,31 @@
 												"type": "uint64"
 											}
 										],
-										"internalType": "struct VerusObjects.CCurrencyValueMap",
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 										"name": "totalfees",
-										"type": "tuple"
+										"type": "tuple[]"
 									},
 									{
 										"internalType": "uint256",
 										"name": "hashtransfers",
 										"type": "uint256"
+									},
+									{
+										"components": [
+											{
+												"internalType": "uint160",
+												"name": "currency",
+												"type": "uint160"
+											},
+											{
+												"internalType": "uint64",
+												"name": "amount",
+												"type": "uint64"
+											}
+										],
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+										"name": "totalburned",
+										"type": "tuple[]"
 									},
 									{
 										"internalType": "address",
@@ -1160,27 +1431,27 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0x2f1ec2be98169621247a828d38b988e0b161f8b1b5ab90e20f8376074f37b1b2",
+			"keccak256": "0x7a939cf0e2cb269b66cb27b1d8aa8e01b6f5e58927e63eece3e8fb9ca23f8078",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e93e918171c8fbb327471918cf374d09940c18f5fb32c49f56f13f8e0b067048",
-				"dweb:/ipfs/QmVokwQFpeaGkmeUyeQK3NQDR6N12MX3jXkqKuWoGy8XXp"
+				"bzz-raw://843135617a509ebb1d6d29d84cc277cbf33455a6ceb210e3b75b821be218a553",
+				"dweb:/ipfs/Qmete3yCrWCvnJJkpvtWTtohb9Gm7rzZamYe2w2agZaR1Z"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x61e32e2802f5f894dc71d039eb31b1276d496510b918f40a1c49002487de7e8c",
+			"keccak256": "0xd9e76005e3b7e6a2a078e88befb07a02153d4b57d557250d7082b023161667c1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bba5a4a43ee63265cd29a935ec59e048e36a59ebcb0cf4e3013547f231ddef4a",
-				"dweb:/ipfs/QmWNze5EaHLhvSeYC9N5tMuJueBC9wYZCWPtksAuTuaSwu"
+				"bzz-raw://1d4bda1a588e57c6ba7680221ab5f87beb49c08bc2cffc76895dec2108cded1f",
+				"dweb:/ipfs/QmXA8zuaqGVsaceYKhCH92Zhb2bor8Kr5zKR4NYEo1mqxJ"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xa76b0e3d1b24c31e16824350998de89bb1250f9df245688b5fa8d93ed16bd6f0",
+			"keccak256": "0x660c7e1542977804434510a57f7b470cf10d1f3de09038c99c385f6e2963e3be",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://445d581fa988f2e14e969e326923d1f03897ed73d138cff5ac925d497f4b48b6",
-				"dweb:/ipfs/Qmd6WNST7g6cYzp82AaUeWStUHoMg9uZQEyMw4CvVmRQnK"
+				"bzz-raw://81981ad2dddaa0e08f2e0189be65d44824988a34d5d94955ee298c3abed92887",
+				"dweb:/ipfs/QmNRudpFA3jTSNLNEdaU5LDqqKyzByoMXFnkV4fdQCmB7T"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {

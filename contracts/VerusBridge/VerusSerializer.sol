@@ -235,6 +235,7 @@ contract VerusSerializer {
             serializeCCurrencyValueMaps(_ccce.totalamounts),
             serializeCCurrencyValueMaps(_ccce.totalfees),
             serializeUint256(_ccce.hashtransfers),
+            serializeCCurrencyValueMaps(_ccce.totalburned),
             serializeAddress(_ccce.rewardaddress),
             serializeInt32(_ccce.firstinput));
         return abi.encodePacked(part1,part2);
