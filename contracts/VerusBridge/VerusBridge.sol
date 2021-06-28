@@ -210,16 +210,21 @@ contract VerusBridge {
         //loop through the array and create totals of the amounts and fees
 
         //how to calculate the length of the CCurrencyValueMap arrays before the can be created
-
-        uint160[] currencyAddresses;
-        uint64[] currencyAmounts;
-        uint160[] feesCurrencies;
-        uint64[] feesAmounts;
-
+        //may need to be intitalised to the maximum possible size
+        uint160[] memory currencyAddresses = new uint160[](_readyExports[exportIndex].length);
+        uint64[] memory currencyAmounts = new uint64[](_readyExports[exportIndex].length);
+        uint numAmounts = 0;
+        uint160[] memory feesCurrencies = new uint160[](_readyExports[exportIndex].length);
+        uint64[] memory feesAmounts = new uint64[](_readyExports[exportIndex].length);
+        uint numFees = 0;
+        uint160 currencyAddress;
+        uint64 currencyAmount;
+        uint160 feecurrency;
+        uint64 feeamount;
         for(uint i = 0; i < _readyExports[exportIndex].length; i++){
             
-            uint160 currencyAddress = _readyExports[exportIndex][i].currencyvalues.currency;
-            uint64 currencyAmount = _readyExports[exportIndex][i].currencyvalues.amount;
+            currencyAddress = _readyExports[exportIndex][i].currencyvalues.currency;
+            currencyAmount = _readyExports[exportIndex][i].currencyvalues.amount;
             bool currencyExists = false;
             for(uint j = 0; j < currencyAddresses.length; j++){
                 if(currencyAddresses[j] == currencyAddress) {
@@ -228,13 +233,14 @@ contract VerusBridge {
                     break;
                 }
             }
-            if(currencyExists == false){
-                currencyAddresses.push(currencyAddress);
-                currencyAmounts.push(currencyAmount);
+           if(currencyExists == false){
+                currencyAddresses[numAmounts] = currencyAddress;
+                currencyAmounts[numAmounts] = currencyAmount;
+                numAmounts++;
             }    
             
-            uint160 feecurrency = _readyExports[exportIndex][i].feecurrencyid;
-            uint64 feeamount = uint64(_readyExports[exportIndex][i].fees);
+            feecurrency = _readyExports[exportIndex][i].feecurrencyid;
+            feeamount = uint64(_readyExports[exportIndex][i].fees);
             currencyExists = false;
             for(uint k = 0; k < feesCurrencies.length; k++){
                 if(feesCurrencies[k] == feecurrency) {
@@ -244,30 +250,35 @@ contract VerusBridge {
                 }
             }
             if(currencyExists == false){
-                feesCurrencies.push(feecurrency);
-                feesAmounts.push(feeamount);
+                feesCurrencies[numFees] = feecurrency;
+                feesAmounts[numFees] = feeamount;
+                numFees++;
             }
             
         }
-    
+    /*
         //create the total amounts arrays
         workingCCE.totalamounts = new VerusObjects.CCurrencyValueMap[](currencyAddresses.length);
         for(uint l = 0; l < currencyAddresses.length ; l++){
-            workingCCE.totalamounts[l] = VerusObjects.CCurrencyValueMap(currencyAddresses[l],currencyAmounts[l]);
+            if(currencyAddresses[l] != 0) {
+                workingCCE.totalamounts[l] = VerusObjects.CCurrencyValueMap(currencyAddresses[l],currencyAmounts[l]);
+            }
         }
         
         workingCCE.totalfees = new VerusObjects.CCurrencyValueMap[](feesCurrencies.length);
-        for(uint l = 0; l < feesCurrencies.length ; l++){
-            workingCCE.totalfees[l] = VerusObjects.CCurrencyValueMap(feesCurrencies[l],feesAmounts[l]);
+        for(uint m = 0; m < feesCurrencies.length ; m++){
+            if(feesCurrencies[m] != 0) {
+                workingCCE.totalfees[m] = VerusObjects.CCurrencyValueMap(feesCurrencies[m],feesAmounts[m]);
+            }
         }
-    
+   
         workingCCE.hashtransfers = uint256(hashedTransfers);
         VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0,0);
         
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
         workingCCE.totalburned[0] = totalburnedCCVM;
         workingCCE.rewardaddress = address(RewardAddress);
-        workingCCE.firstinput = 0;
+        workingCCE.firstinput = 0;*/
         return workingCCE;
     }
 
@@ -318,11 +329,6 @@ contract VerusBridge {
     returns a list of exports to be processed on the verus chain
     */
     
-    function pendingExports() public view returns(VerusObjects.CReserveTransfer[] memory){
-        require(!deprecated,"Contract has been deprecated");
-        return _pendingExports;
-    }
-    
     function getReadyExportsIndex() public view returns(uint){
         require(!deprecated,"Contract has been deprecated");
         return _readyExports.length - 1;
@@ -353,7 +359,7 @@ contract VerusBridge {
     }
 
     
-function getReadyExportsByRange(uint _startBlock,uint _endBlock) public view returns(VerusObjects.CReserveTransferSet[] memory){
+    function getReadyExportsByRange(uint _startBlock,uint _endBlock) public view returns(VerusObjects.CReserveTransferSet[] memory){
         //calculate the size that the return array will be to initialise it
         uint outputSize = 0;
         for(uint i = _startBlock; i <= _endBlock; i++){
@@ -380,18 +386,6 @@ function getReadyExportsByRange(uint _startBlock,uint _endBlock) public view ret
         }
         return output;        
     }
-/*
-    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CReserveTransfer[][] memory){
-        require(!deprecated,"Contract has been deprecated");
-        //retrieve the bridge transactions
-        uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
-        //loop through the array and add to the outgoing array
-        VerusObjects.CReserveTransfer[][] memory output = new VerusObjects.CReserveTransfer[][](eIndexes.length);
-        for(uint i = 0; i < eIndexes.length; i++){
-            output[eIndexes[i]] = _readyExports[eIndexes[i]];
-        }
-        return output;
-    }*/
  
     function sendEth(uint256 _ethAmount,address payable _ethAddress) private {
         require(!deprecated,"Contract has been deprecated");

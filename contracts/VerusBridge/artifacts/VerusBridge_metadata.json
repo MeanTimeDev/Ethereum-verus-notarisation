@@ -933,90 +933,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "pendingExports",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "uint32",
-								"name": "version",
-								"type": "uint32"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint160",
-										"name": "currency",
-										"type": "uint160"
-									},
-									{
-										"internalType": "uint64",
-										"name": "amount",
-										"type": "uint64"
-									}
-								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap",
-								"name": "currencyvalues",
-								"type": "tuple"
-							},
-							{
-								"internalType": "uint32",
-								"name": "flags",
-								"type": "uint32"
-							},
-							{
-								"internalType": "uint160",
-								"name": "feecurrencyid",
-								"type": "uint160"
-							},
-							{
-								"internalType": "uint256",
-								"name": "fees",
-								"type": "uint256"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint32",
-										"name": "destinationtype",
-										"type": "uint32"
-									},
-									{
-										"internalType": "uint160",
-										"name": "destinationaddress",
-										"type": "uint160"
-									}
-								],
-								"internalType": "struct VerusObjects.CTransferDestination",
-								"name": "destination",
-								"type": "tuple"
-							},
-							{
-								"internalType": "uint160",
-								"name": "destCurrencyID",
-								"type": "uint160"
-							},
-							{
-								"internalType": "uint160",
-								"name": "secondReserveID",
-								"type": "uint160"
-							},
-							{
-								"internalType": "uint160",
-								"name": "destSystemID",
-								"type": "uint160"
-							}
-						],
-						"internalType": "struct VerusObjects.CReserveTransfer[]",
-						"name": "",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "bytes32",
@@ -1343,7 +1259,7 @@
 		"userdoc": {
 			"kind": "user",
 			"methods": {
-				"pendingExports()": {
+				"getReadyExportsIndex()": {
 					"notice": "returns a list of exports to be processed on the verus chain"
 				}
 			},
@@ -1431,11 +1347,11 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0x7a939cf0e2cb269b66cb27b1d8aa8e01b6f5e58927e63eece3e8fb9ca23f8078",
+			"keccak256": "0x9c3e621b3de2ba334a7e7926f6defdbcb5b64627d2ef8528908114b380b63cfe",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://843135617a509ebb1d6d29d84cc277cbf33455a6ceb210e3b75b821be218a553",
-				"dweb:/ipfs/Qmete3yCrWCvnJJkpvtWTtohb9Gm7rzZamYe2w2agZaR1Z"
+				"bzz-raw://898f5a54a0e448c58ace9606786287c15486bdb8b88295cca9965f1b5dc4b7a0",
+				"dweb:/ipfs/QmexjJsVU1JfP3hTgHQ2zRrumsJr9rygyQHYxBW1BWE38Q"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
