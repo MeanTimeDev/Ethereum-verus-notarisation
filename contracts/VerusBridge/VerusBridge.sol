@@ -13,6 +13,7 @@ import "./Token.sol";
 import "./VerusObjects.sol";
 import "./VerusSerializer.sol";
 import "../VerusNotarizer/VerusNotarizer.sol";
+import "./VerusCrossChainExport.sol";
 
 contract VerusBridge {
  
@@ -24,6 +25,7 @@ contract VerusBridge {
     VerusProof verusProof;
     VerusBLAKE2b blake2b;
     VerusNotarizer verusNotarizer;
+    VerusCrossChainExport verusCCE;
 
     //THE CONTRACT OWNER NEEDS TO BE REPLACED BY A SET OF NOTARIES
     address contractOwner;
@@ -55,21 +57,34 @@ contract VerusBridge {
     //used for proving the export set
     
     mapping (bytes32 => uint) public processedImportSetHashes;
-    //stores the index of the 
-    mapping (uint => uint[]) public readyExportsByBlock;
+    //stores the index corresponds to the block
+    
+    struct blockCreated {
+        uint index;
+        bool created;
+    }
+    
+    mapping (uint => blockCreated) public readyExportsByBlock;
     mapping (address => uint256) public claimableFees;
     
     event ReceivedTransfer(VerusObjects.CReserveTransfer transaction);
     event ExportsReady(uint256 index);
     event Deprecate(address newAddress);
+    event CrossChainExport(VerusObjects.CCrossChainExport CCE);
     
-    constructor(address verusProofAddress,address tokenManagerAddress,address verusSerializerAddress,address verusBLAKE2bAddress,address verusNotarizerAddress) public {
+    constructor(address verusProofAddress,
+        address tokenManagerAddress,
+        address verusSerializerAddress,
+        address verusBLAKE2bAddress,
+        address verusNotarizerAddress,
+        address verusCCEAddress) public {
         contractOwner = msg.sender; 
         verusProof =  VerusProof(verusProofAddress);
         tokenManager = TokenManager(tokenManagerAddress);
         verusSerializer = VerusSerializer(verusSerializerAddress);
         blake2b = VerusBLAKE2b(verusBLAKE2bAddress);
         verusNotarizer = VerusNotarizer(verusNotarizerAddress);
+        verusCCE = VerusCrossChainExport(verusCCEAddress);
     }
 
     function exportETH(uint160 _destination,uint256 _nFees,uint160 _secondReserveID,uint160 _destSystemID) public payable returns(uint256){
@@ -136,151 +151,45 @@ contract VerusBridge {
 
     function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
         uint currentHeight = block.number;
-        uint exportsIndex;
-        
+        uint exportIndex;
+        bool newHash;
 
         //check if the current block height has a set of transfers associated with it if so add to the existing array
-        if((exportsIndex = readyExportsByBlock[currentHeight].length) > 0) {
+        if(readyExportsByBlock[currentHeight].created) {
             //append to an existing array of transfers
-            //
-            _readyExports[exportsIndex-1].push(newTransaction);
+            exportIndex = readyExportsByBlock[currentHeight].index;
+            _readyExports[exportIndex].push(newTransaction);
+            newHash = false;
         }
         else {
-            
             _pendingExports.push(newTransaction);
             _readyExports.push(_pendingExports);
-            readyExportsByBlock[currentHeight].push(_readyExports.length-1);
+            exportIndex = _readyExports.length - 1;
+            readyExportsByBlock[currentHeight] = blockCreated(exportIndex,true);
             delete _pendingExports;
+            newHash = true;
         }
+        
         //create a cross chain export, serialize it and hash it
-        //VerusObjects.CCrossChainExport memory CCCE = _createCCrossChainExport(exportsIndex);
+        ExportsReady(exportIndex);
+        VerusObjects.CCrossChainExport memory CCCE = _createCCrossChainExport(exportIndex);
         //create a hash of the CCCE
-        //bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
-        //bytes32 hashedCCE = blake2b.createHash(serializedCCE);
+        bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
+        bytes32 hashedCCE = blake2b.createHash(serializedCCE);
         //add the hashed value
-        //readyExportHashes[exportsIndex] = hashedCCE;
+        if(newHash) readyExportHashes.push(hashedCCE);
+        else readyExportHashes[exportIndex] = hashedCCE;
         
     }
 
 
-/*
-    function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
-        bytes32 hashedTransactions;
 
-        _pendingExports.push(newTransaction);    
-        _pendingBlockHeights.push(block.number);
-        
-        //loop through the totalAmounts and append if the currency exists
-        if(_pendingExports.length >= transactionsPerCall){
-            //add the transactions to the ready export
-            _readyExports.push(_pendingExports);
-            //should actually create an mmr not
-            hashedTransactions = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_pendingExports));
-            //create a hash of the transactions for proo
-            readyExportHashes.push(hashedTransactions);
-            //clear the pending array
-            delete _pendingExports;
-            //add the block to the mapping
-            readyExportsByBlock[block.number].push(_readyExports.length - 1);
-            
-            //emit an event       
-            emit ExportsReady(_readyExports.length - 1);     
-        }
-        
-    }*/
-    
-    //create a cross chain export and serialize it for hashing 
     function _createCCrossChainExport(uint exportIndex) public returns (VerusObjects.CCrossChainExport memory){
-        bytes32 hashedTransfers;
-        //create a hash of the transfers and then 
-        hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]));
-
-        //create the Cross ChainExport to then serialize and hash
-
-        VerusObjects.CCrossChainExport memory workingCCE;
-        workingCCE.version = 1;
-        workingCCE.flags = 3;
-        //need to pick up the 
-        workingCCE.sourceheightstart = uint32(block.number);
-        workingCCE.sourceheightend =uint32(block.number);
-        workingCCE.sourcesystemid = EthSystemID;
-        workingCCE.destinationsystemid = VerusSystemId;
-        workingCCE.destinationcurrencyid = VEth;
-        workingCCE.numinputs = int32(_readyExports[exportIndex].length);
-        //loop through the array and create totals of the amounts and fees
-
-        //how to calculate the length of the CCurrencyValueMap arrays before the can be created
-        //may need to be intitalised to the maximum possible size
-        uint160[] memory currencyAddresses = new uint160[](_readyExports[exportIndex].length);
-        uint64[] memory currencyAmounts = new uint64[](_readyExports[exportIndex].length);
-        uint numAmounts = 0;
-        uint160[] memory feesCurrencies = new uint160[](_readyExports[exportIndex].length);
-        uint64[] memory feesAmounts = new uint64[](_readyExports[exportIndex].length);
-        uint numFees = 0;
-        uint160 currencyAddress;
-        uint64 currencyAmount;
-        uint160 feecurrency;
-        uint64 feeamount;
-        for(uint i = 0; i < _readyExports[exportIndex].length; i++){
-            
-            currencyAddress = _readyExports[exportIndex][i].currencyvalues.currency;
-            currencyAmount = _readyExports[exportIndex][i].currencyvalues.amount;
-            bool currencyExists = false;
-            for(uint j = 0; j < currencyAddresses.length; j++){
-                if(currencyAddresses[j] == currencyAddress) {
-                    currencyAmounts[j] += currencyAmount;
-                    currencyExists = true;
-                    break;
-                }
-            }
-           if(currencyExists == false){
-                currencyAddresses[numAmounts] = currencyAddress;
-                currencyAmounts[numAmounts] = currencyAmount;
-                numAmounts++;
-            }    
-            
-            feecurrency = _readyExports[exportIndex][i].feecurrencyid;
-            feeamount = uint64(_readyExports[exportIndex][i].fees);
-            currencyExists = false;
-            for(uint k = 0; k < feesCurrencies.length; k++){
-                if(feesCurrencies[k] == feecurrency) {
-                    feesAmounts[k] += feeamount;
-                    currencyExists = true;
-                    break;
-                }
-            }
-            if(currencyExists == false){
-                feesCurrencies[numFees] = feecurrency;
-                feesAmounts[numFees] = feeamount;
-                numFees++;
-            }
-            
-        }
-    /*
-        //create the total amounts arrays
-        workingCCE.totalamounts = new VerusObjects.CCurrencyValueMap[](currencyAddresses.length);
-        for(uint l = 0; l < currencyAddresses.length ; l++){
-            if(currencyAddresses[l] != 0) {
-                workingCCE.totalamounts[l] = VerusObjects.CCurrencyValueMap(currencyAddresses[l],currencyAmounts[l]);
-            }
-        }
-        
-        workingCCE.totalfees = new VerusObjects.CCurrencyValueMap[](feesCurrencies.length);
-        for(uint m = 0; m < feesCurrencies.length ; m++){
-            if(feesCurrencies[m] != 0) {
-                workingCCE.totalfees[m] = VerusObjects.CCurrencyValueMap(feesCurrencies[m],feesAmounts[m]);
-            }
-        }
-   
-        workingCCE.hashtransfers = uint256(hashedTransfers);
-        VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0,0);
-        
-        workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
-        workingCCE.totalburned[0] = totalburnedCCVM;
-        workingCCE.rewardaddress = address(RewardAddress);
-        workingCCE.firstinput = 0;*/
-        return workingCCE;
+        VerusObjects.CCrossChainExport memory output = verusCCE.generateCCE(_readyExports[exportIndex]);
+        CrossChainExport(output);
+        return output;
     }
+
 
     /***
      * Import from Verus functions
@@ -340,21 +249,16 @@ contract VerusBridge {
     }
     
     
-    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CReserveTransferSet[] memory){
+    function getReadyExportsByBlock(uint _blockNumber) public view returns(VerusObjects.CReserveTransferSet memory){
         //need a transferset for each position not each block
         //retrieve a block get the indexes, create a transfer set for each index add those to the array
-        
-        uint[] memory eIndexes = readyExportsByBlock[_blockNumber];
-        VerusObjects.CReserveTransferSet[] memory output = new VerusObjects.CReserveTransferSet[](eIndexes.length);
-        for(uint i = 0; i < eIndexes.length; i++){
-            output[i] = VerusObjects.CReserveTransferSet(
-                eIndexes[i], //position in main array
-                _blockNumber, //blockHeight
-                readyExportHashes[eIndexes[i]], //hash of the transactions
-                _readyExports[eIndexes[i]] //list of transactions
-            );
-        }
-
+        uint eIndex = readyExportsByBlock[_blockNumber].index;
+        VerusObjects.CReserveTransferSet memory output = VerusObjects.CReserveTransferSet(
+            eIndex, //position in array
+            _blockNumber, //blockHeight
+            readyExportHashes[eIndex],
+            _readyExports[eIndex]
+        );
         return output;
     }
 
@@ -363,11 +267,18 @@ contract VerusBridge {
         //calculate the size that the return array will be to initialise it
         uint outputSize = 0;
         for(uint i = _startBlock; i <= _endBlock; i++){
-            outputSize += readyExportsByBlock[i].length;
+            if(readyExportsByBlock[i].created) outputSize += 1;
         }
 
-       VerusObjects.CReserveTransferSet[] memory output = new VerusObjects.CReserveTransferSet[](outputSize);
-        
+        VerusObjects.CReserveTransferSet[] memory output = new VerusObjects.CReserveTransferSet[](outputSize);
+        uint outputPosition = 0;
+        for(uint blockNumber = _startBlock;blockNumber <= _endBlock;blockNumber++){
+            if(readyExportsByBlock[blockNumber].created) {
+                output[outputPosition] = getReadyExportsByBlock(blockNumber);
+                outputPosition++;
+            }
+        }
+        /*
         uint[] memory eIndexes;
         
         uint outputPosition = 0;
@@ -383,7 +294,7 @@ contract VerusBridge {
                 outputPosition++;
             }
             
-        }
+        }*/
         return output;        
     }
  
