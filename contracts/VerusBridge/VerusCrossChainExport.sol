@@ -63,17 +63,19 @@ contract VerusCrossChainExport{
         int64 currencyExists;
         int64 feeExists;
         for(uint i = 0; i < transfers.length; i++){
-            currencyExists = inCurrencies(transfers[i].currencyvalues.currency);
-            if(currencyExists >= 0){
-                currencies[uint256(currencyExists)].amount += transfers[i].currencyvalues.amount;
-            } else {
-                currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalues.currency,transfers[i].currencyvalues.amount));
-            }
-            feeExists = inFees(transfers[i].currencyvalues.currency); 
-            if(feeExists >= 0){
-                fees[uint256(feeExists)].amount += uint64(transfers[i].fees);
-            } else {
-                fees.push(VerusObjects.CCurrencyValueMap(transfers[i].feecurrencyid,uint64(transfers[i].fees)));
+            for(uint j = 0; j < transfers[i].currencyvalues.length; j++){
+                currencyExists = inCurrencies(transfers[i].currencyvalues[j].currency);
+                if(currencyExists >= 0){
+                    currencies[uint256(currencyExists)].amount += transfers[i].currencyvalues[j].amount;
+                } else {
+                    currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalues[j].currency,transfers[i].currencyvalues[j].amount));
+                }
+                feeExists = inFees(transfers[i].feecurrencyid); 
+                if(feeExists >= 0){
+                    fees[uint256(feeExists)].amount += uint64(transfers[i].fees);
+                } else {
+                    fees.push(VerusObjects.CCurrencyValueMap(transfers[i].feecurrencyid,uint64(transfers[i].fees)));
+                }
             }
         }
         workingCCE.totalamounts = currencies;
@@ -94,5 +96,7 @@ contract VerusCrossChainExport{
         return workingCCE;
 
     }
+    
+    
 
 }

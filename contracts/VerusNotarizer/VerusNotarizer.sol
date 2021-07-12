@@ -44,7 +44,7 @@ contract VerusNotarizer{
         notaryCount = 0;
         lastBlockHeight = 0;
         //add in the owner as the first notary
-        address msgSender = msg.sender;
+       // address msgSender = msg.sender;
         for(uint i =0; i < _notaries.length; i++){
             komodoNotaries[_notaries[i]] = true;
             notaryCount++;

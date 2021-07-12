@@ -1,0 +1,37 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/TestB2B/Blake2b.sol": "Blake2b"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/TestB2B/Blake2b.sol": {
+			"keccak256": "0x8659ed43c960634423bf9664fc82cee727045880357a4c6c189c9cf3a6f7928e",
+			"urls": [
+				"bzz-raw://e2ac09af1dc91ff000fc87e87b1e2072e0449e781918a197f2dbd2f463c360b6",
+				"dweb:/ipfs/QmNafAu69TXTqZynibEYzz9ALTrMA1XBxkCUkuNmQfgE23"
+			]
+		}
+	},
+	"version": 1
+}

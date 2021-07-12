@@ -731,9 +731,9 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap",
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 								"name": "currencyvalues",
-								"type": "tuple"
+								"type": "tuple[]"
 							},
 							{
 								"internalType": "uint32",
@@ -821,9 +821,9 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap",
+								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
 								"name": "currencyvalues",
-								"type": "tuple"
+								"type": "tuple[]"
 							},
 							{
 								"internalType": "uint32",
@@ -1530,19 +1530,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xd9e76005e3b7e6a2a078e88befb07a02153d4b57d557250d7082b023161667c1",
+			"keccak256": "0xc8eed12065cb958e72afe02bc8513a66751942eec621f34eb02a0aecace5bc22",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d4bda1a588e57c6ba7680221ab5f87beb49c08bc2cffc76895dec2108cded1f",
-				"dweb:/ipfs/QmXA8zuaqGVsaceYKhCH92Zhb2bor8Kr5zKR4NYEo1mqxJ"
+				"bzz-raw://0e0d25285cc4f0c26cb038610d12d5ec3c3d6a39b8c02dae63db765551db8274",
+				"dweb:/ipfs/QmcFHCMsaAFkF9eH4nb7WLKXWxAqjeWRwHpZNBPpo1Vz65"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x013c95a6b67faf94302472f70fbc7902cf358615154c077d665304e5e9bedc0b",
+			"keccak256": "0xcf5918b845a618f4aecd87cdd8be770833f97b2eff84c563e3844ab2f9338ad2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://43b1c13bc94fe854a9076d170936c9e60df62356e4234b5561a99287ebaff576",
-				"dweb:/ipfs/Qmc29EMDaFezGu8qx7wdhwmbc4cgRxkHPCziafs9vHEmF1"
+				"bzz-raw://2ee50d1f9eca5c17ec6c4fdb649f33380bc708c2c01d897f642b1d55526cb73c",
+				"dweb:/ipfs/QmRVV5BDWeCMs93yCjYE3KpXr13hQ3J6t2iRpWCT41Kis2"
 			]
 		}
 	},

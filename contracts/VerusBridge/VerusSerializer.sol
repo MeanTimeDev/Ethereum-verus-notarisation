@@ -119,7 +119,7 @@ contract VerusSerializer {
     function serializeCReserveTransfer(VerusObjects.CReserveTransfer memory ct) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeUint32(ct.version),
-            serializeCCurrencyValueMap(ct.currencyvalues),
+            serializeCCurrencyValueMaps(ct.currencyvalues),
             serializeUint32(ct.flags),
             serializeUint160(ct.feecurrencyid),
             serializeUint256(ct.fees),

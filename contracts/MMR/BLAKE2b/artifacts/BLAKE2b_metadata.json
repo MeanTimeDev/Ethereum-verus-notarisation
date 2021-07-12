@@ -19,6 +19,32 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32[2]",
+						"name": "blakeArray",
+						"type": "bytes32[2]"
+					}
+				],
+				"name": "Compress2Result",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint64[8]",
+						"name": "blakeArray",
+						"type": "uint64[8]"
+					}
+				],
+				"name": "CompressResult",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint64[16]",
@@ -267,7 +293,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/MMR/BLAKE2B/BLAKE2b.sol": "BLAKE2b"
+			"contracts/MMR/BLAKE2b/BLAKE2b.sol": "BLAKE2b"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -281,15 +307,15 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/MMR/BLAKE2B/BLAKE2b.sol": {
-			"keccak256": "0x10a7b9c7e923faf2805fd987853138bd5bb17ac38e23fe3256cd49b368f5e59b",
+		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
+			"keccak256": "0x3f00ca0430221afe43bf73aae5a54984924f99e2107917d8a23847cf14bfe739",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f3ea0e6bda2d354bc288553cc5afc01bb8a961b98be7d2052b4f43e4aaf32373",
-				"dweb:/ipfs/QmQX1pRDEjfVbxDi3u5qnmQqMp889p7E3v9UqydKYs2Jau"
+				"bzz-raw://d23352b885ee4b366901a684b740b192b6b69cb2b86a7aadc82b3acffc9be794",
+				"dweb:/ipfs/QmS2KYXhaGeYEkcEZ6EHyZLVm8uZBuVKPpgEU3TtmD28LX"
 			]
 		},
-		"localhost/contracts/MMR/BLAKE2B/BLAKE2b_Constants.sol": {
+		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
 			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
 			"license": "MIT",
 			"urls": [
