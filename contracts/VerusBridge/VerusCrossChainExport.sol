@@ -12,7 +12,7 @@ contract VerusCrossChainExport{
 
     VerusObjects.CCurrencyValueMap[] currencies;
     VerusObjects.CCurrencyValueMap[] fees;
-    VerusBLAKE2b blake2b;
+    //VerusBLAKE2b blake2b;
     VerusSerializer verusSerializer;
 
 
@@ -21,9 +21,10 @@ contract VerusCrossChainExport{
     uint160 public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
     uint160 public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
 
-    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress) public {
+    //constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress) public {
+    constructor(address _verusSerializerAddress) public {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
-        blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
+        //blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
     }
 
     function inCurrencies(uint160 checkCurrency) private view returns(int64){
@@ -44,7 +45,8 @@ contract VerusCrossChainExport{
 
          bytes32 hashedTransfers;
         //create a hash of the transfers and then 
-        hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(transfers));
+        //hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(transfers));
+        hashedTransfers = keccak256(verusSerializer.serializeCReserveTransfers(transfers));
 
         //create the Cross ChainExport to then serialize and hash
 
