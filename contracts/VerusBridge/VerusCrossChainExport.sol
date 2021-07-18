@@ -6,13 +6,11 @@ pragma experimental ABIEncoderV2;
 
 import "../VerusBridge/VerusObjects.sol";
 import "../VerusBridge/VerusSerializer.sol";
-import "../MMR/VerusBLAKE2b.sol";
 
 contract VerusCrossChainExport{
 
     VerusObjects.CCurrencyValueMap[] currencies;
     VerusObjects.CCurrencyValueMap[] fees;
-    VerusBLAKE2b blake2b;
     VerusSerializer verusSerializer;
 
 
@@ -21,9 +19,8 @@ contract VerusCrossChainExport{
     uint160 public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
     uint160 public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
 
-    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress) public {
+    constructor(address _verusSerializerAddress) {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
-        blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
     }
 
     function inCurrencies(uint160 checkCurrency) private view returns(int64){
@@ -42,14 +39,14 @@ contract VerusCrossChainExport{
 
     function generateCCE(VerusObjects.CReserveTransfer[] memory transfers) public returns(VerusObjects.CCrossChainExport memory){
 
-         bytes32 hashedTransfers;
+        // bytes32 hashedTransfers;
         //create a hash of the transfers and then 
-        hashedTransfers = blake2b.createHash(verusSerializer.serializeCReserveTransfers(transfers));
+        //hashedTransfers = keccak256(verusSerializer.serializeCReserveTransfers(transfers));
 
         //create the Cross ChainExport to then serialize and hash
 
         VerusObjects.CCrossChainExport memory workingCCE;
-        workingCCE.version = 1;
+        workingCCE.version = 0x80000000;
         workingCCE.flags = 3;
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
@@ -63,25 +60,24 @@ contract VerusCrossChainExport{
         int64 currencyExists;
         int64 feeExists;
         for(uint i = 0; i < transfers.length; i++){
-            for(uint j = 0; j < transfers[i].currencyvalues.length; j++){
-                currencyExists = inCurrencies(transfers[i].currencyvalues[j].currency);
-                if(currencyExists >= 0){
-                    currencies[uint256(currencyExists)].amount += transfers[i].currencyvalues[j].amount;
-                } else {
-                    currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalues[j].currency,transfers[i].currencyvalues[j].amount));
-                }
-                feeExists = inFees(transfers[i].feecurrencyid); 
-                if(feeExists >= 0){
-                    fees[uint256(feeExists)].amount += uint64(transfers[i].fees);
-                } else {
-                    fees.push(VerusObjects.CCurrencyValueMap(transfers[i].feecurrencyid,uint64(transfers[i].fees)));
-                }
+            currencyExists = inCurrencies(transfers[i].currencyvalues.currency);
+            if(currencyExists >= 0){
+                currencies[uint256(currencyExists)].amount += transfers[i].currencyvalues.amount;
+            } else {
+                currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalues.currency,transfers[i].currencyvalues.amount));
             }
+            feeExists = inFees(transfers[i].feecurrencyid); 
+            if(feeExists >= 0){
+                fees[uint256(feeExists)].amount += uint64(transfers[i].fees);
+            } else {
+                fees.push(VerusObjects.CCurrencyValueMap(transfers[i].feecurrencyid,uint64(transfers[i].fees)));
+            }
+            
         }
         workingCCE.totalamounts = currencies;
         workingCCE.totalfees = fees;
 
-        workingCCE.hashtransfers = uint256(hashedTransfers);
+        //workingCCE.hashtransfers = uint256(hashedTransfers);
         VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0,0);
         
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);

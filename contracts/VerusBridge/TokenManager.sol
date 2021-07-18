@@ -68,7 +68,7 @@ contract TokenManager {
     }
     
     //Tokens that are being imported into the eth blockchain are either minted or transferred from a reserve
-    function importERC20Tokens(address _contractAddress,uint256 _tokenAmount,address _destinationAddress) public returns(bool){
+    function importERC20Tokens(address _contractAddress,uint256 _tokenAmount,address _destinationAddress) public {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         hostedToken memory tokenDetail = vERC20Tokens[_contractAddress];
         //if the token has been created by this contract then burn the token
@@ -81,7 +81,7 @@ contract TokenManager {
         }
     }
 
-    function importERC20Tokens(uint160 _destCurrencyID,uint64 _tokenAmount,uint160 _destination) public returns(bool){
+    function importERC20Tokens(uint160 _destCurrencyID,uint64 _tokenAmount,uint160 _destination) public {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         address contractAddress;
         //if the token has not been previously created then it must be deployed
@@ -228,7 +228,7 @@ contract TokenManager {
         bytes memory bstr = new bytes(len);
         uint k = len - 1;
         while (number != 0) {
-            bstr[k--] = byte(uint8(48 + number % 10));
+            bstr[k--] = bytes1(uint8(48 + number % 10));
             number /= 10;
         }
         return string(bstr);

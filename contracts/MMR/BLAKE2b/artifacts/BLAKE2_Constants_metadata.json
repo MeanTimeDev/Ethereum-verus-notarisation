@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.7.0+commit.9e61f92b"
 	},
 	"language": "Solidity",
 	"output": {
@@ -38,7 +38,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/MMR/BLAKE2B/BLAKE2b_Constants.sol": "BLAKE2_Constants"
+			"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": "BLAKE2_Constants"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -52,12 +52,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/MMR/BLAKE2B/BLAKE2b_Constants.sol": {
-			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
+		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
+			"keccak256": "0x5da0529d7599b7d12c4a21beda19c5c2179485b36e41ab7ee5a6d82e0479c8c3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://280bebb8fc2de921191d7e82e064816b7fa48a2adb0be175fdb6bf876d34abfc",
-				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
+				"bzz-raw://713013a1d83eb0146cf4ced9ee7a01ce128acba7cf2ef15fd1ebc137bdef6366",
+				"dweb:/ipfs/Qma24rN1DEqcERWExpB87tvPiRWA5Up8KMHqHJGr4RbVc2"
 			]
 		}
 	},

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.6.0 < 0.7.0;
+pragma solidity >=0.6.0 < 0.9.0;
 pragma experimental ABIEncoderV2;   
 import "./VerusObjects.sol";
 
@@ -119,7 +119,7 @@ contract VerusSerializer {
     function serializeCReserveTransfer(VerusObjects.CReserveTransfer memory ct) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeUint32(ct.version),
-            serializeCCurrencyValueMaps(ct.currencyvalues),
+            serializeCCurrencyValueMap(ct.currencyvalues),
             serializeUint32(ct.flags),
             serializeUint160(ct.feecurrencyid),
             serializeUint256(ct.fees),
@@ -224,7 +224,7 @@ contract VerusSerializer {
 
     function serializeCCrossChainExport(VerusObjects.CCrossChainExport memory _ccce) public pure returns(bytes memory){
         bytes memory part1 = abi.encodePacked(
-            serializeUint8(_ccce.version),
+            serializeUint32(_ccce.version),
             serializeUint32(_ccce.flags),
             serializeUint160(_ccce.sourcesystemid),
             serializeUint32(_ccce.sourceheightstart),

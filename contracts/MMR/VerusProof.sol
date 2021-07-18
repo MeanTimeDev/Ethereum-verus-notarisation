@@ -18,7 +18,7 @@ contract VerusProof{
     
     event HashEvent(bytes32 newHash,uint8 eventType);
 
-    constructor(address notarizerAddress,address verusBLAKE2b,address verusSerializerAddress) public{
+    constructor(address notarizerAddress,address verusBLAKE2b,address verusSerializerAddress) {
         blake2b = VerusBLAKE2b(verusBLAKE2b);
         verusSerializer = VerusSerializer(verusSerializerAddress);
         verusNotarizer = VerusNotarizer(notarizerAddress);   

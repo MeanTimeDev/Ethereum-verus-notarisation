@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.7.6+commit.7338295f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -197,27 +197,27 @@
 	},
 	"sources": {
 		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
-			"keccak256": "0x3f00ca0430221afe43bf73aae5a54984924f99e2107917d8a23847cf14bfe739",
+			"keccak256": "0xccb25598e7457c73aecd5ba498f361480ae1b42b6bd81d3d8fefe7eb1029ed75",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d23352b885ee4b366901a684b740b192b6b69cb2b86a7aadc82b3acffc9be794",
-				"dweb:/ipfs/QmS2KYXhaGeYEkcEZ6EHyZLVm8uZBuVKPpgEU3TtmD28LX"
+				"bzz-raw://025874734bf483e561fc319fa3b6f4dd931b8c197eeecd526f863725d7e2e920",
+				"dweb:/ipfs/QmdhQSpGFEade21snSfYuCZCyagCMgdoL3Ap3szsehHiD5"
 			]
 		},
 		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
-			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
+			"keccak256": "0x5da0529d7599b7d12c4a21beda19c5c2179485b36e41ab7ee5a6d82e0479c8c3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://280bebb8fc2de921191d7e82e064816b7fa48a2adb0be175fdb6bf876d34abfc",
-				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
+				"bzz-raw://713013a1d83eb0146cf4ced9ee7a01ce128acba7cf2ef15fd1ebc137bdef6366",
+				"dweb:/ipfs/Qma24rN1DEqcERWExpB87tvPiRWA5Up8KMHqHJGr4RbVc2"
 			]
 		},
 		"contracts/MMR/VerusBLAKE2b.sol": {
-			"keccak256": "0x7326b2169bdb6a4ede3fabefa4d8f231ea3e5c9da2bec7263390bd747f2a614e",
+			"keccak256": "0x0755e82371a90f08115282dda436aa6187a7a690c20d95b3f832406f437a385b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6e96c8d8e6056e9cfb27584839a049cc6cdfa301c1806c8b48418266d892dfd7",
-				"dweb:/ipfs/Qmd8sPEkS26VCNUhsJanXHyRdHFmH5fEJiCAoyUggWxGBP"
+				"bzz-raw://5c1acaddc1e5604066ad77e963a307c32df4ade4f72754fa8d493cd5c1d4fef5",
+				"dweb:/ipfs/QmdRU8svVJzmbcfb5FoC191bR6GpKoQJ7mfB4jBTkieffX"
 			]
 		}
 	},

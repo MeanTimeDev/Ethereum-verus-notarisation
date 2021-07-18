@@ -167,9 +167,9 @@
 					{
 						"components": [
 							{
-								"internalType": "uint8",
+								"internalType": "uint32",
 								"name": "version",
-								"type": "uint8"
+								"type": "uint32"
 							},
 							{
 								"internalType": "uint32",
@@ -731,9 +731,9 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"internalType": "struct VerusObjects.CCurrencyValueMap",
 								"name": "currencyvalues",
-								"type": "tuple[]"
+								"type": "tuple"
 							},
 							{
 								"internalType": "uint32",
@@ -821,9 +821,9 @@
 										"type": "uint64"
 									}
 								],
-								"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+								"internalType": "struct VerusObjects.CCurrencyValueMap",
 								"name": "currencyvalues",
-								"type": "tuple[]"
+								"type": "tuple"
 							},
 							{
 								"internalType": "uint32",
@@ -1530,19 +1530,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xc8eed12065cb958e72afe02bc8513a66751942eec621f34eb02a0aecace5bc22",
+			"keccak256": "0x5e2a89792883d702a18f0796ca8212e34f5c5c87a337654ce0b39e83898b1f53",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0e0d25285cc4f0c26cb038610d12d5ec3c3d6a39b8c02dae63db765551db8274",
-				"dweb:/ipfs/QmcFHCMsaAFkF9eH4nb7WLKXWxAqjeWRwHpZNBPpo1Vz65"
+				"bzz-raw://106e271c159a322b779afe12f4818da82b9017e6d2667d38cd4f5efc31ed97db",
+				"dweb:/ipfs/QmZ3ZZX33944xZyGadQe4mMcoiB7urZHPPjdtMci46Pw24"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xcf5918b845a618f4aecd87cdd8be770833f97b2eff84c563e3844ab2f9338ad2",
+			"keccak256": "0xec53ce04bf06818e30f666bdf1a09ef4db769a5a9f108635e0fd6717bfaddcb5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2ee50d1f9eca5c17ec6c4fdb649f33380bc708c2c01d897f642b1d55526cb73c",
-				"dweb:/ipfs/QmRVV5BDWeCMs93yCjYE3KpXr13hQ3J6t2iRpWCT41Kis2"
+				"bzz-raw://f4da27b8888b9e16676072d402ee297ff1b76ed46864475de3a833d706db25c1",
+				"dweb:/ipfs/Qma6mVpDn38fUxC7xn4mWzv8gUZzUTR16xJNjKGogeDxkR"
 			]
 		}
 	},

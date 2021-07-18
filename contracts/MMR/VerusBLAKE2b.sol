@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity >=0.6.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 import "./BLAKE2b/BLAKE2b.sol";
 contract VerusBLAKE2b {
@@ -9,7 +9,7 @@ contract VerusBLAKE2b {
     BLAKE2b blake2b;
     bytes verusKey = "VerusDefaultHash";
 
-    constructor() public{
+    constructor() {
         blake2b = new BLAKE2b();
     }
     function createHash(bytes memory toHash,bytes memory personalisation,bool flipped) public returns(bytes32){

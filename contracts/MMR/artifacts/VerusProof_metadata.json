@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.7.6+commit.7338295f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -171,59 +171,59 @@
 	},
 	"sources": {
 		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
-			"keccak256": "0x10a7b9c7e923faf2805fd987853138bd5bb17ac38e23fe3256cd49b368f5e59b",
+			"keccak256": "0xccb25598e7457c73aecd5ba498f361480ae1b42b6bd81d3d8fefe7eb1029ed75",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f3ea0e6bda2d354bc288553cc5afc01bb8a961b98be7d2052b4f43e4aaf32373",
-				"dweb:/ipfs/QmQX1pRDEjfVbxDi3u5qnmQqMp889p7E3v9UqydKYs2Jau"
+				"bzz-raw://025874734bf483e561fc319fa3b6f4dd931b8c197eeecd526f863725d7e2e920",
+				"dweb:/ipfs/QmdhQSpGFEade21snSfYuCZCyagCMgdoL3Ap3szsehHiD5"
 			]
 		},
 		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
-			"keccak256": "0x847cec1327082a2f6651a2ef2cf1eb4608aedef9a48452f952d633d3cd4125ad",
+			"keccak256": "0x5da0529d7599b7d12c4a21beda19c5c2179485b36e41ab7ee5a6d82e0479c8c3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://280bebb8fc2de921191d7e82e064816b7fa48a2adb0be175fdb6bf876d34abfc",
-				"dweb:/ipfs/QmNbETDZqWNVz8r5UnBdqNXgE8esnVjGRb37vh51U86riw"
+				"bzz-raw://713013a1d83eb0146cf4ced9ee7a01ce128acba7cf2ef15fd1ebc137bdef6366",
+				"dweb:/ipfs/Qma24rN1DEqcERWExpB87tvPiRWA5Up8KMHqHJGr4RbVc2"
 			]
 		},
 		"contracts/MMR/VerusBLAKE2b.sol": {
-			"keccak256": "0x7326b2169bdb6a4ede3fabefa4d8f231ea3e5c9da2bec7263390bd747f2a614e",
+			"keccak256": "0x0755e82371a90f08115282dda436aa6187a7a690c20d95b3f832406f437a385b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6e96c8d8e6056e9cfb27584839a049cc6cdfa301c1806c8b48418266d892dfd7",
-				"dweb:/ipfs/Qmd8sPEkS26VCNUhsJanXHyRdHFmH5fEJiCAoyUggWxGBP"
+				"bzz-raw://5c1acaddc1e5604066ad77e963a307c32df4ade4f72754fa8d493cd5c1d4fef5",
+				"dweb:/ipfs/QmdRU8svVJzmbcfb5FoC191bR6GpKoQJ7mfB4jBTkieffX"
 			]
 		},
 		"contracts/MMR/VerusProof.sol": {
-			"keccak256": "0x24334b9d06fa363b49f321b242f363fe13bd26cb7ec2ea1e6a4d8c0041fa4bdc",
+			"keccak256": "0xad8d813c386df611bf6ac249d8be6fb4e3bf4ec4bd6c7e2e364ba3fa625dba87",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0e1fbc04e2cc5bdcc58a36b4d07ea2dc77d05bb68f5678207e0e98d954dab592",
-				"dweb:/ipfs/QmSXgNZNafXHzjUNEexdevY4LGS6QcDbourZ3Wu4N3RgNG"
+				"bzz-raw://817a95d0f549d6c81893235e99a0121af3497e77ad18624635aa5d8734c00bb9",
+				"dweb:/ipfs/QmcNJdRmPsrnEHwBteTtxXWJu9L5L3V4fi2CybEqQuZRPR"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x51efd419bd3ec61b91e3860464656f83a6bb8559e95a5c9b54858046c7987620",
+			"keccak256": "0x5e2a89792883d702a18f0796ca8212e34f5c5c87a337654ce0b39e83898b1f53",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7d8961f8f6c1de883ba28841d791ef68bbf61902a83a387d2207aab02751cf5c",
-				"dweb:/ipfs/QmSDnUE7JioVpfPxyAk4zvcd7CfwngXBMNv417pQv3Cd5x"
+				"bzz-raw://106e271c159a322b779afe12f4818da82b9017e6d2667d38cd4f5efc31ed97db",
+				"dweb:/ipfs/QmZ3ZZX33944xZyGadQe4mMcoiB7urZHPPjdtMci46Pw24"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x08b4f8570675e6f0ca98b3018df830d029f0625f777b1005158c497e18f6f0e6",
+			"keccak256": "0xec53ce04bf06818e30f666bdf1a09ef4db769a5a9f108635e0fd6717bfaddcb5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://44095499778c2f9a4731e19faa25e2c281b225eb150758e644d625e590cc5a61",
-				"dweb:/ipfs/QmTA11KE1cBDLuYT5avK8PrtnuFvK1oBZ6roRsbXbfxJdV"
+				"bzz-raw://f4da27b8888b9e16676072d402ee297ff1b76ed46864475de3a833d706db25c1",
+				"dweb:/ipfs/Qma6mVpDn38fUxC7xn4mWzv8gUZzUTR16xJNjKGogeDxkR"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0xc769c3570002f5edb121f837456c4c8194f2e94c2a617ba7cda68d68e49bd3e8",
+			"keccak256": "0x1bc6d9ec84720c4cebaa2b85dc7e1c10c404cda053a03412f832ac31a2be652e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4426a7d2b00fd6eaaf6fdb2b30c15ddc9cc52da6902c29cf3f5e9f53c2df5668",
-				"dweb:/ipfs/QmYiR7vVKU5Ga7g7hGQz7tRiC899MecZgVUKWTz1TQPphD"
+				"bzz-raw://6d506cd3d1555a4d7a0246b42155c5a04756627ab6201adb506900e6810f4fbb",
+				"dweb:/ipfs/QmYH5bb5moUAnyD9DVfxMJnhqJfbAkbmQbhDdQutvn9yvn"
 			]
 		}
 	},

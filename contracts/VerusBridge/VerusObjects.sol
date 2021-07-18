@@ -22,7 +22,7 @@ library VerusObjects {
 
     struct CReserveTransfer {
         uint32 version;
-        CCurrencyValueMap[] currencyvalues;
+        CCurrencyValueMap currencyvalues;
         uint32 flags;
         uint160 feecurrencyid;
         uint256 fees;
@@ -51,7 +51,7 @@ library VerusObjects {
     }
 
     struct CCrossChainExport {
-        uint8 version;
+        uint32 version;
         uint32 flags;
         uint160 sourcesystemid;
         uint32 sourceheightstart;

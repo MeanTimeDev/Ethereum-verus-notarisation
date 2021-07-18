@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.6.0 < 0.8.0;
+pragma solidity >=0.6.0 < 0.9.0;
 library VerusAddressCalculator{
 
     
@@ -37,7 +37,7 @@ library VerusAddressCalculator{
         bytes memory bytesString = new bytes(32);
         uint charCount = 0;
         for (uint j = 0; j < 20; j++) {
-            byte char = byte(bytes32(uint256(x) * 2 ** (8 * j)));
+            bytes1 char = bytes1(bytes32(uint256(x) * 2 ** (8 * j)));
             if (char != 0) {
                 bytesString[charCount] = char;
                 charCount++;

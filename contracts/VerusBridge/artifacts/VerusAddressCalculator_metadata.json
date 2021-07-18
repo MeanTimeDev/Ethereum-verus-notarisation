@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.8.4+commit.c7e474f2"
 	},
 	"language": "Solidity",
 	"output": {
@@ -133,7 +133,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/VerusBridge/VerusAddressCalculator.sol": "VerusAddressCalculator"
+			"contracts/VerusBridge/VerusAddressCalculator.sol": "VerusAddressCalculator"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -147,12 +147,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/VerusBridge/VerusAddressCalculator.sol": {
-			"keccak256": "0xf80a2904c035dce5ab5346bc7c807913a0ddbf19b5c9d7d8892b92981c7b6fbd",
+		"contracts/VerusBridge/VerusAddressCalculator.sol": {
+			"keccak256": "0xd4a599a97faf1e94ac6ec02c7e522054a89166147eaa407abccdc4d263b11d4a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c315ee8eb7d988372ead7164cc1f789d6ce775759cbede181d576aefef5ed84d",
-				"dweb:/ipfs/QmfFQoKYZebsuLmm1w3YA6Gym7MKGKmA3jMuLxwGUKBYe9"
+				"bzz-raw://bb06ebc98039670dc15d7082aaa5522364fbbee659e5460e87bfa8326b5341cf",
+				"dweb:/ipfs/QmWKFzo4NmRCd31Mx4TR2Pgprm6vhYvCDs1X2pQ5gU3Ppd"
 			]
 		}
 	},

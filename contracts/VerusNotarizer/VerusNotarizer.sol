@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity >=0.6.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
 import "../VerusBridge/VerusObjects.sol";
@@ -24,6 +24,7 @@ contract VerusNotarizer{
 
     //list of all notarizers mapped to allow for quick searching
     mapping (address => bool) public komodoNotaries;
+    address[] private notaries;
     //mapped blockdetails
     mapping (uint32 => VerusObjects.CPBaaSNotarization) public notarizedDataEntries;
     mapping (uint32 => uint256) public notarizedStateRoots;
@@ -37,7 +38,7 @@ contract VerusNotarizer{
     event NewBlock(VerusObjects.CPBaaSNotarization,uint32 notarizedDataHeight);
     event signedAddress(address signedAddress);
 
-    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] memory _notaries) public {
+    constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] memory _notaries) {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
         blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
         deprecated = false;
@@ -47,6 +48,7 @@ contract VerusNotarizer{
        // address msgSender = msg.sender;
         for(uint i =0; i < _notaries.length; i++){
             komodoNotaries[_notaries[i]] = true;
+            notaries.push(_notaries[i]);
             notaryCount++;
         }
     }
@@ -57,6 +59,9 @@ contract VerusNotarizer{
         _;
     }
     
+    function getNotaries() public view returns(address[] memory){
+        return notaries;
+    }
         
     function isNotary(address _notary) public view returns(bool) {
         if(komodoNotaries[_notary] == true) return true;
@@ -227,6 +232,10 @@ contract VerusNotarizer{
         return addr;
     }
 
+    function numNotarizedBlocks() public view returns(uint){
+        return blockHeights.length;
+    }
+
     function getLastNotarizedData() public view returns(VerusObjects.CPBaaSNotarization memory){
 
         require(!deprecated,"Contract has been deprecated");
@@ -248,7 +257,7 @@ contract VerusNotarizer{
         return(true);
     }
 
-    function deprecate(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(address){
+    function deprecate(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public {
         if(notarizedDeprecation(_upgradedAddress, _addressHash, _vs, _rs, _ss)){
             deprecated = true;
             upgradedAddress = _upgradedAddress;
