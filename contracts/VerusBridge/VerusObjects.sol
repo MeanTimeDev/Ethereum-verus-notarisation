@@ -22,7 +22,7 @@ library VerusObjects {
 
     struct CReserveTransfer {
         uint32 version;
-        CCurrencyValueMap currencyvalues;
+        CCurrencyValueMap currencyvalue;
         uint32 flags;
         uint160 feecurrencyid;
         uint256 fees;
