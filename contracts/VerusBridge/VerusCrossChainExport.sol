@@ -60,11 +60,11 @@ contract VerusCrossChainExport{
         int64 currencyExists;
         int64 feeExists;
         for(uint i = 0; i < transfers.length; i++){
-            currencyExists = inCurrencies(transfers[i].currencyvalues.currency);
+            currencyExists = inCurrencies(transfers[i].currencyvalue.currency);
             if(currencyExists >= 0){
-                currencies[uint256(currencyExists)].amount += transfers[i].currencyvalues.amount;
+                currencies[uint256(currencyExists)].amount += transfers[i].currencyvalue.amount;
             } else {
-                currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalues.currency,transfers[i].currencyvalues.amount));
+                currencies.push(VerusObjects.CCurrencyValueMap(transfers[i].currencyvalue.currency,transfers[i].currencyvalue.amount));
             }
             feeExists = inFees(transfers[i].feecurrencyid); 
             if(feeExists >= 0){

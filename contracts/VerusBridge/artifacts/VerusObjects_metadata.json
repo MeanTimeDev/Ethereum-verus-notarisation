@@ -1,10 +1,89 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.7.6+commit.7338295f"
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"name": "EthSystemID",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "RewardAddress",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "VEth",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "VerusCurrencyId",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "VerusSystemId",
+				"outputs": [
+					{
+						"internalType": "uint160",
+						"name": "",
+						"type": "uint160"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "transactionFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
 			"methods": {},
@@ -33,11 +112,11 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x5e2a89792883d702a18f0796ca8212e34f5c5c87a337654ce0b39e83898b1f53",
+			"keccak256": "0xf4c30f73be7ceb5582e9d9b2c9e5eb4f4279f293f3770c622cc6465a3c23203d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://106e271c159a322b779afe12f4818da82b9017e6d2667d38cd4f5efc31ed97db",
-				"dweb:/ipfs/QmZ3ZZX33944xZyGadQe4mMcoiB7urZHPPjdtMci46Pw24"
+				"bzz-raw://74af1fcdde8382a7b899bf114cc119cf2f41d5b27e8e7b119be68ee52d8291ad",
+				"dweb:/ipfs/QmcLq57hsxqetg2aEhJ1vnArJgWzVnroS6mgrPpCsixxmB"
 			]
 		}
 	},

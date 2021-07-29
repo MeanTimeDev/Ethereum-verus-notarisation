@@ -5,7 +5,47 @@ pragma solidity >=0.6.0 < 0.9.0;
 pragma experimental ABIEncoderV2;
 
 library VerusObjects {
-
+    
+    uint160 constant public VEth = uint160(0x67460C2f56774eD27EeB8685f29f6CEC0B090B00);
+    uint160 constant public EthSystemID = VEth;
+    uint160 constant public VerusSystemId = uint160(0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d);
+    uint160 constant public VerusCurrencyId = uint160(0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d);
+    //does this need to be set 
+    uint160 constant public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
+    uint256 constant public transactionFee = 100000000000000; //0.0001 eth
+    
+    struct blockCreated {
+        uint index;
+        bool created;
+    }
+    struct infoDetails {
+        uint version;
+        string VRSCversion;
+        uint blocks;
+        uint tiptime;
+        string name;
+        bool testnet;
+    }
+    
+    struct currencyDetail {
+        uint version;
+        string name;
+        uint160 currencyid;
+        uint160 parent;
+        uint160 systemid;
+        uint8 notarizationprotocol;
+        uint8 proofprotocol;
+        VerusObjects.CTransferDestination nativecurrencyid;
+        uint160 launchsystemid;
+        uint startblock;
+        uint endblock;
+        uint256 initialsupply;
+        uint256 prelaunchcarveout;
+        uint160 gatewayid;
+        address[] notaries;
+        uint minnotariesconfirm;
+    }
+    
     struct CCurrencyValueMap {
         uint160 currency;
         uint64 amount;
@@ -91,6 +131,15 @@ library VerusObjects {
     }
 
     struct CCoinbaseCurrencyState {
+        uint16 version;
+        uint16 flags;
+        uint160 currencyID;
+        uint160[] currencies;
+        int32[] weights;
+        int64[] reserves;
+        int64 initialSupply;
+        int64 emitted;
+        int64 supply;
         int64 primaryCurrencyOut;
         int64 preconvertedOut;
         int64 primaryCurrencyFees;
@@ -117,18 +166,18 @@ library VerusObjects {
 
     struct CPBaaSNotarization {
         uint32 version;
-        uint32 flags;
         CTransferDestination proposer;
-        uint160 currencyID;
         uint32 notarizationHeight;
         CCoinbaseCurrencyState currencyState;
-        CUTXORef prevNotarization;
-        uint256 hashPrevNotarization;
-        uint32 prevHeight;
+        uint256 prevnotarizationtxid;
+        int64 prevnotarizationout;
+        uint256 hashprevnotarizationobject;
+        uint64 prevheight;
         CurrencyStates[] currencyStates;
         ProofRoots[] proofRoots;
         CNodeData[] nodes;
     }
+
     //represents the output from the pbaas rpc
     struct Notarization {
         uint32 index;
