@@ -5,12 +5,12 @@ pragma solidity >=0.6.0 < 0.9.0;
 library VerusAddressCalculator{
 
     
-    function stringToUint160(string memory value) public pure returns(uint160){
+    function stringToAddress(string memory value) public pure returns(address){
         bytes32 interimString = stringToBytes32(value);
-        return uint160(bytes20(interimString));   
+        return address(bytes20(interimString));   
     }
 
-    function uint160ToString(uint160 value) public pure returns(string memory){
+    function addressToString(address value) public pure returns(string memory){
         //convert to bytes20
         return bytes20ToString(bytes20(value));
     }
@@ -25,7 +25,7 @@ library VerusAddressCalculator{
         }
     }
 
-    function uint160ToAddress(uint160 value) public pure returns(address){
+    function uint160ToAddress(address value) public pure returns(address){
         return address(value);
     }
 

@@ -10,7 +10,6 @@ import "../VerusNotarizer/VerusNotarizer.sol";
 
 contract VerusProof{
 
-    uint160 ethCurrencyID = 0;
     uint256 mmrRoot;
     VerusBLAKE2b blake2b;
     VerusNotarizer verusNotarizer;
@@ -29,7 +28,7 @@ contract VerusProof{
         VerusObjects.CPBaaSNotarization memory verusNotarizedData = verusNotarizer.getNotarizedData(_blockHeight);
         //loop through the proofRoots get the appropriate one for eth
         for(uint i = 0;i< verusNotarizedData.proofRoots.length;i++){
-            if(verusNotarizedData.proofRoots[i].currencyId == ethCurrencyID) {
+            if(verusNotarizedData.proofRoots[i].currencyId == VerusObjects.VEth) {
                 mmrRootHash = bytes32(verusNotarizedData.proofRoots[i].proofRoot.stateRoot);
             }
         }

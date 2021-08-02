@@ -20,14 +20,14 @@ contract generateCrossChainExport{
         blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
     }
 
-    function inCurrencies(uint160 checkCurrency) private returns(int){
+    function inCurrencies(address checkCurrency) private returns(int){
         for(uint i = 0; i < currencies.length; i++){
             if(currencies[i].currency == checkCurrency) return i;
         }
         return -1;
     }
 
-    function inFees(uint160 checkFeesCurrency) private returns(int){
+    function inFees(address checkFeesCurrency) private returns(int){
         for(uint i = 0; i < fees.length; i++){
             if(fees[i].currency == checkFeesCurrency) return i;
         }

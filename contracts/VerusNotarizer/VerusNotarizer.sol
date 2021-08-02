@@ -10,7 +10,6 @@ import "../MMR/VerusBLAKE2b.sol";
 
 contract VerusNotarizer{
 
-    uint160 ethCurrencyID = 0;
     //last notarized blockheight
     uint32 public lastBlockHeight;
     //CurrencyState private lastCurrencyState;
@@ -24,7 +23,7 @@ contract VerusNotarizer{
 
     //list of all notarizers mapped to allow for quick searching
     mapping (address => bool) public komodoNotaries;
-    address[] public notaries;
+    address[] private notaries;
     //mapped blockdetails
     mapping (uint32 => VerusObjects.CPBaaSNotarization) public notarizedDataEntries;
     mapping (uint32 => uint256) public notarizedStateRoots;
@@ -100,8 +99,6 @@ contract VerusNotarizer{
     }
 
     function isNotarized(bytes32 _notarizedDataHash,
-        uint160[] memory notaryids,
-        uint64[] _sigBlockHeights,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
         uint8[] memory _vs) public view returns(bool){
@@ -112,22 +109,6 @@ contract VerusNotarizer{
 
         //loop through the arrays, check the following:
         //does the hash in the hashedBlocks match the komodoBlockHash passed in
-        
-        for(uint y = 0 ; y < _sigBlockHeights ; y++){
-            //prove each signature
-            if(komodoNotaries[notaryids[y]]){
-                msgToHash = VerusObjects.verusHashPrefix("",
-                    VerusObjects.VerusSystemId,
-                    _sigBlockHeights[y]),
-                    notaryids[y],
-                    _notarizedDataHash);
-                hashedNotarization = blake2b.createHash(msgToHash);
-                if(notaryids[y] == recoverSigner(_notarizedDataHash, _vs[y], _rs[y], _ss[y])){
-                    numberOfSignatures++;
-                }
-            }
-        }
-        
         for(uint i = 0; i < _rs.length; i++){
             //if the address is in the notary array increment the number of signatures
             signingAddress = recoverSigner(_notarizedDataHash, _vs[i], _rs[i], _ss[i]);
@@ -143,51 +124,27 @@ contract VerusNotarizer{
     }
 
     function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
-        uint160[] memory notaryids,
         uint8[] memory _vs,
         bytes32[] memory _rs,
-        bytes32[] memory _ss,
-        uint64[] _sigBlockHeights
+        bytes32[] memory _ss
         ) public onlyNotary returns(bool){
 
         require(!deprecated,"Contract has been deprecated");
         require(komodoNotaries[msg.sender],"Only a notary can call this function");
         require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
         require(_pbaasNotarization.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
-        //verusHashPrefix(string memory prefix,uint160 systemID,int64 blockHeight,uint160 signingID, bytes memory messageToHash) public pure returns(bytes memory){
-        !!!!NEED TO CHANGE THAT 
-        
+
         bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
-        bytes memory msgToHash;
-        bytes32 hashedNotarization
-        //need to loop through and check each signature.
-        for(uint y = 0 ; y < _sigBlockHeights ; y++){
-            //prove each signature
-            if(komodoNotaries[notaryids[y]]){
-                msgToHash = VerusObjects.verusHashPrefix("",
-                    VerusObjects.VerusSystemId,
-                    _sigBlockHeights[y]),
-                    notaryids[y],
-                    serializedNotarisation);
-                hashedNotarization = blake2b.createHash(msgToHash);
-                if(notaryids == recoverSigner(_notarizedDataHash, _vs[y], _rs[y], _ss[y]));
-            }
-        }
-    
-        bytes memory serializedNotarisation = VerusSerializer.verusHashPrefix("",
-            _pbaasNotarization.systemid,
-            _sigBlockHeights, );
-        //create the complete object to be hashed for signing
-        //bytes32 hashedNotarization = blake2b.createHash(serializedNotarisation);
+        bytes32 hashedNotarization = blake2b.createHash(serializedNotarisation);
         //require(hashedNotarization == _notarizedDataHash,"Hash of serialized notarization does not match.");
         //check the hash of the data
         //need to check the block hash matches the hashed notarized block
-                
+    /*            
         //if there is greater than 13 proper signatories then set the block hash
         if(isNotarized(hashedNotarization,_rs,_ss,_vs)){
             //loop through the notarized data to retrieve the relevant CProofRoot
             for(uint i = 0 ; i < _pbaasNotarization.proofRoots.length;i++){
-                if(_pbaasNotarization.proofRoots[i].currencyId == ethCurrencyID){
+                if(_pbaasNotarization.proofRoots[i].currencyId == VerusObjects.VEth){
                     notarizedStateRoots[_pbaasNotarization.notarizationHeight] =  _pbaasNotarization.proofRoots[i].proofRoot.stateRoot;       
                     blockHeights.push(_pbaasNotarization.notarizationHeight);
                     if(lastBlockHeight <_pbaasNotarization.notarizationHeight){
@@ -196,11 +153,11 @@ contract VerusNotarizer{
                 }
             }
             
-
+*/
             //lastCurrencyState = _currencyState;
             emit NewBlock(_pbaasNotarization,lastBlockHeight);
             return true;
-        } else return false;
+       // } else return false;
     }
 
     function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {
@@ -211,6 +168,13 @@ contract VerusNotarizer{
     function numNotarizedBlocks() public view returns(uint){
         return blockHeights.length;
     }
+/*
+    function getLastNotarizedData() public view returns(VerusObjects.CPBaaSNotarization memory){
+
+        require(!deprecated,"Contract has been deprecated");
+        return notarizedDataEntries[lastBlockHeight];
+
+    }*/
 
     function getNotarizedData(uint32 _blockHeight) public view returns(VerusObjects.CPBaaSNotarization memory){
 

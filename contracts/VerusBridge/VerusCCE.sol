@@ -25,11 +25,11 @@ contract VerusCCE {
     uint160[] _feesCurrencies;
     uint64[] _feesAmounts;
     
-    uint160 public VEth = uint160(0x0000000000000000000000000000000000000000);
-    uint160 public EthSystemID = uint160(0x0000000000000000000000000000000000000000);
-    uint160 public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
+    address public VEth = uint160(0x0000000000000000000000000000000000000000);
+    address public EthSystemID = uint160(0x0000000000000000000000000000000000000000);
+    address public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
     //does this need to be set 
-    uint160 public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
+    address public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
 
     //create a cross chain export and serialize it for hashing 
     function createCCrossChainExport(VerusObjects.CReserveTransfer[] memory _readyExports) public returns (VerusObjects.CCrossChainExport memory){
@@ -55,7 +55,7 @@ contract VerusCCE {
 
         for(uint i = 0; i < _readyExports.length; i++){
             
-            uint160 currencyAddress = _readyExports[i].currencyvalues.currency;
+            address currencyAddress = _readyExports[i].currencyvalues.currency;
             uint64 currencyAmount = _readyExports[i].currencyvalues.amount;
             bool currencyExists = false;
             for(uint j = 0; j < _currencyAddresses.length; j++){
@@ -70,7 +70,7 @@ contract VerusCCE {
                 _currencyAmounts.push(currencyAmount);
             }    
             
-            uint160 feecurrency = _readyExports[i].feecurrencyid;
+            address feecurrency = _readyExports[i].feecurrencyid;
             uint64 feeamount = uint64(_readyExports[i].fees);
             currencyExists = false;
             for(uint k = 0; k < _feesCurrencies.length; k++){

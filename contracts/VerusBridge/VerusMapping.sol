@@ -11,14 +11,14 @@ pragma experimental ABIEncoderV2;
 contract VerusMapping {
 
     mapping(address => uint160) ethToVerus;
-    mapping(uint160 => address) verusToEth;
+    mapping(address => address) verusToEth;
 
-    function addMap(address ethAddress,uint160 vAddress) public {
+    function addMap(address ethAddress,address vAddress) public {
         ethToVerus[ethAddress] = vAddress;
         verusToEth[vAddress] = ethAddress;
     }
 
-    function getMapping(uint160 vAddress) public view returns(address){
+    function getMapping(address vAddress) public view returns(address){
         return verusToEth[vAddress];
     }
 

@@ -195,35 +195,35 @@
 			]
 		},
 		"contracts/MMR/VerusProof.sol": {
-			"keccak256": "0xad8d813c386df611bf6ac249d8be6fb4e3bf4ec4bd6c7e2e364ba3fa625dba87",
+			"keccak256": "0xfe5a027f085bca4ca485e815ae176880f068aa1b0b654e4efbfbefef4ea63c54",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://817a95d0f549d6c81893235e99a0121af3497e77ad18624635aa5d8734c00bb9",
-				"dweb:/ipfs/QmcNJdRmPsrnEHwBteTtxXWJu9L5L3V4fi2CybEqQuZRPR"
+				"bzz-raw://468f0f0b5217a3a974d50e7e10620065df8d95babc41e7da3bc5479e7eb861cb",
+				"dweb:/ipfs/QmcG47kkFnSb7isJRQqfxzEV4z4dZYbrP7s4qWKxQ21qRe"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x5e2a89792883d702a18f0796ca8212e34f5c5c87a337654ce0b39e83898b1f53",
+			"keccak256": "0xb42d41d22b057bc3cbcaeef7cbdb7ab02e43a74169b9d3fe8d39092862c402b1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://106e271c159a322b779afe12f4818da82b9017e6d2667d38cd4f5efc31ed97db",
-				"dweb:/ipfs/QmZ3ZZX33944xZyGadQe4mMcoiB7urZHPPjdtMci46Pw24"
+				"bzz-raw://fa8df2695983bd9af9221ddd5d2bcb4feb566354f6b59b9a0338e0de57c70aef",
+				"dweb:/ipfs/QmcZ14vkHXjs9kvUJPopoeE4asgDaHpAUamriPWVuYCZ3T"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xec53ce04bf06818e30f666bdf1a09ef4db769a5a9f108635e0fd6717bfaddcb5",
+			"keccak256": "0x827accbad5e2b2e211e4ec808d77c3bfaa16067146181c64ac5374058e1836a8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4da27b8888b9e16676072d402ee297ff1b76ed46864475de3a833d706db25c1",
-				"dweb:/ipfs/Qma6mVpDn38fUxC7xn4mWzv8gUZzUTR16xJNjKGogeDxkR"
+				"bzz-raw://df3623fab42a1443746b3db4c9aca6dfe4f5bc9d9e254a428cceac2b4cd9068e",
+				"dweb:/ipfs/QmWsLCReMBngGAWKNN4sZfjhj3PSYtFTUTm6V2Yf9KB1Vd"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x1bc6d9ec84720c4cebaa2b85dc7e1c10c404cda053a03412f832ac31a2be652e",
+			"keccak256": "0x92eb251ca311ccce57efe8de2e9f4ca0825d5d76de93c1d9e78ddc0431c5d05c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6d506cd3d1555a4d7a0246b42155c5a04756627ab6201adb506900e6810f4fbb",
-				"dweb:/ipfs/QmYH5bb5moUAnyD9DVfxMJnhqJfbAkbmQbhDdQutvn9yvn"
+				"bzz-raw://087d31e3247f580eebd4c4ff5d69073b555d05ee18dcd9c6328e0281673bff93",
+				"dweb:/ipfs/QmdtoQk8hfnp3G7J4TKuyhtd6uvHaV9KhjNtDUjNDAdBD8"
 			]
 		}
 	},

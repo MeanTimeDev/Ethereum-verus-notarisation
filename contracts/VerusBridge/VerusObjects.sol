@@ -6,12 +6,12 @@ pragma experimental ABIEncoderV2;
 
 library VerusObjects {
     
-    uint160 constant public VEth = uint160(0x67460C2f56774eD27EeB8685f29f6CEC0B090B00);
-    uint160 constant public EthSystemID = VEth;
-    uint160 constant public VerusSystemId = uint160(0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d);
-    uint160 constant public VerusCurrencyId = uint160(0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d);
+    address constant public VEth = 0x67460C2f56774eD27EeB8685f29f6CEC0B090B00;
+    address constant public EthSystemID = VEth;
+    address constant public VerusSystemId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
+    address constant public VerusCurrencyId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
     //does this need to be set 
-    uint160 constant public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
+    address constant public RewardAddress = 0x0000000000000000000000000000000000000002;
     uint256 constant public transactionFee = 100000000000000; //0.0001 eth
     
     struct blockCreated {
@@ -30,24 +30,24 @@ library VerusObjects {
     struct currencyDetail {
         uint version;
         string name;
-        uint160 currencyid;
-        uint160 parent;
-        uint160 systemid;
+        address currencyid;
+        address parent;
+        address systemid;
         uint8 notarizationprotocol;
         uint8 proofprotocol;
         VerusObjects.CTransferDestination nativecurrencyid;
-        uint160 launchsystemid;
+        address launchsystemid;
         uint startblock;
         uint endblock;
         uint256 initialsupply;
         uint256 prelaunchcarveout;
-        uint160 gatewayid;
+        address gatewayid;
         address[] notaries;
         uint minnotariesconfirm;
     }
     
     struct CCurrencyValueMap {
-        uint160 currency;
+        address currency;
         uint64 amount;
     }
 
@@ -57,19 +57,19 @@ library VerusObjects {
 
     struct CTransferDestination {
         uint32 destinationtype;
-        uint160 destinationaddress;
+        address destinationaddress;
     }
 
     struct CReserveTransfer {
         uint32 version;
         CCurrencyValueMap currencyvalue;
         uint32 flags;
-        uint160 feecurrencyid;
+        address feecurrencyid;
         uint256 fees;
         CTransferDestination destination;
-        uint160 destCurrencyID;
-        uint160 secondReserveID;
-        uint160 destSystemID;
+        address destCurrencyID;
+        address secondReserveID;
+        address destSystemID;
     }
 
     //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
@@ -93,12 +93,12 @@ library VerusObjects {
     struct CCrossChainExport {
         uint32 version;
         uint32 flags;
-        uint160 sourcesystemid;
+        address sourcesystemid;
         uint32 sourceheightstart;
         uint32 sourceheightend;
-        uint160 destinationsystemid;
-        uint160 destinationcurrencyid;
-        int32 numinputs;
+        address destinationsystemid;
+        address destinationcurrencyid;
+        uint32 numinputs;
         CCurrencyValueMap[] totalamounts;
         CCurrencyValueMap[] totalfees;
         uint256 hashtransfers; // hashtransfers
@@ -113,7 +113,7 @@ library VerusObjects {
     struct CProofRoot{
         int16 version;                        // to enable future data types with various functions
         int16 CPRtype;                           // type of proof root
-        uint160 systemID;                       // system that can have things proven on it with this root
+        address systemID;                       // system that can have things proven on it with this root
         uint32 rootHeight;                    // height (or sequence) of the notarization we certify
         uint256 stateRoot;                      // latest MMR root of the notarization height
         uint256 blockHash;                      // combination of block hash, block MMR root, and compact power (or external proxy) for the notarization height
@@ -121,19 +121,19 @@ library VerusObjects {
     }
 
     struct CurrencyStates {
-        uint160 currencyId;
+        address currencyId;
         CCoinbaseCurrencyState currencyState;
     }
 
     struct ProofRoots {
-        uint160 currencyId;
+        address currencyId;
         CProofRoot proofRoot;
     }
 
     struct CCoinbaseCurrencyState {
         uint16 version;
         uint16 flags;
-        uint160 currencyID;
+        address currencyID;
         uint160[] currencies;
         int32[] weights;
         int64[] reserves;
@@ -161,7 +161,7 @@ library VerusObjects {
 
     struct CNodeData {
         string networkAddress;
-        uint160 nodeIdentity;
+        address nodeIdentity;
     }
 
     struct CPBaaSNotarization {

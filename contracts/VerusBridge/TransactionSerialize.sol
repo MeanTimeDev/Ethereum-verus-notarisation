@@ -18,32 +18,32 @@ contract TransactionSerialize{
 
     struct CTransferDestination {
         TransferDestinationType transferType;
-        uint160 destination;
+        address destination;
     }
 
     //pending transactions array
     struct BridgeTransaction {
         uint32 flags; //type of transfer 0,
-        uint160 feeCurrencyID; //fees are paid in this currency
+        address feeCurrencyID; //fees are paid in this currency
         uint64 nFees; //cross chain network fees
         CTransferDestination destination; //destination address
         uint64 amount;
-        uint160 destCurrencyID;
-        uint160 secondReserveID;
+        address destCurrencyID;
+        address secondReserveID;
     }
     
     struct CCurrencyValueMap {
-        uint160 currency;
+        address currency;
         uint64 amount;
     }
     
     struct BridgeTransactionSet {
         uint16 version;
         uint16 flags;
-        uint160 sourceSystemID;
+        address sourceSystemID;
         uint32 sourceHeightStart;
         uint32 sourceHeightEnd;
-        uint160 destCurrencyId; //does this need to be here as we have the currency map?
+        address destCurrencyId; //does this need to be here as we have the currency map?
         CCurrencyValueMap[] totalAmounts; 
         CCurrencyValueMap[] totalFees;
         uint32 numInputs; //number of transactions in this list
@@ -190,7 +190,7 @@ contract TransactionSerialize{
         //arrayTest.push(4);
         //arrayTest.push(5);
         uint32 flagTest = 1;
-        uint160 feeTest = uint160(0x0000000000000000000000000000000000000005);
+        address feeTest = uint160(0x0000000000000000000000000000000000000005);
         bytes20 bytesTest = bytes20(0x0000000000000000000000000000000000000005);
         //bytes memory output = vs.serialize(bytesTest);
         uint32 transferType = 1;

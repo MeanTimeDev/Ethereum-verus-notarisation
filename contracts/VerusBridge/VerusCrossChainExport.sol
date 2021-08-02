@@ -13,24 +13,18 @@ contract VerusCrossChainExport{
     VerusObjects.CCurrencyValueMap[] fees;
     VerusSerializer verusSerializer;
 
-
-    uint160 public VEth = uint160(0x0000000000000000000000000000000000000000);
-    uint160 public EthSystemID = uint160(0x0000000000000000000000000000000000000000);
-    uint160 public VerusSystemId = uint160(0x0000000000000000000000000000000000000001);
-    uint160 public RewardAddress = uint160(0x0000000000000000000000000000000000000002);
-
     constructor(address _verusSerializerAddress) {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
     }
 
-    function inCurrencies(uint160 checkCurrency) private view returns(int64){
+    function inCurrencies(address checkCurrency) private view returns(int64){
         for(uint i = 0; i < uint64(currencies.length); i++){
             if(currencies[i].currency == checkCurrency) return int64(i);
         }
         return -1;
     }
 
-    function inFees(uint160 checkFeesCurrency) private view returns(int64){
+    function inFees(address checkFeesCurrency) private view returns(int64){
         for(uint i = 0; i < uint64(fees.length); i++){
             if(fees[i].currency == checkFeesCurrency) return int64(i);
         }
@@ -39,22 +33,22 @@ contract VerusCrossChainExport{
 
     function generateCCE(VerusObjects.CReserveTransfer[] memory transfers) public returns(VerusObjects.CCrossChainExport memory){
 
-        // bytes32 hashedTransfers;
+        
         //create a hash of the transfers and then 
-        //hashedTransfers = keccak256(verusSerializer.serializeCReserveTransfers(transfers));
+        bytes32 hashedTransfers = keccak256(verusSerializer.serializeCReserveTransfers(transfers));
 
         //create the Cross ChainExport to then serialize and hash
 
         VerusObjects.CCrossChainExport memory workingCCE;
         workingCCE.version = 0x80000000;
-        workingCCE.flags = 3;
+        workingCCE.flags = 0x2100;
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
         workingCCE.sourceheightend =uint32(block.number);
-        workingCCE.sourcesystemid = EthSystemID;
-        workingCCE.destinationsystemid = VerusSystemId;
-        workingCCE.destinationcurrencyid = VEth;
-        workingCCE.numinputs = int32(transfers.length);
+        workingCCE.sourcesystemid = VerusObjects.EthSystemID;
+        workingCCE.destinationsystemid = VerusObjects.VerusSystemId;
+        workingCCE.destinationcurrencyid = VerusObjects.VEth;
+        workingCCE.numinputs = uint32(transfers.length);
         //loop through the array and create totals of the amounts and fees
         
         int64 currencyExists;
@@ -77,12 +71,12 @@ contract VerusCrossChainExport{
         workingCCE.totalamounts = currencies;
         workingCCE.totalfees = fees;
 
-        //workingCCE.hashtransfers = uint256(hashedTransfers);
-        VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0,0);
+        workingCCE.hashtransfers = uint256(hashedTransfers);
+        VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0x0000000000000000000000000000000000000000,0);
         
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
         workingCCE.totalburned[0] = totalburnedCCVM;
-        workingCCE.rewardaddress = address(RewardAddress);
+        workingCCE.rewardaddress = address(VerusObjects.RewardAddress);
         workingCCE.firstinput = 0;
 
         //clear the arrays

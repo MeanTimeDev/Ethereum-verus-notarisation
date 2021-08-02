@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.7.6+commit.7338295f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -34,9 +34,9 @@
 				"name": "addExistingToken",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -98,28 +98,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint160",
-						"name": "_destinationCurrencyID",
-						"type": "uint160"
-					}
-				],
-				"name": "deployNewToken",
-				"outputs": [
-					{
 						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint160",
 						"name": "_destinationCurrencyID",
-						"type": "uint160"
+						"type": "address"
 					},
 					{
 						"internalType": "string",
@@ -146,9 +127,28 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
+						"name": "_destinationCurrencyID",
+						"type": "address"
+					}
+				],
+				"name": "deployNewToken",
+				"outputs": [
+					{
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"name": "destinationToAddress",
@@ -183,24 +183,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint160",
-						"name": "_destCurrencyID",
-						"type": "uint160"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_tokenAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "exportERC20Tokens",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "string",
 						"name": "_tokenName",
 						"type": "string"
@@ -209,9 +191,9 @@
 				"name": "generateDestinationCurrencyID",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -220,9 +202,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "_destCurrencyID",
-						"type": "uint160"
+						"type": "address"
 					},
 					{
 						"internalType": "uint64",
@@ -230,31 +212,8 @@
 						"type": "uint64"
 					},
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "_destination",
-						"type": "uint160"
-					}
-				],
-				"name": "importERC20Tokens",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_contractAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_tokenAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "_destinationAddress",
 						"type": "address"
 					}
 				],
@@ -269,25 +228,6 @@
 						"internalType": "address",
 						"name": "_contractAddress",
 						"type": "address"
-					}
-				],
-				"name": "isToken",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint160",
-						"name": "_destinationCurrencyID",
-						"type": "uint160"
 					}
 				],
 				"name": "isToken",
@@ -344,9 +284,9 @@
 				"name": "vERC20Tokens",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "destinationCurrencyID",
-						"type": "uint160"
+						"type": "address"
 					},
 					{
 						"internalType": "bool",
@@ -399,19 +339,19 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0x13ac5305501fb267d951a82157d0b164a74cad7c8d246dc81110163e58871715",
+			"keccak256": "0x8397c6d0956219ca3f29fcd675e51fea3be84ffd4337ce474cda827ca392c9f0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3e7180b945549386a8158cac09ae696be31614282d6d99a61ed9e15c16b116d0",
-				"dweb:/ipfs/QmXBGoMjM2K1gKXgyqEePhhiYX6iBYov2HVG2QJ4ce6o2c"
+				"bzz-raw://7b60eca0d3bede6ad3fc471b5ca8bf82a5f0764f363a19aade7a5fd331c18104",
+				"dweb:/ipfs/QmZefTbWBA1QThYQ8VpDqRa85XN9eHf4VbMjD5p2hMzqNY"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {
-			"keccak256": "0xd4a599a97faf1e94ac6ec02c7e522054a89166147eaa407abccdc4d263b11d4a",
+			"keccak256": "0x658ca5b9d2ee14b7ab45a7c253966a24b897f588ebc3e8f01f98a97fad69994c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bb06ebc98039670dc15d7082aaa5522364fbbee659e5460e87bfa8326b5341cf",
-				"dweb:/ipfs/QmWKFzo4NmRCd31Mx4TR2Pgprm6vhYvCDs1X2pQ5gU3Ppd"
+				"bzz-raw://887f7443b78d03ab218fb72ea6d3effb8f04454ebe419488ef81f08b15c9d717",
+				"dweb:/ipfs/QmUTrxNKq6HZ5FF8d38THCutzna9cD3T7jhr65vispk3K9"
 			]
 		},
 		"node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {

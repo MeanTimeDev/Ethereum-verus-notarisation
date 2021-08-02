@@ -10,9 +10,9 @@
 				"name": "EthSystemID",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -23,9 +23,9 @@
 				"name": "RewardAddress",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -36,9 +36,9 @@
 				"name": "VEth",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -49,9 +49,9 @@
 				"name": "VerusCurrencyId",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -62,9 +62,9 @@
 				"name": "VerusSystemId",
 				"outputs": [
 					{
-						"internalType": "uint160",
+						"internalType": "address",
 						"name": "",
-						"type": "uint160"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -112,11 +112,11 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xf4c30f73be7ceb5582e9d9b2c9e5eb4f4279f293f3770c622cc6465a3c23203d",
+			"keccak256": "0x52b7535c9a1d47a2a366f2741052d1c05669f2bd5b19b05f488cd3a8ebdf1543",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://74af1fcdde8382a7b899bf114cc119cf2f41d5b27e8e7b119be68ee52d8291ad",
-				"dweb:/ipfs/QmcLq57hsxqetg2aEhJ1vnArJgWzVnroS6mgrPpCsixxmB"
+				"bzz-raw://9ccc931c0043e9ae3b43dbdb8ca39a13eed3d8a239a07c8ba3dd3b62b599cbf4",
+				"dweb:/ipfs/QmSH6YJV34WNJZRy9iiDMftTA9HSTKQmMVqgWAWy5SB1Mj"
 			]
 		}
 	},
