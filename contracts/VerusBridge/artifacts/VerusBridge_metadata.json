@@ -212,6 +212,44 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"name": "SerializedCCEs",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "SerializedCRTs",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
@@ -278,11 +316,6 @@
 					{
 						"internalType": "address",
 						"name": "destCurrencyID",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "secondReserveID",
 						"type": "address"
 					},
 					{
@@ -403,6 +436,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "uint32",
+						"name": "_destinationType",
+						"type": "uint32"
+					},
+					{
 						"internalType": "address",
 						"name": "_destCurrencyID",
 						"type": "address"
@@ -415,11 +453,6 @@
 					{
 						"internalType": "address",
 						"name": "_feeCurrencyID",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_secondReserveID",
 						"type": "address"
 					},
 					{
@@ -441,6 +474,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "uint32",
+						"name": "_destinationType",
+						"type": "uint32"
+					},
+					{
 						"internalType": "address",
 						"name": "_feeCurrencyID",
 						"type": "address"
@@ -449,11 +487,6 @@
 						"internalType": "uint256",
 						"name": "_nFees",
 						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "_secondReserveID",
-						"type": "address"
 					},
 					{
 						"internalType": "address",
@@ -588,11 +621,6 @@
 									},
 									{
 										"internalType": "address",
-										"name": "secondReserveID",
-										"type": "address"
-									},
-									{
-										"internalType": "address",
 										"name": "destSystemID",
 										"type": "address"
 									}
@@ -701,11 +729,6 @@
 									{
 										"internalType": "address",
 										"name": "destCurrencyID",
-										"type": "address"
-									},
-									{
-										"internalType": "address",
-										"name": "secondReserveID",
 										"type": "address"
 									},
 									{
@@ -880,6 +903,25 @@
 						"internalType": "struct VerusObjects.infoDetails",
 						"name": "",
 						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "hashedCRTs",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "view",
@@ -1141,11 +1183,6 @@
 									},
 									{
 										"internalType": "address",
-										"name": "secondReserveID",
-										"type": "address"
-									},
-									{
-										"internalType": "address",
 										"name": "destSystemID",
 										"type": "address"
 									}
@@ -1263,35 +1300,35 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0xcd110669e588d2ba084420d00eface32aff33a9d76cbcc5a12787d328f3ccf46",
+			"keccak256": "0xcead6ad0afe091e364b56ec6da6e2f54863cf4d7192acbdffa2aa3e923e9fc16",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://037d30dca51dfca5d2766be5a772866d7526cd423bc25b55316a309facea7e19",
-				"dweb:/ipfs/QmcEZ9YATjDL2P8sDR93XwAkBDki2sxqm1sscRos4M64EH"
+				"bzz-raw://7b1307163cef387ea460a2370921c364b89dac1e174bd36e44c041020adae2e3",
+				"dweb:/ipfs/QmVrZNHaU1zDw9j4dftzyhuscbZrJub6SJDDWcXMtqV29f"
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {
-			"keccak256": "0x2d9b437e07ab95ba0d0fa0b0250744673eabb0ebfec16ec472fa81a6217eed8b",
+			"keccak256": "0x33c7e4267e1e7019863aef0150541c556f347f2dafc48bc2975e6d86c1cd4703",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://25a37262aed7b71d35e998ee277b65e59fd641ad90064c106a48790de748088c",
-				"dweb:/ipfs/QmSSAAsii6D1Xr1ziY7dRgpSurxWoe36PriVg3FR2n9tYy"
+				"bzz-raw://d58eb31ca36779fe28c2704fda88e70d1c3917561cebaa3e0e06e9e8e688014d",
+				"dweb:/ipfs/QmVuDnkmdWT6uyfYBnK3gwNrvRKZhLbzZVtejcocbWGbDV"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x52b7535c9a1d47a2a366f2741052d1c05669f2bd5b19b05f488cd3a8ebdf1543",
+			"keccak256": "0xbd4fc27d10578922518fab2ad9743b3a836d19cf9aa92ea764e4552bae94ef32",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9ccc931c0043e9ae3b43dbdb8ca39a13eed3d8a239a07c8ba3dd3b62b599cbf4",
-				"dweb:/ipfs/QmSH6YJV34WNJZRy9iiDMftTA9HSTKQmMVqgWAWy5SB1Mj"
+				"bzz-raw://ac3e25fa3a37ec263bd98ec86c0b70b7b1a9dacb4664ea139a97848d4cea07e8",
+				"dweb:/ipfs/QmUrPNJ2nBZoTJ8VyEfpikrbAmBZASxHcid9gnrg5vcPdi"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x4858ea28a5789d345fb728f8c1eeb7de4a8b7dc4d69db825e3ff9ed9d07162e4",
+			"keccak256": "0xa05b0e63e44dc3350c46d7b90799affff718c5640ccb7b64290802d358bbc78d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e64ed9b4276450594a8dcc0ac950b95214792880ad7a3691fa33093141283206",
-				"dweb:/ipfs/QmUCb5v7bC3ighiZQnh9293JwWJoFMpeWyGpPGdj2J7iSm"
+				"bzz-raw://1ed13c73da87f84368c11cc26674b79d524e196d84f063881eeee0e60b61802b",
+				"dweb:/ipfs/QmcZ3WFMfuPwUS2gX4QT6cHcDMZSNsqUg9Q66Vws7W1brk"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {

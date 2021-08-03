@@ -923,11 +923,6 @@
 							},
 							{
 								"internalType": "address",
-								"name": "secondReserveID",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
 								"name": "destSystemID",
 								"type": "address"
 							}
@@ -1009,11 +1004,6 @@
 							{
 								"internalType": "address",
 								"name": "destCurrencyID",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "secondReserveID",
 								"type": "address"
 							},
 							{
@@ -1896,19 +1886,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x52b7535c9a1d47a2a366f2741052d1c05669f2bd5b19b05f488cd3a8ebdf1543",
+			"keccak256": "0xda78aa337133e26a76d7e9291fd3838b640f8f9a666868ce890d2a5be4dc412c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9ccc931c0043e9ae3b43dbdb8ca39a13eed3d8a239a07c8ba3dd3b62b599cbf4",
-				"dweb:/ipfs/QmSH6YJV34WNJZRy9iiDMftTA9HSTKQmMVqgWAWy5SB1Mj"
+				"bzz-raw://74140958715f88f4ee286879848d3772b3dd4c69ac693e1d02627b0e913be146",
+				"dweb:/ipfs/QmUr34faYgJ7n1J6PGHiPwf2xTqYhGpEfmh1zhU9pESdo5"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x4858ea28a5789d345fb728f8c1eeb7de4a8b7dc4d69db825e3ff9ed9d07162e4",
+			"keccak256": "0xa05b0e63e44dc3350c46d7b90799affff718c5640ccb7b64290802d358bbc78d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e64ed9b4276450594a8dcc0ac950b95214792880ad7a3691fa33093141283206",
-				"dweb:/ipfs/QmUCb5v7bC3ighiZQnh9293JwWJoFMpeWyGpPGdj2J7iSm"
+				"bzz-raw://1ed13c73da87f84368c11cc26674b79d524e196d84f063881eeee0e60b61802b",
+				"dweb:/ipfs/QmcZ3WFMfuPwUS2gX4QT6cHcDMZSNsqUg9Q66Vws7W1brk"
 			]
 		}
 	},

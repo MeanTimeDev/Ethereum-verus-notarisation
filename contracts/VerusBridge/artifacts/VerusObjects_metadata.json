@@ -112,11 +112,11 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x52b7535c9a1d47a2a366f2741052d1c05669f2bd5b19b05f488cd3a8ebdf1543",
+			"keccak256": "0xbd4fc27d10578922518fab2ad9743b3a836d19cf9aa92ea764e4552bae94ef32",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9ccc931c0043e9ae3b43dbdb8ca39a13eed3d8a239a07c8ba3dd3b62b599cbf4",
-				"dweb:/ipfs/QmSH6YJV34WNJZRy9iiDMftTA9HSTKQmMVqgWAWy5SB1Mj"
+				"bzz-raw://ac3e25fa3a37ec263bd98ec86c0b70b7b1a9dacb4664ea139a97848d4cea07e8",
+				"dweb:/ipfs/QmUrPNJ2nBZoTJ8VyEfpikrbAmBZASxHcid9gnrg5vcPdi"
 			]
 		}
 	},

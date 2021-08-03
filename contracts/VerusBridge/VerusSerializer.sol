@@ -9,14 +9,15 @@ contract VerusSerializer {
 
     //hashing functions
 
-
     function writeVarInt(uint256 incoming) public pure returns(bytes memory) {
+        bytes1 inProgress;
         bytes memory output;
         uint len = 0;
         while(true){
-            output[len] = bytes1((uint8(uint256(incoming & 0x7f)) | (len!=0 ? 0x80:0x00)));
+            inProgress = bytes1(uint8(incoming & 0x7f) | (len!=0 ? 0x80:0x00));
+            output = abi.encodePacked(output,inProgress);
             if(incoming <= 0x7f) break;
-            incoming = (incoming << 7) -1;
+            incoming = (incoming >> 7) -1;
             len++;
         }
         return flipArray(output);
@@ -136,7 +137,8 @@ contract VerusSerializer {
 
     function serializeUint160(address number) public pure returns(bytes memory){
         bytes memory be = abi.encodePacked(number);
-        return(flipArray(be));
+        return be;
+        //return(flipArray(be));
     }
     
     function serializeUint160Array(uint160[] memory numbers) public pure returns(bytes memory){
@@ -188,9 +190,9 @@ contract VerusSerializer {
             serializeUint32(ct.flags),
             serializeUint160(ct.feecurrencyid),
             writeVarInt(ct.fees),
-            serializeCTransferDestination(ct.destination));
+            serializeCTransferDestination(ct.destination)
+           );
         if(ct.destCurrencyID != 0x0000000000000000000000000000000000000000) output = abi.encodePacked(output,serializeUint160(ct.destCurrencyID));
-        if(ct.secondReserveID != 0x0000000000000000000000000000000000000000) output = abi.encodePacked(output,serializeUint160(ct.secondReserveID));
         if(ct.destSystemID != 0x0000000000000000000000000000000000000000) output = abi.encodePacked(output,serializeUint160(ct.destSystemID));
         return output;
     }

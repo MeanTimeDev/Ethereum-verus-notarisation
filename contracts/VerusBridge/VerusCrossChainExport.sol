@@ -33,21 +33,22 @@ contract VerusCrossChainExport{
 
     function generateCCE(VerusObjects.CReserveTransfer[] memory transfers) public returns(VerusObjects.CCrossChainExport memory){
 
-        
+        VerusObjects.CCrossChainExport memory workingCCE;
         //create a hash of the transfers and then 
-        bytes32 hashedTransfers = keccak256(verusSerializer.serializeCReserveTransfers(transfers));
+        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(transfers);
+        bytes32 hashedTransfers = keccak256(serializedTransfers);
 
         //create the Cross ChainExport to then serialize and hash
-
-        VerusObjects.CCrossChainExport memory workingCCE;
+        
         workingCCE.version = 0x80000000;
         workingCCE.flags = 0x2100;
+        //workingCCE.flags = 1;
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
         workingCCE.sourceheightend =uint32(block.number);
-        workingCCE.sourcesystemid = VerusObjects.EthSystemID;
+        workingCCE.sourcesystemid = VerusObjects.VEth;
         workingCCE.destinationsystemid = VerusObjects.VerusSystemId;
-        workingCCE.destinationcurrencyid = VerusObjects.VEth;
+        workingCCE.destinationcurrencyid = VerusObjects.VerusSystemId;
         workingCCE.numinputs = uint32(transfers.length);
         //loop through the array and create totals of the amounts and fees
         

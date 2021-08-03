@@ -11,7 +11,7 @@ library VerusObjects {
     address constant public VerusSystemId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
     address constant public VerusCurrencyId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
     //does this need to be set 
-    address constant public RewardAddress = 0x0000000000000000000000000000000000000002;
+    address constant public RewardAddress = 0xB26820ee0C9b1276Aac834Cf457026a575dfCe84;
     uint256 constant public transactionFee = 100000000000000; //0.0001 eth
     
     struct blockCreated {
@@ -68,7 +68,6 @@ library VerusObjects {
         uint256 fees;
         CTransferDestination destination;
         address destCurrencyID;
-        address secondReserveID;
         address destSystemID;
     }
 
