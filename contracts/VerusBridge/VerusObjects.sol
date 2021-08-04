@@ -12,7 +12,9 @@ library VerusObjects {
     address constant public VerusCurrencyId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
     //does this need to be set 
     address constant public RewardAddress = 0xB26820ee0C9b1276Aac834Cf457026a575dfCe84;
+    uint8 constant public RewardAddressType = 4;
     uint256 constant public transactionFee = 100000000000000; //0.0001 eth
+    string constant public currencyName = "VETH";
     
     struct blockCreated {
         uint index;
@@ -56,7 +58,7 @@ library VerusObjects {
     }
 
     struct CTransferDestination {
-        uint32 destinationtype;
+        uint8 destinationtype;
         address destinationaddress;
     }
 
@@ -90,8 +92,8 @@ library VerusObjects {
     }
 
     struct CCrossChainExport {
-        uint32 version;
-        uint32 flags;
+        uint16 version;
+        uint16 flags;
         address sourcesystemid;
         uint32 sourceheightstart;
         uint32 sourceheightend;
@@ -100,9 +102,9 @@ library VerusObjects {
         uint32 numinputs;
         CCurrencyValueMap[] totalamounts;
         CCurrencyValueMap[] totalfees;
-        uint256 hashtransfers; // hashtransfers
+        bytes32 hashtransfers; // hashtransfers
         CCurrencyValueMap[] totalburned;
-        address rewardaddress; //reward address
+        CTransferDestination rewardaddress; //reward address
         int32 firstinput;
     }
 

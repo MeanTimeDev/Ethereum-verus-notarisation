@@ -28,7 +28,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "anyAddress",
+						"name": "number",
 						"type": "address"
 					}
 				],
@@ -71,6 +71,25 @@
 					}
 				],
 				"name": "serializeBytes20",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "anyBytes32",
+						"type": "bytes32"
+					}
+				],
+				"name": "serializeBytes32",
 				"outputs": [
 					{
 						"internalType": "bytes",
@@ -212,14 +231,14 @@
 					{
 						"components": [
 							{
-								"internalType": "uint32",
+								"internalType": "uint16",
 								"name": "version",
-								"type": "uint32"
+								"type": "uint16"
 							},
 							{
-								"internalType": "uint32",
+								"internalType": "uint16",
 								"name": "flags",
-								"type": "uint32"
+								"type": "uint16"
 							},
 							{
 								"internalType": "address",
@@ -286,9 +305,9 @@
 								"type": "tuple[]"
 							},
 							{
-								"internalType": "uint256",
+								"internalType": "bytes32",
 								"name": "hashtransfers",
-								"type": "uint256"
+								"type": "bytes32"
 							},
 							{
 								"components": [
@@ -308,9 +327,21 @@
 								"type": "tuple[]"
 							},
 							{
-								"internalType": "address",
+								"components": [
+									{
+										"internalType": "uint8",
+										"name": "destinationtype",
+										"type": "uint8"
+									},
+									{
+										"internalType": "address",
+										"name": "destinationaddress",
+										"type": "address"
+									}
+								],
+								"internalType": "struct VerusObjects.CTransferDestination",
 								"name": "rewardaddress",
-								"type": "address"
+								"type": "tuple"
 							},
 							{
 								"internalType": "int32",
@@ -439,9 +470,9 @@
 							{
 								"components": [
 									{
-										"internalType": "uint32",
+										"internalType": "uint8",
 										"name": "destinationtype",
-										"type": "uint32"
+										"type": "uint8"
 									},
 									{
 										"internalType": "address",
@@ -902,9 +933,9 @@
 							{
 								"components": [
 									{
-										"internalType": "uint32",
+										"internalType": "uint8",
 										"name": "destinationtype",
-										"type": "uint32"
+										"type": "uint8"
 									},
 									{
 										"internalType": "address",
@@ -987,9 +1018,9 @@
 							{
 								"components": [
 									{
-										"internalType": "uint32",
+										"internalType": "uint8",
 										"name": "destinationtype",
-										"type": "uint32"
+										"type": "uint8"
 									},
 									{
 										"internalType": "address",
@@ -1033,9 +1064,9 @@
 					{
 						"components": [
 							{
-								"internalType": "uint32",
+								"internalType": "uint8",
 								"name": "destinationtype",
-								"type": "uint32"
+								"type": "uint8"
 							},
 							{
 								"internalType": "address",
@@ -1669,25 +1700,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "number",
-						"type": "address"
-					}
-				],
-				"name": "serializeUint160",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint160[]",
 						"name": "numbers",
 						"type": "uint160[]"
@@ -1886,19 +1898,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xda78aa337133e26a76d7e9291fd3838b640f8f9a666868ce890d2a5be4dc412c",
+			"keccak256": "0x7b01b13200331514f3e4b9b7b810cb3f2a25ae53aff8a026becd9d25dc4d0d09",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://74140958715f88f4ee286879848d3772b3dd4c69ac693e1d02627b0e913be146",
-				"dweb:/ipfs/QmUr34faYgJ7n1J6PGHiPwf2xTqYhGpEfmh1zhU9pESdo5"
+				"bzz-raw://fc3949b0e375c247cecff4a1ffb85b27977abbb3c878a3fbec4e15d91eee8856",
+				"dweb:/ipfs/QmRZ5yUEYJAWn5EvsondXZHXJuyQFGNAz9wB5ccdwu9d1i"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xa05b0e63e44dc3350c46d7b90799affff718c5640ccb7b64290802d358bbc78d",
+			"keccak256": "0xc9719af20b2e53ebc82038a859b2b25e45e2af002934a3927e7e4965b489e448",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1ed13c73da87f84368c11cc26674b79d524e196d84f063881eeee0e60b61802b",
-				"dweb:/ipfs/QmcZ3WFMfuPwUS2gX4QT6cHcDMZSNsqUg9Q66Vws7W1brk"
+				"bzz-raw://f469ee770580b99f6f53dd0854a240e170d40949cf1d757104a37e7849efb262",
+				"dweb:/ipfs/QmPuwYAgq3euJUL9YBH5og7NRh2B36jcdFsyQqwQeqzBwF"
 			]
 		}
 	},

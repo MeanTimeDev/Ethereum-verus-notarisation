@@ -40,8 +40,8 @@ contract VerusCrossChainExport{
 
         //create the Cross ChainExport to then serialize and hash
         
-        workingCCE.version = 0x80000000;
-        workingCCE.flags = 0x2100;
+        workingCCE.version = 1;
+        workingCCE.flags = 2;
         //workingCCE.flags = 1;
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
@@ -72,12 +72,12 @@ contract VerusCrossChainExport{
         workingCCE.totalamounts = currencies;
         workingCCE.totalfees = fees;
 
-        workingCCE.hashtransfers = uint256(hashedTransfers);
+        workingCCE.hashtransfers = hashedTransfers;
         VerusObjects.CCurrencyValueMap memory totalburnedCCVM = VerusObjects.CCurrencyValueMap(0x0000000000000000000000000000000000000000,0);
         
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
         workingCCE.totalburned[0] = totalburnedCCVM;
-        workingCCE.rewardaddress = address(VerusObjects.RewardAddress);
+        workingCCE.rewardaddress = VerusObjects.CTransferDestination(VerusObjects.RewardAddressType,address(VerusObjects.RewardAddress));
         workingCCE.firstinput = 0;
 
         //clear the arrays

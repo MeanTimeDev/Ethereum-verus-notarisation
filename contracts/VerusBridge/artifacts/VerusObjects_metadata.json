@@ -33,6 +33,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "RewardAddressType",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "VEth",
 				"outputs": [
 					{
@@ -65,6 +78,19 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currencyName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -112,11 +138,11 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0xbd4fc27d10578922518fab2ad9743b3a836d19cf9aa92ea764e4552bae94ef32",
+			"keccak256": "0x3aeb85cc5350a8171e3f9e4c1ddf810950d1040e4dc8cd5630f693afac7e77d5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ac3e25fa3a37ec263bd98ec86c0b70b7b1a9dacb4664ea139a97848d4cea07e8",
-				"dweb:/ipfs/QmUrPNJ2nBZoTJ8VyEfpikrbAmBZASxHcid9gnrg5vcPdi"
+				"bzz-raw://185fee885b4808aa25b3d5d23f47627edd8d3460c8a973e5c70b97be50901f9d",
+				"dweb:/ipfs/QmaNdEc4irjMrEQuHp9GrnoU2X72Ttw12FDKV6B9tBfgfA"
 			]
 		}
 	},

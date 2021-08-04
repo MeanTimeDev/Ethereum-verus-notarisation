@@ -51,7 +51,6 @@ contract VerusBridge {
     
     VerusObjects.infoDetails chainInfo;
     
-    
     bytes[] public SerializedCRTs;
     bytes[] public SerializedCCEs;
     bytes32[] public hashedCRTs;
@@ -59,7 +58,6 @@ contract VerusBridge {
     //event ReceivedTransfer(VerusObjects.CReserveTransfer transaction);
     //event ExportsReady(uint256 index);
     event Deprecate(address newAddress);
-    event CrossChainExport(VerusObjects.CCrossChainExport CCE,bytes serialized);
     
     constructor(address verusProofAddress,
         address tokenManagerAddress,
@@ -107,7 +105,7 @@ contract VerusBridge {
         if(_currencyid == VerusObjects.VEth){
             returnCurrency = VerusObjects.currencyDetail(
                 chainInfo.version,
-                "VETH",
+                VerusObjects.currencyName,
                 VerusObjects.VEth,
                 VerusObjects.VerusSystemId,
                 VerusObjects.VerusSystemId,
@@ -160,7 +158,7 @@ contract VerusBridge {
         }
     }
 
-    function exportETH(address _destination,uint32 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID) public payable returns(uint256){
+    function exportETH(address _destination,uint8 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
         require(msg.value > VerusObjects.transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
@@ -177,7 +175,7 @@ contract VerusBridge {
 
 
     //nFees and secondReserveID are used to send the tokens/eth on
-    function exportERC20(uint64 _amount,address _tokenAddress,address _destination,uint32 _destinationType,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID) public payable {
+    function exportERC20(uint64 _amount,address _tokenAddress,address _destination,uint8 _destinationType,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID) public payable {
         //check that they are not attempting to send Eth
         require(!deprecated,"Contract has been deprecated");
         require(msg.value >= VerusObjects.transactionFee + uint64(_nFees),"Please send the appropriate transaction fee.");
@@ -197,7 +195,7 @@ contract VerusBridge {
         _createExports(_amount,_tokenAddress,_destination,_destinationType,_destCurrencyID,_nFees,_feeCurrencyID,_destSystemID);
     }
 
-    function _createExports(uint64 _amount,address _tokenAddress,address _destination,uint32 _destinationType,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID) private {
+    function _createExports(uint64 _amount,address _tokenAddress,address _destination,uint8 _destinationType,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID) private {
         uint currentHeight = block.number;
         uint exportIndex;
         bool newHash;
@@ -206,7 +204,7 @@ contract VerusBridge {
         VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(_destinationType,_destination);
         VerusObjects.CCurrencyValueMap memory currencyvalues = VerusObjects.CCurrencyValueMap(_tokenAddress,_amount);
         VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(
-            1,
+            0x80000000,//force to be a signle value in the currencyvalue
             currencyvalues,
             flags,
             _feeCurrencyID,
@@ -241,14 +239,18 @@ contract VerusBridge {
         
         VerusObjects.CCrossChainExport memory CCCE = verusCCE.generateCCE(_readyExports[exportIndex]);
         //create a hash of the CCCE
+       // testCVMs.push(CCCE.totalamounts);
+    //    testCVMs.push(CCCE.totalfees);
+        
+        
         bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
         SerializedCCEs.push(serializedCCE);
-        CrossChainExport(CCCE,serializedCCE);
+        //CrossChainExport(CCCE,serializedCCE);
         bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]);
         SerializedCRTs.push(serializedTransfers);
         bytes32 hashedTransfers = keccak256(serializedTransfers);
         hashedCRTs.push(hashedTransfers);
-        bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,verusSerializer.writeCompactSize(_readyExports[exportIndex].length),serializedTransfers));
+        bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,serializedTransfers));
         
         //add the hashed value
         if(newHash) readyExportHashes.push(hashedCCE);
@@ -256,49 +258,6 @@ contract VerusBridge {
         if(firstBlock == 0) firstBlock = currentHeight;
         
     }
-
-    
-    /*
-    function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
-        uint currentHeight = block.number;
-        uint exportIndex;
-        bool newHash;
-
-        //if there is fees in the pool spend those and not the amount that
-        if(isPoolAvailable(newTransaction.fees,newTransaction.feecurrencyid)) {
-            poolSize -= newTransaction.fees;
-        }
-
-        //check if the current block height has a set of transfers associated with it if so add to the existing array
-        if(readyExportsByBlock[currentHeight].created) {
-            //append to an existing array of transfers
-            exportIndex = readyExportsByBlock[currentHeight].index;
-            _readyExports[exportIndex].push(newTransaction);
-            newHash = false;
-        }
-        else {
-            _pendingExports.push(newTransaction);
-            _readyExports.push(_pendingExports);
-            exportIndex = _readyExports.length - 1;
-            readyExportsByBlock[currentHeight] = VerusObjects.blockCreated(exportIndex,true);
-            delete _pendingExports;
-            newHash = true;
-        }
-        
-        //create a cross chain export, serialize it and hash it
-        //ExportsReady(exportIndex);
-        //VerusObjects.CCrossChainExport memory CCCE = _createCCrossChainExport(exportIndex);
-        VerusObjects.CCrossChainExport memory CCCE = verusCCE.generateCCE(_readyExports[exportIndex]);
-        //create a hash of the CCCE
-        bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
-        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]);
-        bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,serializedTransfers));
-        //bytes32 hashedCCE = keccak256(verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]));
-        //add the hashed value
-        if(newHash) readyExportHashes.push(hashedCCE);
-        else readyExportHashes[exportIndex] = hashedCCE;
-        
-    }*/
 
     /***
      * Import from Verus functions
