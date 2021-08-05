@@ -1898,19 +1898,19 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x7b01b13200331514f3e4b9b7b810cb3f2a25ae53aff8a026becd9d25dc4d0d09",
+			"keccak256": "0x3aeb85cc5350a8171e3f9e4c1ddf810950d1040e4dc8cd5630f693afac7e77d5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fc3949b0e375c247cecff4a1ffb85b27977abbb3c878a3fbec4e15d91eee8856",
-				"dweb:/ipfs/QmRZ5yUEYJAWn5EvsondXZHXJuyQFGNAz9wB5ccdwu9d1i"
+				"bzz-raw://185fee885b4808aa25b3d5d23f47627edd8d3460c8a973e5c70b97be50901f9d",
+				"dweb:/ipfs/QmaNdEc4irjMrEQuHp9GrnoU2X72Ttw12FDKV6B9tBfgfA"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xc9719af20b2e53ebc82038a859b2b25e45e2af002934a3927e7e4965b489e448",
+			"keccak256": "0xfdef65e7ce8ff7c1f8f0942fe939262614c725bea92e04a038ade1d49ee34d75",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f469ee770580b99f6f53dd0854a240e170d40949cf1d757104a37e7849efb262",
-				"dweb:/ipfs/QmPuwYAgq3euJUL9YBH5og7NRh2B36jcdFsyQqwQeqzBwF"
+				"bzz-raw://6c8a569e788fd942fded18c115eb6cb6572e51556696faa0e02371e749fc3e4d",
+				"dweb:/ipfs/QmX94cXEz35x4vg98xkELJcBBgba2rCajwccAmLdFAGTZV"
 			]
 		}
 	},

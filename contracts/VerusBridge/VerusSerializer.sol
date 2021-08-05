@@ -184,14 +184,15 @@ contract VerusSerializer {
         
         bytes memory output =  abi.encodePacked(
             writeVarInt(ct.version),
-            serializeCCurrencyValueMap(ct.currencyvalue),
+            abi.encodePacked(serializeAddress(ct.currencyvalue.currency),writeVarInt(ct.currencyvalue.amount)),//special interpretation of a ccurrencyvalue
             writeVarInt(ct.flags),
             serializeAddress(ct.feecurrencyid),
             writeVarInt(ct.fees),
             serializeCTransferDestination(ct.destination),
             serializeAddress(ct.destCurrencyID)
            );
-        if(ct.destSystemID != 0x0000000000000000000000000000000000000000) output = abi.encodePacked(output,serializeAddress(ct.destSystemID));
+         //see if its got a cross_system flag
+        if((ct.flags & 0x40)>0) output = abi.encodePacked(output,serializeAddress(ct.destSystemID));
         return output;
     }
     

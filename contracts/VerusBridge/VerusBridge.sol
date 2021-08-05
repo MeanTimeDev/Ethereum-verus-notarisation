@@ -204,7 +204,7 @@ contract VerusBridge {
         VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(_destinationType,_destination);
         VerusObjects.CCurrencyValueMap memory currencyvalues = VerusObjects.CCurrencyValueMap(_tokenAddress,_amount);
         VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(
-            0x80000000,//force to be a signle value in the currencyvalue
+            1,//force to be a signle value in the currencyvalue
             currencyvalues,
             flags,
             _feeCurrencyID,
@@ -244,11 +244,13 @@ contract VerusBridge {
         
         
         bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
-        SerializedCCEs.push(serializedCCE);
+        
         //CrossChainExport(CCCE,serializedCCE);
         bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]);
         SerializedCRTs.push(serializedTransfers);
         bytes32 hashedTransfers = keccak256(serializedTransfers);
+        bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);
+        SerializedCCEs.push(toHash);
         hashedCRTs.push(hashedTransfers);
         bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,serializedTransfers));
         
