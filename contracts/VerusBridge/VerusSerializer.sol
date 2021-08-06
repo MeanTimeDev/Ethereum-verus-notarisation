@@ -154,6 +154,7 @@ contract VerusSerializer {
         bytes memory be = abi.encodePacked(number);
         return(flipArray(be));
     }
+    
 /*
     function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
          return abi.encodePacked(serializeUint8(uint8(ctd.CTDType)),
@@ -196,10 +197,11 @@ contract VerusSerializer {
         return output;
     }
     
-    function serializeCReserveTransfers(VerusObjects.CReserveTransfer[] memory _bts) public pure returns(bytes memory){
+    function serializeCReserveTransfers(VerusObjects.CReserveTransfer[] memory _bts,bool includeSize) public pure returns(bytes memory){
         bytes memory inProgress;
         
-        inProgress =writeCompactSize(_bts.length);
+        if(includeSize) inProgress =writeCompactSize(_bts.length);
+        
         for(uint i=0; i < _bts.length; i++){
             inProgress = abi.encodePacked(inProgress,serializeCReserveTransfer(_bts[i]));
         }
@@ -208,7 +210,7 @@ contract VerusSerializer {
 
     function serializeCUTXORef(VerusObjects.CUTXORef memory _cutxo) public pure returns(bytes memory){
         return abi.encodePacked(
-            serializeUint256(_cutxo.hash),
+            serializeBytes32(_cutxo.hash),
             serializeUint32(_cutxo.n)
         );
     }
@@ -219,9 +221,9 @@ contract VerusSerializer {
             serializeInt16(_cpr.CPRtype),
             serializeAddress(_cpr.systemID),
             serializeUint32(_cpr.rootHeight),
-            serializeUint256(_cpr.stateRoot),
-            serializeUint256(_cpr.blockHash),
-            serializeUint256(_cpr.compactPower)
+            serializeBytes32(_cpr.stateRoot),
+            serializeBytes32(_cpr.blockHash),
+            serializeBytes32(_cpr.compactPower)
             );
     }
 
@@ -284,16 +286,32 @@ contract VerusSerializer {
         }
         return inProgress;
     }
+/*
+    struct CPBaaSNotarization {
+        uint32 version;
+        uint32 flags;
+        CTransferDestination proposer;
+        address currencyID;
+        CCoinbaseCurrencyState currencyState;
+        uint32 notarizationHeight;
+        CUTXORef prevNotarization;
+        bytes32 hashPrevNotarization;
+        uint64 prevheight;
+        CurrencyStates[] currencyStates;
+        ProofRoots[] proofRoots;
+        CNodeData[] nodes;
+    }*/
 
     function serializeCPBaaSNotarization(VerusObjects.CPBaaSNotarization memory _not) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeUint32(_not.version),
+            serializeUint32(_not.flags),
             serializeCTransferDestination(_not.proposer),
-            serializeUint32(_not.notarizationHeight),
+            serializeAddress(_not.currencyID),
             serializeCCoinbaseCurrencyState(_not.currencyState),
-            serializeUint256(_not.prevnotarizationtxid),
-            serializeInt64(_not.prevnotarizationout),
-            serializeUint256(_not.hashprevnotarizationobject),
+            serializeUint32(_not.notarizationHeight),
+            serializeCUTXORef(_not.prevNotarization),
+            serializeBytes32(_not.hashPrevNotarization),
             serializeUint64(_not.prevheight),
             serializeCurrencyStatesArray(_not.currencyStates),
             serializeProofRootsArray(_not.proofRoots),

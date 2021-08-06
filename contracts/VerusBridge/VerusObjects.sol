@@ -116,9 +116,9 @@ library VerusObjects {
         int16 CPRtype;                           // type of proof root
         address systemID;                       // system that can have things proven on it with this root
         uint32 rootHeight;                    // height (or sequence) of the notarization we certify
-        uint256 stateRoot;                      // latest MMR root of the notarization height
-        uint256 blockHash;                      // combination of block hash, block MMR root, and compact power (or external proxy) for the notarization height
-        uint256 compactPower;   
+        bytes32 stateRoot;                      // latest MMR root of the notarization height
+        bytes32 blockHash;                      // combination of block hash, block MMR root, and compact power (or external proxy) for the notarization height
+        bytes32 compactPower;   
     }
 
     struct CurrencyStates {
@@ -151,12 +151,12 @@ library VerusObjects {
         int64[] conversionPrice;   // calculated price in reserve for all conversions * 100000000
         int64[] viaConversionPrice; // the via conversion stage prices
         int64[] fees;              // fee values in native (or reserve if specified) coins for reserve transaction fees for the block
-        int64[] conversionFees;    // total of only conversion fees, which will accrue to the conversion transaction
         int32[] priorWeights;
+        int64[] conversionFees;    // total of only conversion fees, which will accrue to the conversion transaction
     }
 
     struct CUTXORef {
-        uint256 hash;
+        bytes32 hash;
         uint32 n;
     }
 
@@ -167,12 +167,13 @@ library VerusObjects {
 
     struct CPBaaSNotarization {
         uint32 version;
+        uint32 flags;
         CTransferDestination proposer;
-        uint32 notarizationHeight;
+        address currencyID;
         CCoinbaseCurrencyState currencyState;
-        uint256 prevnotarizationtxid;
-        int64 prevnotarizationout;
-        uint256 hashprevnotarizationobject;
+        uint32 notarizationHeight;
+        CUTXORef prevNotarization;
+        bytes32 hashPrevNotarization;
         uint64 prevheight;
         CurrencyStates[] currencyStates;
         ProofRoots[] proofRoots;

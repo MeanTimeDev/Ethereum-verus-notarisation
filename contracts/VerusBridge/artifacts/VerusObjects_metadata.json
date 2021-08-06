@@ -138,11 +138,11 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x3aeb85cc5350a8171e3f9e4c1ddf810950d1040e4dc8cd5630f693afac7e77d5",
+			"keccak256": "0x781d0211c8ebc10b96adda4895bb01ceecee5a816cbd94e055e49e6728b3fc08",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://185fee885b4808aa25b3d5d23f47627edd8d3460c8a973e5c70b97be50901f9d",
-				"dweb:/ipfs/QmaNdEc4irjMrEQuHp9GrnoU2X72Ttw12FDKV6B9tBfgfA"
+				"bzz-raw://42be844dbee60f87f44f217be5924ee2e3ed9fc16d9f7eba40811b6354dd8f31",
+				"dweb:/ipfs/Qmd2XqV7rLrcVzNemJHxsD3o9czbxWrzjetMnCpGarLE3g"
 			]
 		}
 	},

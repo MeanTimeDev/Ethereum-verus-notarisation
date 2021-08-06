@@ -1185,35 +1185,35 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0xa14f42182d37bb4cdd797dda758372694e2645ce3d23a2413460b9900dc90ec1",
+			"keccak256": "0xb6a9b5458acb5648015c35fa393408a889538b8248f0004c3d0cc464877bb27a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5bcc60ae953445d6bc9ad8716b3de7f4b2661ca89ded80ee0b86dfe7d625a6e8",
-				"dweb:/ipfs/QmW12ppjcPRfqyHLS27GAxUMq3cZBmvaatGZkiLFdxep1S"
+				"bzz-raw://a7f142fccc7d49cd77ab903978d0fe8ee6ce5f7b82910c1abb6a8325f944e520",
+				"dweb:/ipfs/QmfMj81J1EAxGBTDP9yax1KBW8n4HVaALXQDBugsHxjf7g"
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {
-			"keccak256": "0xf5efe29204dc36322e86900b9932dc2949078eaad4cf4226309deeae4e6e139e",
+			"keccak256": "0x05c9ada88db40ef907655bc14248a897c4231b6f44d3e9ae33fd334288d7bacb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6950e8ba43928562192a8913f2b948571a41ea58fff38b65b84e66be4eba0745",
-				"dweb:/ipfs/QmZYdtBse9fM4fzr1CVj15QkEd6gmZEQW54LZmZUX8upt1"
+				"bzz-raw://6ae0f1d3e37fed42246d1f0ad2efd295d153c9f002d0b6ee86fa31f9db3a1076",
+				"dweb:/ipfs/QmXCJRuDhGd3G1zeKKUG2JAtBynCYtXoP63LtX9g7yMhK1"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x3aeb85cc5350a8171e3f9e4c1ddf810950d1040e4dc8cd5630f693afac7e77d5",
+			"keccak256": "0x781d0211c8ebc10b96adda4895bb01ceecee5a816cbd94e055e49e6728b3fc08",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://185fee885b4808aa25b3d5d23f47627edd8d3460c8a973e5c70b97be50901f9d",
-				"dweb:/ipfs/QmaNdEc4irjMrEQuHp9GrnoU2X72Ttw12FDKV6B9tBfgfA"
+				"bzz-raw://42be844dbee60f87f44f217be5924ee2e3ed9fc16d9f7eba40811b6354dd8f31",
+				"dweb:/ipfs/Qmd2XqV7rLrcVzNemJHxsD3o9czbxWrzjetMnCpGarLE3g"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xfdef65e7ce8ff7c1f8f0942fe939262614c725bea92e04a038ade1d49ee34d75",
+			"keccak256": "0x7542925e20072441272497a62d4f3b7a4b95d01b0ccadffef4ba04241e3f69db",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6c8a569e788fd942fded18c115eb6cb6572e51556696faa0e02371e749fc3e4d",
-				"dweb:/ipfs/QmX94cXEz35x4vg98xkELJcBBgba2rCajwccAmLdFAGTZV"
+				"bzz-raw://b7087547a6a69dbdbb60dd7d7a99de6fd24e625972606812199ff0ae6c04a6c3",
+				"dweb:/ipfs/Qmf738NEhySsmYns96isTyLPRQXWTHoanrPReTDRzr2Mxq"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {

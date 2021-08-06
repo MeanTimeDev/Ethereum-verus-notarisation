@@ -168,7 +168,7 @@ contract VerusBridge {
         feesHeld += VerusObjects.transactionFee;
         //create a new Bridge Transaction
          
-        _createExports(uint64(amount), address(VerusObjects.VEth), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
+        _createExports(uint64(amount), address(VerusObjects.VerusCurrencyId), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
 
         return amount;
     }
@@ -239,14 +239,10 @@ contract VerusBridge {
         
         VerusObjects.CCrossChainExport memory CCCE = verusCCE.generateCCE(_readyExports[exportIndex]);
         //create a hash of the CCCE
-       // testCVMs.push(CCCE.totalamounts);
-    //    testCVMs.push(CCCE.totalfees);
-        
         
         bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
         
-        //CrossChainExport(CCCE,serializedCCE);
-        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex]);
+        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex],false);
         SerializedCRTs.push(serializedTransfers);
         bytes32 hashedTransfers = keccak256(serializedTransfers);
         bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);

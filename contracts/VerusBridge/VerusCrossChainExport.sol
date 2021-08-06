@@ -35,7 +35,7 @@ contract VerusCrossChainExport{
 
         VerusObjects.CCrossChainExport memory workingCCE;
         //create a hash of the transfers and then 
-        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(transfers);
+        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(transfers,false);
         bytes32 hashedTransfers = keccak256(serializedTransfers);
 
         //create the Cross ChainExport to then serialize and hash
