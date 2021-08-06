@@ -235,6 +235,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					}
+				],
+				"name": "convertToVerusNumber",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "_upgradedAddress",
 						"type": "address"
@@ -1185,11 +1204,11 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0xb6a9b5458acb5648015c35fa393408a889538b8248f0004c3d0cc464877bb27a",
+			"keccak256": "0x03c430553605c54a2e7cb8aa8af6d3d0002344f3fa144c4af06cd77f73fafff9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a7f142fccc7d49cd77ab903978d0fe8ee6ce5f7b82910c1abb6a8325f944e520",
-				"dweb:/ipfs/QmfMj81J1EAxGBTDP9yax1KBW8n4HVaALXQDBugsHxjf7g"
+				"bzz-raw://f7f48cec922b7de84aaf6c34d5f94792a91a19261ee0e9c284bf1d25157d59eb",
+				"dweb:/ipfs/QmNXWSEjGGc8ApBjJivPkovfQdZJRXbd3ke3Tjhe84BEzQ"
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {

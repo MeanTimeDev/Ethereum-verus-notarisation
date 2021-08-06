@@ -157,7 +157,13 @@ contract VerusBridge {
             return true;
         }
     }
-
+      function convertToVerusNumber(uint256 a) public pure returns (uint64) {
+        //require(b > 0); // Solidity only automatically asserts when dividing by 0
+        uint256 c = a / 10000000000;
+        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+    
+        return uint64(c);
+      }
     function exportETH(address _destination,uint8 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
@@ -168,7 +174,7 @@ contract VerusBridge {
         feesHeld += VerusObjects.transactionFee;
         //create a new Bridge Transaction
          
-        _createExports(uint64(amount), address(VerusObjects.VerusCurrencyId), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
+        _createExports(convertToVerusNumber(amount), address(VerusObjects.VerusCurrencyId), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
 
         return amount;
     }
