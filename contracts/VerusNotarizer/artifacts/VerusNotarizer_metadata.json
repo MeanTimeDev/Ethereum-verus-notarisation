@@ -1633,9 +1633,9 @@
 				"name": "setLatestData",
 				"outputs": [
 					{
-						"internalType": "bytes",
+						"internalType": "bytes32",
 						"name": "",
-						"type": "bytes"
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -1723,11 +1723,11 @@
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0xa59101243d78419963355985559b0c8e02edbb38a8c3cea343366afa49c2fb06",
+			"keccak256": "0xf592fbb59810b10f0f1f3b683f710d66dccbf2f055e5a73af54d1227e5f7b2f6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e7086d62cac45c7acdff75b12ceecd1f28297ec6ef8ae772f1cd24d8ac254f98",
-				"dweb:/ipfs/QmTS117dNzk8RBkKEMFApJKyx8zkeS12ANyS6EdDxbM833"
+				"bzz-raw://45a17aed5039111822188d3aa672b8109866238648e241d9888ca0769a811186",
+				"dweb:/ipfs/QmUtvy1VQFh4FbY34YoRNsd8rb3Bpm1TGRWnzSEkHgy7W6"
 			]
 		}
 	},

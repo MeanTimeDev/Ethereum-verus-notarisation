@@ -132,7 +132,7 @@ contract VerusNotarizer{
         bytes32[] memory _ss,
         uint[] memory blockheights,
         address[] memory notaryAddress
-        ) public returns(bytes memory){
+        ) public returns(bytes32){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -140,15 +140,13 @@ contract VerusNotarizer{
         require(_pbaasNotarization.notarizationheight > lastBlockHeight,"Block Height must be greater than current block height");
 
         bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
-        return serializedNotarisation;
+        
         //add in the extra fields for the hashing
         //add in the other pieces for encoding
         bytes32 hashedNotarization;
         address signer;
         uint8 numberOfSignatures = 0;
-        
-        
-        
+    
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
             hashedNotarization = keccak256(abi.encodePacked(vdxfcode,VerusObjects.VerusSystemId,blockheights[i],notaryAddress[i],serializedNotarisation));
@@ -160,7 +158,7 @@ contract VerusNotarizer{
                 break;
             }
         }
-        if(numberOfSignatures >= requiredNotaries){
+        if(numberOfSignatures >= currentNotariesRequired()){
             for(uint j = 0 ; j < _pbaasNotarization.proofroots.length;j++){
                 if(_pbaasNotarization.proofroots[j].systemid == VerusObjects.VEth){
                     notarizedStateRoots[_pbaasNotarization.notarizationheight] =  _pbaasNotarization.proofroots[j].stateroot;       
@@ -172,9 +170,9 @@ contract VerusNotarizer{
             }
             emit NewBlock(_pbaasNotarization,lastBlockHeight);
             //lastCurrencyState = _pbaasNotarization.currencyState;
-            return serializedNotarisation;
-        } //else return bytes(0x00);
         
+        } //else return bytes(0x00);
+        return hashedNotarization;
     }
 
     function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {
