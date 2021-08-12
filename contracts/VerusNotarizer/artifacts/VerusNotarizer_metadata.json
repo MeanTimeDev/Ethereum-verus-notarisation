@@ -73,7 +73,7 @@
 							},
 							{
 								"internalType": "address",
-								"name": "currencyID",
+								"name": "currencyid",
 								"type": "address"
 							},
 							{
@@ -90,7 +90,7 @@
 									},
 									{
 										"internalType": "address",
-										"name": "currencyID",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -110,7 +110,7 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "initialSupply",
+										"name": "initialsupply",
 										"type": "int64"
 									},
 									{
@@ -125,47 +125,47 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyOut",
+										"name": "primarycurrencyout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "preconvertedOut",
+										"name": "preconvertedout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyFees",
+										"name": "primarycurrencyfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyConversionFees",
+										"name": "primarycurrencyconversionfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveIn",
+										"name": "reservein",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "primaryCurrencyIn",
+										"name": "primarycurrencyin",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveOut",
+										"name": "reserveout",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionPrice",
+										"name": "conversionprice",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "viaConversionPrice",
+										"name": "viaconversionprice",
 										"type": "int64[]"
 									},
 									{
@@ -175,22 +175,22 @@
 									},
 									{
 										"internalType": "int32[]",
-										"name": "priorWeights",
+										"name": "priorweights",
 										"type": "int32[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionFees",
+										"name": "conversionfees",
 										"type": "int64[]"
 									}
 								],
 								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-								"name": "currencyState",
+								"name": "currencystate",
 								"type": "tuple"
 							},
 							{
 								"internalType": "uint32",
-								"name": "notarizationHeight",
+								"name": "notarizationheight",
 								"type": "uint32"
 							},
 							{
@@ -207,12 +207,12 @@
 									}
 								],
 								"internalType": "struct VerusObjects.CUTXORef",
-								"name": "prevNotarization",
+								"name": "prevnotarization",
 								"type": "tuple"
 							},
 							{
 								"internalType": "bytes32",
-								"name": "hashPrevNotarization",
+								"name": "hashprevnotarization",
 								"type": "bytes32"
 							},
 							{
@@ -224,7 +224,7 @@
 								"components": [
 									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -241,7 +241,7 @@
 											},
 											{
 												"internalType": "address",
-												"name": "currencyID",
+												"name": "currencyid",
 												"type": "address"
 											},
 											{
@@ -261,7 +261,7 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "initialSupply",
+												"name": "initialsupply",
 												"type": "int64"
 											},
 											{
@@ -276,47 +276,47 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyOut",
+												"name": "primarycurrencyout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "preconvertedOut",
+												"name": "preconvertedout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyFees",
+												"name": "primarycurrencyfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyConversionFees",
+												"name": "primarycurrencyconversionfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveIn",
+												"name": "reservein",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "primaryCurrencyIn",
+												"name": "primarycurrencyin",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveOut",
+												"name": "reserveout",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionPrice",
+												"name": "conversionprice",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "viaConversionPrice",
+												"name": "viaconversionprice",
 												"type": "int64[]"
 											},
 											{
@@ -326,88 +326,76 @@
 											},
 											{
 												"internalType": "int32[]",
-												"name": "priorWeights",
+												"name": "priorweights",
 												"type": "int32[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionFees",
+												"name": "conversionfees",
 												"type": "int64[]"
 											}
 										],
 										"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-										"name": "currencyState",
+										"name": "currencystate",
 										"type": "tuple"
 									}
 								],
 								"internalType": "struct VerusObjects.CurrencyStates[]",
-								"name": "currencyStates",
+								"name": "currencystates",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
+										"internalType": "int16",
+										"name": "version",
+										"type": "int16"
+									},
+									{
+										"internalType": "int16",
+										"name": "cprtype",
+										"type": "int16"
+									},
+									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "systemid",
 										"type": "address"
 									},
 									{
-										"components": [
-											{
-												"internalType": "int16",
-												"name": "version",
-												"type": "int16"
-											},
-											{
-												"internalType": "int16",
-												"name": "CPRtype",
-												"type": "int16"
-											},
-											{
-												"internalType": "address",
-												"name": "systemID",
-												"type": "address"
-											},
-											{
-												"internalType": "uint32",
-												"name": "rootHeight",
-												"type": "uint32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "stateRoot",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "blockHash",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "compactPower",
-												"type": "bytes32"
-											}
-										],
-										"internalType": "struct VerusObjects.CProofRoot",
-										"name": "proofRoot",
-										"type": "tuple"
+										"internalType": "uint32",
+										"name": "rootheight",
+										"type": "uint32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "stateroot",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "blockhash",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "compactpower",
+										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.ProofRoots[]",
-								"name": "proofRoots",
+								"internalType": "struct VerusObjects.CProofRoot[]",
+								"name": "proofroots",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
 										"internalType": "string",
-										"name": "networkAddress",
+										"name": "networkaddress",
 										"type": "string"
 									},
 									{
 										"internalType": "address",
-										"name": "nodeIdentity",
+										"name": "nodeidentity",
 										"type": "address"
 									}
 								],
@@ -563,7 +551,7 @@
 							},
 							{
 								"internalType": "address",
-								"name": "currencyID",
+								"name": "currencyid",
 								"type": "address"
 							},
 							{
@@ -580,7 +568,7 @@
 									},
 									{
 										"internalType": "address",
-										"name": "currencyID",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -600,7 +588,7 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "initialSupply",
+										"name": "initialsupply",
 										"type": "int64"
 									},
 									{
@@ -615,47 +603,47 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyOut",
+										"name": "primarycurrencyout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "preconvertedOut",
+										"name": "preconvertedout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyFees",
+										"name": "primarycurrencyfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyConversionFees",
+										"name": "primarycurrencyconversionfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveIn",
+										"name": "reservein",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "primaryCurrencyIn",
+										"name": "primarycurrencyin",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveOut",
+										"name": "reserveout",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionPrice",
+										"name": "conversionprice",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "viaConversionPrice",
+										"name": "viaconversionprice",
 										"type": "int64[]"
 									},
 									{
@@ -665,22 +653,22 @@
 									},
 									{
 										"internalType": "int32[]",
-										"name": "priorWeights",
+										"name": "priorweights",
 										"type": "int32[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionFees",
+										"name": "conversionfees",
 										"type": "int64[]"
 									}
 								],
 								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-								"name": "currencyState",
+								"name": "currencystate",
 								"type": "tuple"
 							},
 							{
 								"internalType": "uint32",
-								"name": "notarizationHeight",
+								"name": "notarizationheight",
 								"type": "uint32"
 							},
 							{
@@ -697,12 +685,12 @@
 									}
 								],
 								"internalType": "struct VerusObjects.CUTXORef",
-								"name": "prevNotarization",
+								"name": "prevnotarization",
 								"type": "tuple"
 							},
 							{
 								"internalType": "bytes32",
-								"name": "hashPrevNotarization",
+								"name": "hashprevnotarization",
 								"type": "bytes32"
 							},
 							{
@@ -714,7 +702,7 @@
 								"components": [
 									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -731,7 +719,7 @@
 											},
 											{
 												"internalType": "address",
-												"name": "currencyID",
+												"name": "currencyid",
 												"type": "address"
 											},
 											{
@@ -751,7 +739,7 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "initialSupply",
+												"name": "initialsupply",
 												"type": "int64"
 											},
 											{
@@ -766,47 +754,47 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyOut",
+												"name": "primarycurrencyout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "preconvertedOut",
+												"name": "preconvertedout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyFees",
+												"name": "primarycurrencyfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyConversionFees",
+												"name": "primarycurrencyconversionfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveIn",
+												"name": "reservein",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "primaryCurrencyIn",
+												"name": "primarycurrencyin",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveOut",
+												"name": "reserveout",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionPrice",
+												"name": "conversionprice",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "viaConversionPrice",
+												"name": "viaconversionprice",
 												"type": "int64[]"
 											},
 											{
@@ -816,88 +804,76 @@
 											},
 											{
 												"internalType": "int32[]",
-												"name": "priorWeights",
+												"name": "priorweights",
 												"type": "int32[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionFees",
+												"name": "conversionfees",
 												"type": "int64[]"
 											}
 										],
 										"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-										"name": "currencyState",
+										"name": "currencystate",
 										"type": "tuple"
 									}
 								],
 								"internalType": "struct VerusObjects.CurrencyStates[]",
-								"name": "currencyStates",
+								"name": "currencystates",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
+										"internalType": "int16",
+										"name": "version",
+										"type": "int16"
+									},
+									{
+										"internalType": "int16",
+										"name": "cprtype",
+										"type": "int16"
+									},
+									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "systemid",
 										"type": "address"
 									},
 									{
-										"components": [
-											{
-												"internalType": "int16",
-												"name": "version",
-												"type": "int16"
-											},
-											{
-												"internalType": "int16",
-												"name": "CPRtype",
-												"type": "int16"
-											},
-											{
-												"internalType": "address",
-												"name": "systemID",
-												"type": "address"
-											},
-											{
-												"internalType": "uint32",
-												"name": "rootHeight",
-												"type": "uint32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "stateRoot",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "blockHash",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "compactPower",
-												"type": "bytes32"
-											}
-										],
-										"internalType": "struct VerusObjects.CProofRoot",
-										"name": "proofRoot",
-										"type": "tuple"
+										"internalType": "uint32",
+										"name": "rootheight",
+										"type": "uint32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "stateroot",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "blockhash",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "compactpower",
+										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.ProofRoots[]",
-								"name": "proofRoots",
+								"internalType": "struct VerusObjects.CProofRoot[]",
+								"name": "proofroots",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
 										"internalType": "string",
-										"name": "networkAddress",
+										"name": "networkaddress",
 										"type": "string"
 									},
 									{
 										"internalType": "address",
-										"name": "nodeIdentity",
+										"name": "nodeidentity",
 										"type": "address"
 									}
 								],
@@ -1038,7 +1014,7 @@
 					},
 					{
 						"internalType": "address",
-						"name": "currencyID",
+						"name": "currencyid",
 						"type": "address"
 					},
 					{
@@ -1055,7 +1031,7 @@
 							},
 							{
 								"internalType": "address",
-								"name": "currencyID",
+								"name": "currencyid",
 								"type": "address"
 							},
 							{
@@ -1075,7 +1051,7 @@
 							},
 							{
 								"internalType": "int64",
-								"name": "initialSupply",
+								"name": "initialsupply",
 								"type": "int64"
 							},
 							{
@@ -1090,47 +1066,47 @@
 							},
 							{
 								"internalType": "int64",
-								"name": "primaryCurrencyOut",
+								"name": "primarycurrencyout",
 								"type": "int64"
 							},
 							{
 								"internalType": "int64",
-								"name": "preconvertedOut",
+								"name": "preconvertedout",
 								"type": "int64"
 							},
 							{
 								"internalType": "int64",
-								"name": "primaryCurrencyFees",
+								"name": "primarycurrencyfees",
 								"type": "int64"
 							},
 							{
 								"internalType": "int64",
-								"name": "primaryCurrencyConversionFees",
+								"name": "primarycurrencyconversionfees",
 								"type": "int64"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "reserveIn",
+								"name": "reservein",
 								"type": "int64[]"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "primaryCurrencyIn",
+								"name": "primarycurrencyin",
 								"type": "int64[]"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "reserveOut",
+								"name": "reserveout",
 								"type": "int64[]"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "conversionPrice",
+								"name": "conversionprice",
 								"type": "int64[]"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "viaConversionPrice",
+								"name": "viaconversionprice",
 								"type": "int64[]"
 							},
 							{
@@ -1140,22 +1116,22 @@
 							},
 							{
 								"internalType": "int32[]",
-								"name": "priorWeights",
+								"name": "priorweights",
 								"type": "int32[]"
 							},
 							{
 								"internalType": "int64[]",
-								"name": "conversionFees",
+								"name": "conversionfees",
 								"type": "int64[]"
 							}
 						],
 						"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-						"name": "currencyState",
+						"name": "currencystate",
 						"type": "tuple"
 					},
 					{
 						"internalType": "uint32",
-						"name": "notarizationHeight",
+						"name": "notarizationheight",
 						"type": "uint32"
 					},
 					{
@@ -1172,12 +1148,12 @@
 							}
 						],
 						"internalType": "struct VerusObjects.CUTXORef",
-						"name": "prevNotarization",
+						"name": "prevnotarization",
 						"type": "tuple"
 					},
 					{
 						"internalType": "bytes32",
-						"name": "hashPrevNotarization",
+						"name": "hashprevnotarization",
 						"type": "bytes32"
 					},
 					{
@@ -1239,9 +1215,9 @@
 				"name": "notarizedStateRoots",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "bytes32",
 						"name": "",
-						"type": "uint256"
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "view",
@@ -1293,7 +1269,7 @@
 							},
 							{
 								"internalType": "address",
-								"name": "currencyID",
+								"name": "currencyid",
 								"type": "address"
 							},
 							{
@@ -1310,7 +1286,7 @@
 									},
 									{
 										"internalType": "address",
-										"name": "currencyID",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -1330,7 +1306,7 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "initialSupply",
+										"name": "initialsupply",
 										"type": "int64"
 									},
 									{
@@ -1345,47 +1321,47 @@
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyOut",
+										"name": "primarycurrencyout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "preconvertedOut",
+										"name": "preconvertedout",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyFees",
+										"name": "primarycurrencyfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64",
-										"name": "primaryCurrencyConversionFees",
+										"name": "primarycurrencyconversionfees",
 										"type": "int64"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveIn",
+										"name": "reservein",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "primaryCurrencyIn",
+										"name": "primarycurrencyin",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "reserveOut",
+										"name": "reserveout",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionPrice",
+										"name": "conversionprice",
 										"type": "int64[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "viaConversionPrice",
+										"name": "viaconversionprice",
 										"type": "int64[]"
 									},
 									{
@@ -1395,22 +1371,22 @@
 									},
 									{
 										"internalType": "int32[]",
-										"name": "priorWeights",
+										"name": "priorweights",
 										"type": "int32[]"
 									},
 									{
 										"internalType": "int64[]",
-										"name": "conversionFees",
+										"name": "conversionfees",
 										"type": "int64[]"
 									}
 								],
 								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-								"name": "currencyState",
+								"name": "currencystate",
 								"type": "tuple"
 							},
 							{
 								"internalType": "uint32",
-								"name": "notarizationHeight",
+								"name": "notarizationheight",
 								"type": "uint32"
 							},
 							{
@@ -1427,12 +1403,12 @@
 									}
 								],
 								"internalType": "struct VerusObjects.CUTXORef",
-								"name": "prevNotarization",
+								"name": "prevnotarization",
 								"type": "tuple"
 							},
 							{
 								"internalType": "bytes32",
-								"name": "hashPrevNotarization",
+								"name": "hashprevnotarization",
 								"type": "bytes32"
 							},
 							{
@@ -1444,7 +1420,7 @@
 								"components": [
 									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "currencyid",
 										"type": "address"
 									},
 									{
@@ -1461,7 +1437,7 @@
 											},
 											{
 												"internalType": "address",
-												"name": "currencyID",
+												"name": "currencyid",
 												"type": "address"
 											},
 											{
@@ -1481,7 +1457,7 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "initialSupply",
+												"name": "initialsupply",
 												"type": "int64"
 											},
 											{
@@ -1496,47 +1472,47 @@
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyOut",
+												"name": "primarycurrencyout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "preconvertedOut",
+												"name": "preconvertedout",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyFees",
+												"name": "primarycurrencyfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64",
-												"name": "primaryCurrencyConversionFees",
+												"name": "primarycurrencyconversionfees",
 												"type": "int64"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveIn",
+												"name": "reservein",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "primaryCurrencyIn",
+												"name": "primarycurrencyin",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "reserveOut",
+												"name": "reserveout",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionPrice",
+												"name": "conversionprice",
 												"type": "int64[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "viaConversionPrice",
+												"name": "viaconversionprice",
 												"type": "int64[]"
 											},
 											{
@@ -1546,88 +1522,76 @@
 											},
 											{
 												"internalType": "int32[]",
-												"name": "priorWeights",
+												"name": "priorweights",
 												"type": "int32[]"
 											},
 											{
 												"internalType": "int64[]",
-												"name": "conversionFees",
+												"name": "conversionfees",
 												"type": "int64[]"
 											}
 										],
 										"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
-										"name": "currencyState",
+										"name": "currencystate",
 										"type": "tuple"
 									}
 								],
 								"internalType": "struct VerusObjects.CurrencyStates[]",
-								"name": "currencyStates",
+								"name": "currencystates",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
+										"internalType": "int16",
+										"name": "version",
+										"type": "int16"
+									},
+									{
+										"internalType": "int16",
+										"name": "cprtype",
+										"type": "int16"
+									},
+									{
 										"internalType": "address",
-										"name": "currencyId",
+										"name": "systemid",
 										"type": "address"
 									},
 									{
-										"components": [
-											{
-												"internalType": "int16",
-												"name": "version",
-												"type": "int16"
-											},
-											{
-												"internalType": "int16",
-												"name": "CPRtype",
-												"type": "int16"
-											},
-											{
-												"internalType": "address",
-												"name": "systemID",
-												"type": "address"
-											},
-											{
-												"internalType": "uint32",
-												"name": "rootHeight",
-												"type": "uint32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "stateRoot",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "blockHash",
-												"type": "bytes32"
-											},
-											{
-												"internalType": "bytes32",
-												"name": "compactPower",
-												"type": "bytes32"
-											}
-										],
-										"internalType": "struct VerusObjects.CProofRoot",
-										"name": "proofRoot",
-										"type": "tuple"
+										"internalType": "uint32",
+										"name": "rootheight",
+										"type": "uint32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "stateroot",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "blockhash",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "compactpower",
+										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.ProofRoots[]",
-								"name": "proofRoots",
+								"internalType": "struct VerusObjects.CProofRoot[]",
+								"name": "proofroots",
 								"type": "tuple[]"
 							},
 							{
 								"components": [
 									{
 										"internalType": "string",
-										"name": "networkAddress",
+										"name": "networkaddress",
 										"type": "string"
 									},
 									{
 										"internalType": "address",
-										"name": "nodeIdentity",
+										"name": "nodeidentity",
 										"type": "address"
 									}
 								],
@@ -1654,14 +1618,24 @@
 						"internalType": "bytes32[]",
 						"name": "_ss",
 						"type": "bytes32[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "blockheights",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "notaryAddress",
+						"type": "address[]"
 					}
 				],
 				"name": "setLatestData",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "bytes",
 						"name": "",
-						"type": "bool"
+						"type": "bytes"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -1733,27 +1707,27 @@
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x781d0211c8ebc10b96adda4895bb01ceecee5a816cbd94e055e49e6728b3fc08",
+			"keccak256": "0x8d158edb764f84fc35bd8bdf68ba00bf46d1f0d782929a65e09e8fe98064a484",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://42be844dbee60f87f44f217be5924ee2e3ed9fc16d9f7eba40811b6354dd8f31",
-				"dweb:/ipfs/Qmd2XqV7rLrcVzNemJHxsD3o9czbxWrzjetMnCpGarLE3g"
+				"bzz-raw://3e3f1ed03a9ee7793877b6356352460d63080bc42de889c336e492cb1348204a",
+				"dweb:/ipfs/Qmb6HiUQwyvfFKzh5SSA5Cf3kcK3Rs7PAbJ6ffBuX6CNUh"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x7542925e20072441272497a62d4f3b7a4b95d01b0ccadffef4ba04241e3f69db",
+			"keccak256": "0x0d62ed013cdd16230e79528fa6879223905889fa7221aa90c0fbd622634b66ea",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b7087547a6a69dbdbb60dd7d7a99de6fd24e625972606812199ff0ae6c04a6c3",
-				"dweb:/ipfs/Qmf738NEhySsmYns96isTyLPRQXWTHoanrPReTDRzr2Mxq"
+				"bzz-raw://46b195983697c2d5afc13c6767d8edea6ac261909b1904230b2869eb243bb903",
+				"dweb:/ipfs/QmV3ASggANXbioiEd5YsXRz4Wrt342tXVrRH7tm1wdBvNQ"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x41ee3bf6eb4f232d376582403feec989199865e19e01e455d43eda2616eaf215",
+			"keccak256": "0xa59101243d78419963355985559b0c8e02edbb38a8c3cea343366afa49c2fb06",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f0a22fe3acc7c23fd60e8a3ef0186c0e299fdd676324350b3abf20916cf70cf5",
-				"dweb:/ipfs/QmScVbVNzvpnS4xa8LkjwBi9HuUrm4KJCDKF3jhixmevuT"
+				"bzz-raw://e7086d62cac45c7acdff75b12ceecd1f28297ec6ef8ae772f1cd24d8ac254f98",
+				"dweb:/ipfs/QmTS117dNzk8RBkKEMFApJKyx8zkeS12ANyS6EdDxbM833"
 			]
 		}
 	},

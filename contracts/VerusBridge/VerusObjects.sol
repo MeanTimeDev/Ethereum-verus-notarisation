@@ -69,8 +69,8 @@ library VerusObjects {
         address feecurrencyid;
         uint256 fees;
         CTransferDestination destination;
-        address destCurrencyID;
-        address destSystemID;
+        address destcurrencyid;
+        address destsystemid;
     }
 
     //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
@@ -113,46 +113,46 @@ library VerusObjects {
 
     struct CProofRoot{
         int16 version;                        // to enable future data types with various functions
-        int16 CPRtype;                           // type of proof root
-        address systemID;                       // system that can have things proven on it with this root
-        uint32 rootHeight;                    // height (or sequence) of the notarization we certify
-        bytes32 stateRoot;                      // latest MMR root of the notarization height
-        bytes32 blockHash;                      // combination of block hash, block MMR root, and compact power (or external proxy) for the notarization height
-        bytes32 compactPower;   
+        int16 cprtype;                           // type of proof root
+        address systemid;                       // system that can have things proven on it with this root
+        uint32 rootheight;                    // height (or sequence) of the notarization we certify
+        bytes32 stateroot;                      // latest MMR root of the notarization height
+        bytes32 blockhash;                      // combination of block hash, block MMR root, and compact power (or external proxy) for the notarization height
+        bytes32 compactpower;   
     }
 
     struct CurrencyStates {
-        address currencyId;
-        CCoinbaseCurrencyState currencyState;
+        address currencyid;
+        CCoinbaseCurrencyState currencystate;
     }
 
     struct ProofRoots {
-        address currencyId;
-        CProofRoot proofRoot;
+        address currencyid;
+        CProofRoot proofroot;
     }
 
     struct CCoinbaseCurrencyState {
         uint16 version;
         uint16 flags;
-        address currencyID;
+        address currencyid;
         uint160[] currencies;
         int32[] weights;
         int64[] reserves;
-        int64 initialSupply;
+        int64 initialsupply;
         int64 emitted;
         int64 supply;
-        int64 primaryCurrencyOut;
-        int64 preconvertedOut;
-        int64 primaryCurrencyFees;
-        int64 primaryCurrencyConversionFees;
-        int64[] reserveIn;         // reserve currency converted to native
-        int64[] primaryCurrencyIn;
-        int64[] reserveOut;        // output can have both normal and reserve output value, if non-0, this is spent by the required output transactions
-        int64[] conversionPrice;   // calculated price in reserve for all conversions * 100000000
-        int64[] viaConversionPrice; // the via conversion stage prices
+        int64 primarycurrencyout;
+        int64 preconvertedout;
+        int64 primarycurrencyfees;
+        int64 primarycurrencyconversionfees;
+        int64[] reservein;         // reserve currency converted to native
+        int64[] primarycurrencyin;
+        int64[] reserveout;        // output can have both normal and reserve output value, if non-0, this is spent by the required output transactions
+        int64[] conversionprice;   // calculated price in reserve for all conversions * 100000000
+        int64[] viaconversionprice; // the via conversion stage prices
         int64[] fees;              // fee values in native (or reserve if specified) coins for reserve transaction fees for the block
-        int32[] priorWeights;
-        int64[] conversionFees;    // total of only conversion fees, which will accrue to the conversion transaction
+        int32[] priorweights;
+        int64[] conversionfees;    // total of only conversion fees, which will accrue to the conversion transaction
     }
 
     struct CUTXORef {
@@ -161,22 +161,22 @@ library VerusObjects {
     }
 
     struct CNodeData {
-        string networkAddress;
-        address nodeIdentity;
+        string networkaddress;
+        address nodeidentity;
     }
 
     struct CPBaaSNotarization {
         uint32 version;
         uint32 flags;
         CTransferDestination proposer;
-        address currencyID;
-        CCoinbaseCurrencyState currencyState;
-        uint32 notarizationHeight;
-        CUTXORef prevNotarization;
-        bytes32 hashPrevNotarization;
+        address currencyid;
+        CCoinbaseCurrencyState currencystate;
+        uint32 notarizationheight;
+        CUTXORef prevnotarization;
+        bytes32 hashprevnotarization;
         uint64 prevheight;
-        CurrencyStates[] currencyStates;
-        ProofRoots[] proofRoots;
+        CurrencyStates[] currencystates;
+        CProofRoot[] proofroots;
         CNodeData[] nodes;
     }
 

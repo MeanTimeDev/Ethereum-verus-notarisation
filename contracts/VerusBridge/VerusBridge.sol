@@ -158,6 +158,11 @@ contract VerusBridge {
         }
     }
 
+    function convertToVerusNumber(uint256 a) public pure returns (uint64) {
+        uint256 c = a / 10000000000;
+        return uint64(c);
+    }
+
     function exportETH(address _destination,uint8 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
@@ -168,7 +173,7 @@ contract VerusBridge {
         feesHeld += VerusObjects.transactionFee;
         //create a new Bridge Transaction
          
-        _createExports(uint64(amount), address(VerusObjects.VerusCurrencyId), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
+        _createExports(convertToVerusNumber(amount), address(VerusObjects.VEth), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
 
         return amount;
     }
@@ -276,7 +281,7 @@ contract VerusBridge {
         //check the transfers were in the hash.
         for(uint i = 0; i < _import.transfers.length; i++){
             //handle eth transactions
-            if(_import.transfers[i].destCurrencyID == VerusObjects.VEth) {
+            if(_import.transfers[i].destcurrencyid == VerusObjects.VEth) {
                 //cast the destination as an ethAddress
                 
                     sendEth(_import.transfers[i].currencyvalue.amount,payable(address(_import.transfers[i].destination.destinationaddress)));
@@ -284,7 +289,7 @@ contract VerusBridge {
         
             } else {
                 //handle erc20 transactions   
-                tokenManager.importERC20Tokens(_import.transfers[i].destCurrencyID,
+                tokenManager.importERC20Tokens(_import.transfers[i].destcurrencyid,
                     _import.transfers[i].currencyvalue.amount,
                     _import.transfers[i].destination.destinationaddress);
             }

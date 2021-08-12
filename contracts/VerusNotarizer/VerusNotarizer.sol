@@ -20,13 +20,15 @@ contract VerusNotarizer{
     uint8 requiredNotaries = 13;
     VerusBLAKE2b blake2b;
     VerusSerializer verusSerializer;
+    bytes20 vdxfcode = bytes20(0x280A0514338BBcDD2889F4809592816B388D4E7a);//0x280a0514338bbcdd2889f4809592816b388d4e7a;
+
 
     //list of all notarizers mapped to allow for quick searching
     mapping (address => bool) public komodoNotaries;
     address[] private notaries;
     //mapped blockdetails
     mapping (uint32 => VerusObjects.CPBaaSNotarization) public notarizedDataEntries;
-    mapping (uint32 => uint256) public notarizedStateRoots;
+    mapping (uint32 => bytes32) public notarizedStateRoots;
     uint32[] public blockHeights;
     //used to record the number of notaries
     uint8 private notaryCount;
@@ -53,7 +55,8 @@ contract VerusNotarizer{
 
     modifier onlyNotary() {
         address msgSender = msg.sender;
-        require(komodoNotaries[msgSender] == true, "Caller is not a notary");
+        bytes memory errorMessage = abi.encodePacked("Caller is not a notary",msgSender);
+        require(komodoNotaries[msgSender] == true, string(errorMessage));
         _;
     }
     
@@ -126,38 +129,52 @@ contract VerusNotarizer{
     function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
         uint8[] memory _vs,
         bytes32[] memory _rs,
-        bytes32[] memory _ss
-        ) public onlyNotary returns(bool){
+        bytes32[] memory _ss,
+        uint[] memory blockheights,
+        address[] memory notaryAddress
+        ) public returns(bytes memory){
 
         require(!deprecated,"Contract has been deprecated");
-        require(komodoNotaries[msg.sender],"Only a notary can call this function");
+        //require(komodoNotaries[msg.sender],"Only a notary can call this function");
         require((_rs.length == _ss.length) && (_rs.length == _vs.length),"Signature arrays must be of equal length");
-        require(_pbaasNotarization.notarizationHeight > lastBlockHeight,"Block Height must be greater than current block height");
+        require(_pbaasNotarization.notarizationheight > lastBlockHeight,"Block Height must be greater than current block height");
 
         bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
-        bytes32 hashedNotarization = blake2b.createHash(serializedNotarisation);
-        //require(hashedNotarization == _notarizedDataHash,"Hash of serialized notarization does not match.");
-        //check the hash of the data
-        //need to check the block hash matches the hashed notarized block
-    /*            
-        //if there is greater than 13 proper signatories then set the block hash
-        if(isNotarized(hashedNotarization,_rs,_ss,_vs)){
-            //loop through the notarized data to retrieve the relevant CProofRoot
-            for(uint i = 0 ; i < _pbaasNotarization.proofRoots.length;i++){
-                if(_pbaasNotarization.proofRoots[i].currencyId == VerusObjects.VEth){
-                    notarizedStateRoots[_pbaasNotarization.notarizationHeight] =  _pbaasNotarization.proofRoots[i].proofRoot.stateRoot;       
-                    blockHeights.push(_pbaasNotarization.notarizationHeight);
-                    if(lastBlockHeight <_pbaasNotarization.notarizationHeight){
-                        lastBlockHeight = _pbaasNotarization.notarizationHeight;
+        return serializedNotarisation;
+        //add in the extra fields for the hashing
+        //add in the other pieces for encoding
+        bytes32 hashedNotarization;
+        address signer;
+        uint8 numberOfSignatures = 0;
+        
+        
+        
+        for(uint i=0; i < blockheights.length;i++){
+            //build the hashing sequence
+            hashedNotarization = keccak256(abi.encodePacked(vdxfcode,VerusObjects.VerusSystemId,blockheights[i],notaryAddress[i],serializedNotarisation));
+            signer = recoverSigner(hashedNotarization, _vs[i], _rs[i], _ss[i]);
+            if(signer == notaryAddress[i] && komodoNotaries[signer]){
+                   numberOfSignatures++;     
+            }
+            if(numberOfSignatures >= requiredNotaries){
+                break;
+            }
+        }
+        if(numberOfSignatures >= requiredNotaries){
+            for(uint j = 0 ; j < _pbaasNotarization.proofroots.length;j++){
+                if(_pbaasNotarization.proofroots[j].systemid == VerusObjects.VEth){
+                    notarizedStateRoots[_pbaasNotarization.notarizationheight] =  _pbaasNotarization.proofroots[j].stateroot;       
+                    blockHeights.push(_pbaasNotarization.notarizationheight);
+                    if(lastBlockHeight <_pbaasNotarization.notarizationheight){
+                        lastBlockHeight = _pbaasNotarization.notarizationheight;
                     }
                 }
             }
-            
-*/
-            //lastCurrencyState = _currencyState;
             emit NewBlock(_pbaasNotarization,lastBlockHeight);
-            return true;
-       // } else return false;
+            //lastCurrencyState = _pbaasNotarization.currencyState;
+            return serializedNotarisation;
+        } //else return bytes(0x00);
+        
     }
 
     function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {

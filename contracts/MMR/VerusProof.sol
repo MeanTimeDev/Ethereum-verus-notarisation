@@ -27,10 +27,10 @@ contract VerusProof{
         bytes32 mmrRootHash;
         VerusObjects.CPBaaSNotarization memory verusNotarizedData = verusNotarizer.getNotarizedData(_blockHeight);
         //loop through the proofRoots get the appropriate one for eth
-        for(uint i = 0;i< verusNotarizedData.proofRoots.length;i++){
-            if(verusNotarizedData.proofRoots[i].currencyId == VerusObjects.VEth) {
-                mmrRootHash = bytes32(verusNotarizedData.proofRoots[i].proofRoot.stateRoot);
-            }
+        for(uint i = 0;i< verusNotarizedData.proofroots.length;i++){
+//            if(verusNotarizedData.proofroots[i].currencyid == VerusObjects.VEth) {
+                mmrRootHash = bytes32(verusNotarizedData.proofroots[i].stateroot);
+//            }
         }
         if (mmrRootHash == predictedRootHash(notarisationHash,_hashIndex,_transfersProof)) return true;
         else return false;
