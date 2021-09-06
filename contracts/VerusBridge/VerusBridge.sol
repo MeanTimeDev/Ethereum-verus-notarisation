@@ -110,7 +110,7 @@ contract VerusBridge {
                 VerusObjects.VerusSystemId,
                 VerusObjects.VerusSystemId,
                 2,
-                4,
+                3,
                 VerusObjects.CTransferDestination(9,VerusObjects.VEth),
                 VerusObjects.VerusSystemId,
                 0,
@@ -132,7 +132,7 @@ contract VerusBridge {
                 VerusObjects.VerusSystemId,
                 VerusObjects.VerusSystemId,
                 2,
-                4,
+                3,
                 VerusObjects.CTransferDestination(9,_currencyid),
                 VerusObjects.VerusSystemId,
                 0,
@@ -173,7 +173,7 @@ contract VerusBridge {
         feesHeld += VerusObjects.transactionFee;
         //create a new Bridge Transaction
          
-        _createExports(convertToVerusNumber(amount), address(VerusObjects.VEth), _destination,_destinationType, VerusObjects.VEth, _nFees, _feeCurrencyID, _destSystemID);
+        _createExports(convertToVerusNumber(amount), address(VerusObjects.VEth), _destination,_destinationType, VerusObjects.VerusSystemId, _nFees, _feeCurrencyID, _destSystemID);
 
         return amount;
     }
@@ -205,7 +205,7 @@ contract VerusBridge {
         uint exportIndex;
         bool newHash;
 
-        uint32 flags = 0;
+        uint32 flags = 65;
         VerusObjects.CTransferDestination memory transferDestination = VerusObjects.CTransferDestination(_destinationType,_destination);
         VerusObjects.CCurrencyValueMap memory currencyvalues = VerusObjects.CCurrencyValueMap(_tokenAddress,_amount);
         VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(
@@ -261,6 +261,21 @@ contract VerusBridge {
         if(firstBlock == 0) firstBlock = currentHeight;
         
     }
+    
+    function testCCE(uint exportIndex) public returns(bytes memory){
+        VerusObjects.CCrossChainExport memory CCCE = verusCCE.generateCCE(_readyExports[exportIndex]);
+        //create a hash of the CCCE
+        
+        bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
+        
+        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex],false);
+        return abi.encodePacked(serializedCCE,serializedTransfers);
+    }
+    
+    function testCCE2(uint exportIndex) public view returns(bytes memory){
+        bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex],false);
+        return serializedTransfers;
+    }
 
     /***
      * Import from Verus functions
@@ -312,7 +327,8 @@ contract VerusBridge {
         VerusObjects.CReserveTransferSet memory output = VerusObjects.CReserveTransferSet(
             eIndex, //position in array
             _blockNumber, //blockHeight
-            readyExportHashes[eIndex],
+            //readyExportHashes[eIndex],
+            hashedCRTs[eIndex],
             _readyExports[eIndex]
         );
         return output;
@@ -354,14 +370,14 @@ contract VerusBridge {
         return claimableFees[msg.sender];
 
     }
-
+/*
     function deprecate(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public{
         if(verusNotarizer.notarizedDeprecation(_upgradedAddress, _addressHash, _vs, _rs, _ss)){
             deprecated = true;
             upgradedAddress = _upgradedAddress;
             Deprecate(_upgradedAddress);
         }
-    }
+    }*/
 
 
 }

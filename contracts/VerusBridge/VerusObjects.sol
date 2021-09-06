@@ -174,7 +174,7 @@ library VerusObjects {
         uint32 notarizationheight;
         CUTXORef prevnotarization;
         bytes32 hashprevnotarization;
-        uint64 prevheight;
+        uint32 prevheight;
         CurrencyStates[] currencystates;
         CProofRoot[] proofroots;
         CNodeData[] nodes;

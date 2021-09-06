@@ -25,7 +25,7 @@ contract VerusProof{
 
     function proveTransaction(bytes32 notarisationHash,bytes32[] memory _transfersProof,uint32 _hashIndex,uint32 _blockHeight) public returns(bool){
         bytes32 mmrRootHash;
-        VerusObjects.CPBaaSNotarization memory verusNotarizedData = verusNotarizer.getNotarizedData(_blockHeight);
+        VerusObjects.CProofRoot memory verusNotarizedData = verusNotarizer.notarizedProofRoots(_blockHeight);
         //loop through the proofRoots get the appropriate one for eth
         for(uint i = 0;i< verusNotarizedData.proofroots.length;i++){
 //            if(verusNotarizedData.proofroots[i].currencyid == VerusObjects.VEth) {
