@@ -3,7 +3,7 @@
 
 pragma solidity >=0.6.0;
 pragma experimental ABIEncoderV2;
-import "../VerusBridge/VerusObjects.sol";
+import "../Libraries/VerusObjects.sol";
 import "./VerusBLAKE2b.sol";
 import "../VerusBridge/VerusSerializer.sol";
 import "../VerusNotarizer/VerusNotarizer.sol";
@@ -23,15 +23,7 @@ contract VerusProof{
         verusNotarizer = VerusNotarizer(notarizerAddress);   
     }
 
-    function proveTransaction(bytes32 notarisationHash,bytes32[] memory _transfersProof,uint32 _hashIndex,uint32 _blockHeight) public returns(bool){
-        bytes32 mmrRootHash;
-        VerusObjects.CProofRoot memory verusNotarizedData = verusNotarizer.notarizedProofRoots(_blockHeight);
-        //loop through the proofRoots get the appropriate one for eth
-        for(uint i = 0;i< verusNotarizedData.proofroots.length;i++){
-//            if(verusNotarizedData.proofroots[i].currencyid == VerusObjects.VEth) {
-                mmrRootHash = bytes32(verusNotarizedData.proofroots[i].stateroot);
-//            }
-        }
+    function proveTransaction(bytes32 mmrRootHash,bytes32 notarisationHash,bytes32[] memory _transfersProof,uint32 _hashIndex) public returns(bool){
         if (mmrRootHash == predictedRootHash(notarisationHash,_hashIndex,_transfersProof)) return true;
         else return false;
     }

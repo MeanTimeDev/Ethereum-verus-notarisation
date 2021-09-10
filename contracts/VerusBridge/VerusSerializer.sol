@@ -3,7 +3,8 @@
 
 pragma solidity >=0.6.0 < 0.9.0;
 pragma experimental ABIEncoderV2;   
-import "./VerusObjects.sol";
+import "../Libraries/VerusObjects.sol";
+import "../Libraries/VerusObjectsNotarization.sol";
 
 contract VerusSerializer {
 
@@ -146,7 +147,7 @@ contract VerusSerializer {
         return(flipArray(be));
     }
     
-    function serializeCTransferDestination(VerusObjects.CTransferDestination memory ctd) public pure returns(bytes memory){
+    function serializeCTransferDestination(VerusObjectsCommon.CTransferDestination memory ctd) public pure returns(bytes memory){
         return abi.encodePacked(serializeUint8(ctd.destinationtype),writeCompactSize(20),serializeAddress(ctd.destinationaddress));
     }   
 
@@ -190,14 +191,14 @@ contract VerusSerializer {
         return inProgress;
     }
 
-    function serializeCUTXORef(VerusObjects.CUTXORef memory _cutxo) public pure returns(bytes memory){
+    function serializeCUTXORef(VerusObjectsNotarization.CUTXORef memory _cutxo) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeBytes32(_cutxo.hash),
             serializeUint32(_cutxo.n)
         );
     }
 
-    function serializeCProofRoot(VerusObjects.CProofRoot memory _cpr) public pure returns(bytes memory){
+    function serializeCProofRoot(VerusObjectsNotarization.CProofRoot memory _cpr) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeAddress(_cpr.systemid),
             serializeInt16(_cpr.version),
@@ -210,14 +211,14 @@ contract VerusSerializer {
             );
     }
 
-    function serializeProofRoots(VerusObjects.ProofRoots memory _prs) public pure returns(bytes memory){
+    function serializeProofRoots(VerusObjectsNotarization.ProofRoots memory _prs) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeAddress(_prs.currencyid),
             serializeCProofRoot(_prs.proofroot)
         );  
     }
 
-    function serializeProofRootsArray(VerusObjects.ProofRoots[] memory _prsa) public pure returns(bytes memory){
+    function serializeProofRootsArray(VerusObjectsNotarization.ProofRoots[] memory _prsa) public pure returns(bytes memory){
         bytes memory inProgress;
         
         inProgress = writeCompactSize(_prsa.length);
@@ -227,7 +228,7 @@ contract VerusSerializer {
         return inProgress;
     }
     
-    function serializeCProofRootArray(VerusObjects.CProofRoot[] memory _prsa) public pure returns(bytes memory){
+    function serializeCProofRootArray(VerusObjectsNotarization.CProofRoot[] memory _prsa) public pure returns(bytes memory){
         bytes memory inProgress;
         
         inProgress = writeCompactSize(_prsa.length);
@@ -238,7 +239,7 @@ contract VerusSerializer {
     }
     
 
-    function serializeCCoinbaseCurrencyState(VerusObjects.CCoinbaseCurrencyState memory _cccs) public pure returns(bytes memory){
+    function serializeCCoinbaseCurrencyState(VerusObjectsNotarization.CCoinbaseCurrencyState memory _cccs) public pure returns(bytes memory){
         bytes memory part1 = abi.encodePacked(
             serializeUint16(_cccs.version),
             serializeUint16(_cccs.flags),
@@ -268,14 +269,14 @@ contract VerusSerializer {
         return abi.encodePacked(part1,part2);
     }
 
-    function serializeCurrencyStates(VerusObjects.CurrencyStates memory _cs) public pure returns(bytes memory){
+    function serializeCurrencyStates(VerusObjectsNotarization.CurrencyStates memory _cs) public pure returns(bytes memory){
         return abi.encodePacked(
             serializeAddress(_cs.currencyid),
             serializeCCoinbaseCurrencyState(_cs.currencystate)
         );
     }
 
-    function serializeCurrencyStatesArray(VerusObjects.CurrencyStates[] memory _csa) public pure returns(bytes memory){
+    function serializeCurrencyStatesArray(VerusObjectsNotarization.CurrencyStates[] memory _csa) public pure returns(bytes memory){
         bytes memory inProgress;
         inProgress = writeCompactSize(_csa.length);
         for(uint i=0; i < _csa.length; i++){
@@ -284,7 +285,7 @@ contract VerusSerializer {
         return inProgress;
     }
 
-    function serializeCPBaaSNotarization(VerusObjects.CPBaaSNotarization memory _not) public pure returns(bytes memory){
+    function serializeCPBaaSNotarization(VerusObjectsNotarization.CPBaaSNotarization memory _not) public pure returns(bytes memory){
         return abi.encodePacked(
             writeVarInt(_not.version),
             writeVarInt(_not.flags),
@@ -301,7 +302,7 @@ contract VerusSerializer {
         );
     }
     
-    function serializeNodes(VerusObjects.CNodeData[] memory _cnds) public pure returns(bytes memory){
+    function serializeNodes(VerusObjectsNotarization.CNodeData[] memory _cnds) public pure returns(bytes memory){
         bytes memory inProgress;
         inProgress = writeCompactSize(_cnds.length);
         for(uint i=0; i < _cnds.length; i++){
@@ -310,7 +311,7 @@ contract VerusSerializer {
         return inProgress;
     }
 
-    function serializeCNodeData(VerusObjects.CNodeData memory _cnd) public pure returns(bytes memory){
+    function serializeCNodeData(VerusObjectsNotarization.CNodeData memory _cnd) public pure returns(bytes memory){
         
         return abi.encodePacked(
             serializeString(_cnd.networkaddress),

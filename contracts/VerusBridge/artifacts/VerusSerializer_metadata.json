@@ -210,7 +210,7 @@
 								"type": "int64[]"
 							}
 						],
-						"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
+						"internalType": "struct VerusObjectsNotarization.CCoinbaseCurrencyState",
 						"name": "_cccs",
 						"type": "tuple"
 					}
@@ -339,7 +339,7 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "rewardaddress",
 								"type": "tuple"
 							},
@@ -442,7 +442,7 @@
 								"type": "address"
 							}
 						],
-						"internalType": "struct VerusObjects.CNodeData",
+						"internalType": "struct VerusObjectsNotarization.CNodeData",
 						"name": "_cnd",
 						"type": "tuple"
 					}
@@ -485,7 +485,7 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "proposer",
 								"type": "tuple"
 							},
@@ -602,7 +602,7 @@
 										"type": "int64[]"
 									}
 								],
-								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
+								"internalType": "struct VerusObjectsNotarization.CCoinbaseCurrencyState",
 								"name": "currencystate",
 								"type": "tuple"
 							},
@@ -624,7 +624,7 @@
 										"type": "uint32"
 									}
 								],
-								"internalType": "struct VerusObjects.CUTXORef",
+								"internalType": "struct VerusObjectsNotarization.CUTXORef",
 								"name": "prevnotarization",
 								"type": "tuple"
 							},
@@ -753,12 +753,12 @@
 												"type": "int64[]"
 											}
 										],
-										"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
+										"internalType": "struct VerusObjectsNotarization.CCoinbaseCurrencyState",
 										"name": "currencystate",
 										"type": "tuple"
 									}
 								],
-								"internalType": "struct VerusObjects.CurrencyStates[]",
+								"internalType": "struct VerusObjectsNotarization.CurrencyStates[]",
 								"name": "currencystates",
 								"type": "tuple[]"
 							},
@@ -800,7 +800,7 @@
 										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.CProofRoot[]",
+								"internalType": "struct VerusObjectsNotarization.CProofRoot[]",
 								"name": "proofroots",
 								"type": "tuple[]"
 							},
@@ -817,12 +817,12 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CNodeData[]",
+								"internalType": "struct VerusObjectsNotarization.CNodeData[]",
 								"name": "nodes",
 								"type": "tuple[]"
 							}
 						],
-						"internalType": "struct VerusObjects.CPBaaSNotarization",
+						"internalType": "struct VerusObjectsNotarization.CPBaaSNotarization",
 						"name": "_not",
 						"type": "tuple"
 					}
@@ -878,7 +878,7 @@
 								"type": "bytes32"
 							}
 						],
-						"internalType": "struct VerusObjects.CProofRoot",
+						"internalType": "struct VerusObjectsNotarization.CProofRoot",
 						"name": "_cpr",
 						"type": "tuple"
 					}
@@ -934,7 +934,7 @@
 								"type": "bytes32"
 							}
 						],
-						"internalType": "struct VerusObjects.CProofRoot[]",
+						"internalType": "struct VerusObjectsNotarization.CProofRoot[]",
 						"name": "_prsa",
 						"type": "tuple[]"
 					}
@@ -1004,7 +1004,7 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "destination",
 								"type": "tuple"
 							},
@@ -1089,7 +1089,7 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "destination",
 								"type": "tuple"
 							},
@@ -1140,7 +1140,7 @@
 								"type": "address"
 							}
 						],
-						"internalType": "struct VerusObjects.CTransferDestination",
+						"internalType": "struct VerusObjectsCommon.CTransferDestination",
 						"name": "ctd",
 						"type": "tuple"
 					}
@@ -1171,7 +1171,7 @@
 								"type": "uint32"
 							}
 						],
-						"internalType": "struct VerusObjects.CUTXORef",
+						"internalType": "struct VerusObjectsNotarization.CUTXORef",
 						"name": "_cutxo",
 						"type": "tuple"
 					}
@@ -1304,12 +1304,12 @@
 										"type": "int64[]"
 									}
 								],
-								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
+								"internalType": "struct VerusObjectsNotarization.CCoinbaseCurrencyState",
 								"name": "currencystate",
 								"type": "tuple"
 							}
 						],
-						"internalType": "struct VerusObjects.CurrencyStates",
+						"internalType": "struct VerusObjectsNotarization.CurrencyStates",
 						"name": "_cs",
 						"type": "tuple"
 					}
@@ -1442,12 +1442,12 @@
 										"type": "int64[]"
 									}
 								],
-								"internalType": "struct VerusObjects.CCoinbaseCurrencyState",
+								"internalType": "struct VerusObjectsNotarization.CCoinbaseCurrencyState",
 								"name": "currencystate",
 								"type": "tuple"
 							}
 						],
-						"internalType": "struct VerusObjects.CurrencyStates[]",
+						"internalType": "struct VerusObjectsNotarization.CurrencyStates[]",
 						"name": "_csa",
 						"type": "tuple[]"
 					}
@@ -1573,7 +1573,7 @@
 								"type": "address"
 							}
 						],
-						"internalType": "struct VerusObjects.CNodeData[]",
+						"internalType": "struct VerusObjectsNotarization.CNodeData[]",
 						"name": "_cnds",
 						"type": "tuple[]"
 					}
@@ -1636,12 +1636,12 @@
 										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.CProofRoot",
+								"internalType": "struct VerusObjectsNotarization.CProofRoot",
 								"name": "proofroot",
 								"type": "tuple"
 							}
 						],
-						"internalType": "struct VerusObjects.ProofRoots",
+						"internalType": "struct VerusObjectsNotarization.ProofRoots",
 						"name": "_prs",
 						"type": "tuple"
 					}
@@ -1704,12 +1704,12 @@
 										"type": "bytes32"
 									}
 								],
-								"internalType": "struct VerusObjects.CProofRoot",
+								"internalType": "struct VerusObjectsNotarization.CProofRoot",
 								"name": "proofroot",
 								"type": "tuple"
 							}
 						],
-						"internalType": "struct VerusObjects.ProofRoots[]",
+						"internalType": "struct VerusObjectsNotarization.ProofRoots[]",
 						"name": "_prsa",
 						"type": "tuple[]"
 					}
@@ -1964,19 +1964,35 @@
 	},
 	"sources": {
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x694bd785d7008bdb5a573b8e069c2577dbb03e7f3765cd2ac37266d66132e336",
+			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9974b9c9c261d22b37e1e001288811eb9a0b867756f74a6a1a1e98927790b7c2",
-				"dweb:/ipfs/QmQhk6iDG8gsVkbPeRryhymQVELntGjMnV46ksvNtMAnth"
+				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
+				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+			]
+		},
+		"contracts/VerusBridge/VerusObjectsCommon.sol": {
+			"keccak256": "0xfe058b5e96065103d3aad3ac2dedca134b01af3016a96d240664e54d22959d53",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://022d2f5fa8c0199590303608a07648eb3a0a3c3200e29e172b9745ff230da16c",
+				"dweb:/ipfs/QmXp1gcMuLojTUvGjQ3ttvQotuGvYUkepdwiUoXsBzP5uG"
+			]
+		},
+		"contracts/VerusBridge/VerusObjectsNotarization.sol": {
+			"keccak256": "0xdffb141ca8e542554532a5bbec4428bb31766260eccd354cc7b271e6c9cb6cd7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b07f9be5d84abd64e699b85dbbb1e4b1ac3759ad3316cd5a20ec7337a25318df",
+				"dweb:/ipfs/QmWPVUA6W3DSw5afrR3M645AWCARdqhGuUVNjXYnVmisVJ"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xe8a4acaf52db6fced016ada7bdfc4c33b346ae6ae954b379b92f2e69b963e6be",
+			"keccak256": "0xecd33703073ce45ce5448cb8c85b967be77325c84d14cbbb57a22436db2ada93",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5f7ba8ac62c13d50824ac2c85964076d26b864257a11792ecd307b62340300f2",
-				"dweb:/ipfs/QmSnwoZMaT5ntx1bAPanz9kSreYmeyGzcTQN8Y6WBJuTAP"
+				"bzz-raw://8dc75acd52d1fce8530650b185dd9b48921a9d130a14e923967948f992160714",
+				"dweb:/ipfs/QmcmLvQ1Gjy7m4Fr7fHyUCVTiizRbZykRV8UwdXimpk3Cx"
 			]
 		}
 	},

@@ -70,18 +70,18 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "destination",
 								"type": "tuple"
 							},
 							{
 								"internalType": "address",
-								"name": "destCurrencyID",
+								"name": "destcurrencyid",
 								"type": "address"
 							},
 							{
 								"internalType": "address",
-								"name": "destSystemID",
+								"name": "destsystemid",
 								"type": "address"
 							}
 						],
@@ -203,7 +203,7 @@
 										"type": "address"
 									}
 								],
-								"internalType": "struct VerusObjects.CTransferDestination",
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
 								"name": "rewardaddress",
 								"type": "tuple"
 							},
@@ -249,28 +249,52 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/VerusBridge/VerusCrossChainExport.sol": {
-			"keccak256": "0x099b0211708a118ca7d92f455783d81df69f79afdca9dcca12e84525c80c1e6b",
+		"contracts/VerusBridge/VerusConstants.sol": {
+			"keccak256": "0x1f56515608af4324b6d9d725b3ab88b97b32e0e557b0215e61e773a3a6d31c82",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://90b27af43fccec1c9e62ed69e41445a49eb7d436ea9ba4fc51d5e3e589f0d495",
-				"dweb:/ipfs/QmaHTUHyyyncCTjqLmnzQHgRNcDWBnZ4YXbJzGMp58SE6F"
+				"bzz-raw://db5eba3185fe588b353ad545b297297db5e3a9e580e1c51a3f8172446f0a0b75",
+				"dweb:/ipfs/QmdYW5pDhgFqixDzyHTjwb1sCazTHQp4tLJSuW9msB4rXF"
+			]
+		},
+		"contracts/VerusBridge/VerusCrossChainExport.sol": {
+			"keccak256": "0x335b4c517d51d8886c188b42d61aacc3f37c801d21ce810ea7a6d8241c24a9fc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d29f12a62aaca12d42ca2c140ede8c73ac065801496f1121dfd26237611501ff",
+				"dweb:/ipfs/QmWpTKb3hLzKFzdWDVJDKUaTEKxJ2HB6CYgB17PE8yUjqs"
 			]
 		},
 		"contracts/VerusBridge/VerusObjects.sol": {
-			"keccak256": "0x781d0211c8ebc10b96adda4895bb01ceecee5a816cbd94e055e49e6728b3fc08",
+			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://42be844dbee60f87f44f217be5924ee2e3ed9fc16d9f7eba40811b6354dd8f31",
-				"dweb:/ipfs/Qmd2XqV7rLrcVzNemJHxsD3o9czbxWrzjetMnCpGarLE3g"
+				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
+				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+			]
+		},
+		"contracts/VerusBridge/VerusObjectsCommon.sol": {
+			"keccak256": "0xfe058b5e96065103d3aad3ac2dedca134b01af3016a96d240664e54d22959d53",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://022d2f5fa8c0199590303608a07648eb3a0a3c3200e29e172b9745ff230da16c",
+				"dweb:/ipfs/QmXp1gcMuLojTUvGjQ3ttvQotuGvYUkepdwiUoXsBzP5uG"
+			]
+		},
+		"contracts/VerusBridge/VerusObjectsNotarization.sol": {
+			"keccak256": "0xdffb141ca8e542554532a5bbec4428bb31766260eccd354cc7b271e6c9cb6cd7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b07f9be5d84abd64e699b85dbbb1e4b1ac3759ad3316cd5a20ec7337a25318df",
+				"dweb:/ipfs/QmWPVUA6W3DSw5afrR3M645AWCARdqhGuUVNjXYnVmisVJ"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x7542925e20072441272497a62d4f3b7a4b95d01b0ccadffef4ba04241e3f69db",
+			"keccak256": "0xecd33703073ce45ce5448cb8c85b967be77325c84d14cbbb57a22436db2ada93",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b7087547a6a69dbdbb60dd7d7a99de6fd24e625972606812199ff0ae6c04a6c3",
-				"dweb:/ipfs/Qmf738NEhySsmYns96isTyLPRQXWTHoanrPReTDRzr2Mxq"
+				"bzz-raw://8dc75acd52d1fce8530650b185dd9b48921a9d130a14e923967948f992160714",
+				"dweb:/ipfs/QmcmLvQ1Gjy7m4Fr7fHyUCVTiizRbZykRV8UwdXimpk3Cx"
 			]
 		}
 	},

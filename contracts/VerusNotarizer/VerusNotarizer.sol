@@ -4,7 +4,8 @@
 pragma solidity >=0.6.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
-import "../VerusBridge/VerusObjects.sol";
+import "../Libraries/VerusConstants.sol";
+import "../Libraries/VerusObjectsNotarization.sol";
 import "../VerusBridge/VerusSerializer.sol";
 import "../MMR/VerusBLAKE2b.sol";
 
@@ -30,7 +31,7 @@ contract VerusNotarizer{
     mapping (address => address) public notaryAddressMapping;
     address[] private notaries;
     //mapped blockdetails
-    mapping (uint32 => VerusObjects.CProofRoot) public notarizedProofRoots;
+    mapping (uint32 => VerusObjectsNotarization.CProofRoot) public notarizedProofRoots;
     mapping (uint32 => bytes32) public notarizedStateRoots;
     
     uint32[] public blockHeights;
@@ -40,7 +41,7 @@ contract VerusNotarizer{
     // Notifies when the contract is deprecated
     event Deprecate(address newAddress);
     // Notifies when a new block hash is published
-    event NewBlock(VerusObjects.CPBaaSNotarization,uint32 notarizedDataHeight);
+    event NewBlock(VerusObjectsNotarization.CPBaaSNotarization,uint32 notarizedDataHeight);
 
     constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] memory _notaries,address[] memory _notariesEthAddress) public {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
@@ -82,30 +83,6 @@ contract VerusNotarizer{
         else return uint8(halfNotaryCount);
     }
 
-/*
-    function splitSignature(bytes memory _sig)
-        public
-        pure
-        returns (uint8, bytes32, bytes32)
-    {
-        require(_sig.length == 65);
-
-        bytes32 r;
-        bytes32 s;
-        uint8 v;
-
-        assembly {
-            // first 32 bytes, after the length prefix
-            r := mload(add(_sig, 32))
-            // second 32 bytes
-            s := mload(add(_sig, 64))
-            // final byte (first byte of the next 32 bytes)
-            v := byte(0, mload(add(_sig, 96)))
-        }
-
-        return (v, r, s);
-    }*/
-
     function isNotarized(bytes32 _notarizedDataHash,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
@@ -130,85 +107,14 @@ contract VerusNotarizer{
         } else return false;
 
     }
-   
-    function testData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
+ 
+    function setLatestData(VerusObjectsNotarization.CPBaaSNotarization memory _pbaasNotarization,
         uint8[] memory _vs,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
         uint32[] memory blockheights,
         address[] memory notaryAddress
-        ) public view returns(address) {
-            
-            address signer;
-            bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
-            
-        for(uint i=0; i < blockheights.length;i++){
-            //build the hashing sequence
-            //uint i=0;
-            bytes memory toHash = abi.encodePacked(uint8(1),vdxfcode,VerusObjects.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
-            bytes32 hashedNotarization = keccak256(toHash);
-            signer = recoverSigner(hashedNotarization, (_vs[i]-4), _rs[i], _ss[i]);
-            
-            //toHash = abi.encodePacked(vdxfcode,VerusObjects.VerusSystemId,blockheights[i],notaryAddress[i],keccak256(serializedNotarisation));
-          /*  output[i] = toHash;
-            hashedNotarization = keccak256(toHash);
-            signer = recoverSigner(hashedNotarization, _vs[i], _rs[i], _ss[i]);
-            if(signer == notaryAddress[i] && komodoNotaries[signer]){
-                   numberOfSignatures++;     
-            }
-            if(numberOfSignatures >= requiredNotaries){
-                break;
-            }*/
-        }
-        return signer;
-        
-        
-    }
-    
-    
-    function testData2(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
-        uint8[] memory _vs,
-        bytes32[] memory _rs,
-        bytes32[] memory _ss,
-        uint32[] memory blockheights,
-        address[] memory notaryAddress
-        ) public view returns(string memory output) {
-            
-                    bytes memory serializedNotarisation = verusSerializer.serializeCPBaaSNotarization(_pbaasNotarization);
-        
-        //add in the extra fields for the hashing
-        //add in the other pieces for encoding
-        bytes32 hashedNotarization;
-        address signer;
-        uint8 numberOfSignatures = 0;
-        bytes memory toHash;
-        output = "start";
- /*
-        for(uint i=0; i < blockheights.length;i++){
-            //build the hashing sequence
-            toHash = abi.encodePacked(uint8(1),vdxfcode,VerusObjects.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
-            //output[i] = toHash;
-            hashedNotarization = keccak256(toHash);
-            signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
-            if(signer == notaryAddressMapping[notaryAddress[i]]){
-                   numberOfSignatures++;
-                   output = string(abi.encodePacked(output," correct signature "));
-            }
-            if(numberOfSignatures >= requiredNotaries){
-                break;
-            }
-        }*/
-        return output;
-        
-    }
-
-    function setLatestData(VerusObjects.CPBaaSNotarization memory _pbaasNotarization,
-        uint8[] memory _vs,
-        bytes32[] memory _rs,
-        bytes32[] memory _ss,
-        uint32[] memory blockheights,
-        address[] memory notaryAddress
-        ) public returns(uint32){
+        ) public returns(string memory output){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -223,15 +129,17 @@ contract VerusNotarizer{
         address signer;
         uint8 numberOfSignatures = 0;
         bytes memory toHash;
+        output = "start";
         
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
-            toHash = abi.encodePacked(uint8(1),vdxfcode,VerusObjects.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
+            toHash = abi.encodePacked(uint8(1),vdxfcode,VerusConstants.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
             //output[i] = toHash;
             hashedNotarization = keccak256(toHash);
             signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
             if(signer == notaryAddressMapping[notaryAddress[i]]){
                    numberOfSignatures++;
+                   output = string(abi.encodePacked(output," signature correct"));
             }
             if(numberOfSignatures >= requiredNotaries){
                 break;
@@ -239,25 +147,26 @@ contract VerusNotarizer{
         }
         
         if(numberOfSignatures >= currentNotariesRequired()){
+                output = string(abi.encodePacked(output," enough notaries"));
             for(uint j = 0 ; j < _pbaasNotarization.proofroots.length;j++){
                 //output = string(abi.encodePacked(output," adding notarized data "));
-                if(_pbaasNotarization.proofroots[j].systemid == VerusObjects.VerusCurrencyId){
+                if(_pbaasNotarization.proofroots[j].systemid == VerusConstants.VerusCurrencyId){
                     
                     notarizedStateRoots[_pbaasNotarization.notarizationheight] =  _pbaasNotarization.proofroots[j].stateroot;       
                     notarizedProofRoots[_pbaasNotarization.notarizationheight] = _pbaasNotarization.proofroots[j];
                     blockHeights.push(_pbaasNotarization.notarizationheight);
                     if(lastBlockHeight <_pbaasNotarization.notarizationheight){
-                        // output = string(abi.encodePacked(output," setting lastBlockHeight"));
+                         output = string(abi.encodePacked(output," setting lastBlockHeight"));
                         lastBlockHeight = _pbaasNotarization.notarizationheight;
                     }
                 }
             }
             emit NewBlock(_pbaasNotarization,lastBlockHeight);
-            //lastCurrencyState = _pbaasNotarization.currencyState;
+            
         
         }
       
-        return lastBlockHeight;
+        return output;
     }
 
     function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {
@@ -269,7 +178,7 @@ contract VerusNotarizer{
         return blockHeights.length;
     }
 
-    function getLastProofRoot() public view returns(VerusObjects.CProofRoot memory){
+    function getLastProofRoot() public view returns(VerusObjectsNotarization.CProofRoot memory){
 
         return notarizedProofRoots[lastBlockHeight];
 

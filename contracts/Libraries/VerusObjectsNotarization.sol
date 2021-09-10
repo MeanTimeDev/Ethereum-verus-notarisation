@@ -4,114 +4,11 @@
 pragma solidity >=0.6.0 < 0.9.0;
 pragma experimental ABIEncoderV2;
 
-library VerusObjects {
-    
-    address constant public VEth = 0x67460C2f56774eD27EeB8685f29f6CEC0B090B00;
-    address constant public EthSystemID = VEth;
-    address constant public VerusSystemId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
-    address constant public VerusCurrencyId = 0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d;
-    //does this need to be set 
-    address constant public RewardAddress = 0xB26820ee0C9b1276Aac834Cf457026a575dfCe84;
-    uint8 constant public RewardAddressType = 4;
-    uint256 constant public transactionFee = 100000000000000; //0.0001 eth
-    string constant public currencyName = "VETH";
-    
-    struct blockCreated {
-        uint index;
-        bool created;
-    }
-    struct infoDetails {
-        uint version;
-        string VRSCversion;
-        uint blocks;
-        uint tiptime;
-        string name;
-        bool testnet;
-    }
-    
-    struct currencyDetail {
-        uint version;
-        string name;
-        address currencyid;
-        address parent;
-        address systemid;
-        uint8 notarizationprotocol;
-        uint8 proofprotocol;
-        VerusObjects.CTransferDestination nativecurrencyid;
-        address launchsystemid;
-        uint startblock;
-        uint endblock;
-        uint256 initialsupply;
-        uint256 prelaunchcarveout;
-        address gatewayid;
-        address[] notaries;
-        uint minnotariesconfirm;
-    }
-    
-    struct CCurrencyValueMap {
-        address currency;
-        uint64 amount;
-    }
+import "./VerusObjectsCommon.sol";
 
-    enum TransferDestinationType{
-        DEST_INVALID,DEST_PK,DEST_PKH,DEST_SH,DEST_ID,DEST_FULLID,DEST_QUANTUM,DEST_RAW
-    }
+library VerusObjectsNotarization {
 
-    struct CTransferDestination {
-        uint8 destinationtype;
-        address destinationaddress;
-    }
-
-    struct CReserveTransfer {
-        uint32 version;
-        CCurrencyValueMap currencyvalue;
-        uint32 flags;
-        address feecurrencyid;
-        uint256 fees;
-        CTransferDestination destination;
-        address destcurrencyid;
-        address destsystemid;
-    }
-
-    //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
-    
-    struct CReserveTransferSet {
-        uint position;
-        uint blockHeight;
-        bytes32 exportHash;
-        CReserveTransfer[] transfers;
-    }
-
-    struct CReserveTransferImport {
-        uint height;
-        bytes32 txid; //this is actually the hash of the transfers that can be used for proof
-        uint txoutnum; //index of the transfers in the exports array
-        CCrossChainExport exportinfo;
-        bytes32[] partialtransactionproof;  //partial transaction proof is for the 
-        CReserveTransfer[] transfers;
-    }
-
-    struct CCrossChainExport {
-        uint16 version;
-        uint16 flags;
-        address sourcesystemid;
-        uint32 sourceheightstart;
-        uint32 sourceheightend;
-        address destinationsystemid;
-        address destinationcurrencyid;
-        uint32 numinputs;
-        CCurrencyValueMap[] totalamounts;
-        CCurrencyValueMap[] totalfees;
-        bytes32 hashtransfers; // hashtransfers
-        CCurrencyValueMap[] totalburned;
-        CTransferDestination rewardaddress; //reward address
-        int32 firstinput;
-    }
-
-    /** Notarisation objects */
-
-
-    struct CProofRoot{
+     struct CProofRoot{
         int16 version;                        // to enable future data types with various functions
         int16 cprtype;                           // type of proof root
         address systemid;                       // system that can have things proven on it with this root
@@ -168,7 +65,7 @@ library VerusObjects {
     struct CPBaaSNotarization {
         uint32 version;
         uint32 flags;
-        CTransferDestination proposer;
+        VerusObjectsCommon.CTransferDestination proposer;
         address currencyid;
         CCoinbaseCurrencyState currencystate;
         uint32 notarizationheight;

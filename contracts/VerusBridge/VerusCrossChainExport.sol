@@ -4,7 +4,8 @@
 pragma solidity >=0.6.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
-import "../VerusBridge/VerusObjects.sol";
+import "../Libraries/VerusObjects.sol";
+import "../Libraries/VerusConstants.sol";
 import "../VerusBridge/VerusSerializer.sol";
 
 contract VerusCrossChainExport{
@@ -46,9 +47,9 @@ contract VerusCrossChainExport{
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
         workingCCE.sourceheightend =uint32(block.number);
-        workingCCE.sourcesystemid = VerusObjects.VEth;
-        workingCCE.destinationsystemid = VerusObjects.VerusSystemId;
-        workingCCE.destinationcurrencyid = VerusObjects.VerusSystemId;
+        workingCCE.sourcesystemid = VerusConstants.VEth;
+        workingCCE.destinationsystemid = VerusConstants.VerusSystemId;
+        workingCCE.destinationcurrencyid = VerusConstants.VerusSystemId;
         workingCCE.numinputs = uint32(transfers.length);
         //loop through the array and create totals of the amounts and fees
         
@@ -87,7 +88,7 @@ contract VerusCrossChainExport{
         
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
         workingCCE.totalburned[0] = totalburnedCCVM;
-        workingCCE.rewardaddress = VerusObjects.CTransferDestination(VerusObjects.RewardAddressType,address(VerusObjects.RewardAddress));
+        workingCCE.rewardaddress = VerusObjectsCommon.CTransferDestination(VerusConstants.RewardAddressType,address(VerusConstants.RewardAddress));
         workingCCE.firstinput = 0;
 
         //clear the arrays
