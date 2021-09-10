@@ -15,6 +15,9 @@ contract VerusProof{
     VerusNotarizer verusNotarizer;
     VerusSerializer verusSerializer;
     
+    bytes32[] public computedValues;
+    bytes32 public testHashedTransfers;
+    
     event HashEvent(bytes32 newHash,uint8 eventType);
 
     constructor(address notarizerAddress,address verusBLAKE2b,address verusSerializerAddress) {
@@ -23,6 +26,17 @@ contract VerusProof{
         verusNotarizer = VerusNotarizer(notarizerAddress);   
     }
 
+    function hashTransfers(VerusObjects.CReserveTransfer[] memory _transfers) public returns (bytes32){
+        bytes memory sTransfers = verusSerializer.serializeCReserveTransfers(_transfers,false);
+        return blake2b.createHash(sTransfers);
+    }
+    
+    
+    function checkTransfers(VerusObjects.CReserveTransferImport memory _import) public returns (bool){
+        //identify if the hashed transfers are in the 
+        testHashedTransfers = hashTransfers(_import.transfers);
+        return true;
+    }
 
     function checkProof(bytes32 hashToProve, VerusObjects.CTXProof[] memory _branches) public returns(bytes32){
         //loop through the branches from bottom to top
@@ -62,6 +76,7 @@ contract VerusProof{
     function proveComponents(VerusObjects.CReserveTransferImport memory _import) public returns(bytes32 txRoot){
         
         bytes32 hashInProgress;
+        bytes32 testHash;
         
         if (_import.partialtransactionproof.components.length > 0)
         {   
@@ -71,15 +86,19 @@ contract VerusProof{
                 txRoot = checkProof(hashInProgress,_import.partialtransactionproof.components[0].elProof);           
             }
         }
+        computedValues.push(txRoot);
         
         for(uint i = 1; i < _import.partialtransactionproof.components.length; i++){
             hashInProgress = blake2b.createHash(_import.partialtransactionproof.components[i].elVchObj);
-           if(txRoot != checkProof(hashInProgress,_import.partialtransactionproof.components[i].elProof)){
+            computedValues.push(hashInProgress);
+            testHash = checkProof(hashInProgress,_import.partialtransactionproof.components[i].elProof);
+            computedValues.push(testHash);
+           if(txRoot != testHash){
                txRoot = 0x0000000000000000000000000000000000000000000000000000000000000000;
                break;
            }          
         }
-        
+        checkTransfers(_import);
         return txRoot;
         
     }

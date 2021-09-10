@@ -330,7 +330,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MMR/BLAKE2b/BLAKE2b.sol": "BLAKE2b"
+			"contracts/testB2B/BLAKE2b.sol": "BLAKE2b"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -344,7 +344,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
+		"contracts/testB2B/BLAKE2b.sol": {
 			"keccak256": "0xb6ccad7545f9d579a7a38fface03479183a6c3825125b18bbaf16b882da49405",
 			"license": "GPL-3.0-or-later",
 			"urls": [
@@ -352,12 +352,12 @@
 				"dweb:/ipfs/QmUe7f85vsimHnNXkQJDi8DDVv42SDj9R8voQLvzHVXSeH"
 			]
 		},
-		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
-			"keccak256": "0x312a6514938efeccf9f672daa963d87e0c19251f795dee296439c1aac41707a4",
+		"contracts/testB2B/BLAKE2b_Constants.sol": {
+			"keccak256": "0x18faf4f0ae2dc89230e7e1c1e63a0f712c9f93494582dba8ecc9bb1b7f3e64d4",
 			"license": "GPL-3.0-or-later",
 			"urls": [
-				"bzz-raw://9569924781f32b39b0a5945565adb8ffa6ed2fa485572c9314f6be4b673590ad",
-				"dweb:/ipfs/QmQbnszDfdCXrghfMjjR9vY6Zh8F3KqPCjRr6oJEQLEkhz"
+				"bzz-raw://3d60c15a8a66dc2722018d14f590821025f21ba09fe956955781f6c7da094d1c",
+				"dweb:/ipfs/QmcWjT8hPmFsgc5DH7jRrh8frsWzJvbq1Mpmo3FaZXxqRx"
 			]
 		}
 	},

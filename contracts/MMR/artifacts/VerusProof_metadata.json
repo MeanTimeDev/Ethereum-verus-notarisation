@@ -186,6 +186,464 @@
 			{
 				"inputs": [
 					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "height",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "txid",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "txoutnum",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint16",
+										"name": "version",
+										"type": "uint16"
+									},
+									{
+										"internalType": "uint16",
+										"name": "flags",
+										"type": "uint16"
+									},
+									{
+										"internalType": "address",
+										"name": "sourcesystemid",
+										"type": "address"
+									},
+									{
+										"internalType": "uint32",
+										"name": "sourceheightstart",
+										"type": "uint32"
+									},
+									{
+										"internalType": "uint32",
+										"name": "sourceheightend",
+										"type": "uint32"
+									},
+									{
+										"internalType": "address",
+										"name": "destinationsystemid",
+										"type": "address"
+									},
+									{
+										"internalType": "address",
+										"name": "destinationcurrencyid",
+										"type": "address"
+									},
+									{
+										"internalType": "uint32",
+										"name": "numinputs",
+										"type": "uint32"
+									},
+									{
+										"components": [
+											{
+												"internalType": "address",
+												"name": "currency",
+												"type": "address"
+											},
+											{
+												"internalType": "uint64",
+												"name": "amount",
+												"type": "uint64"
+											}
+										],
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+										"name": "totalamounts",
+										"type": "tuple[]"
+									},
+									{
+										"components": [
+											{
+												"internalType": "address",
+												"name": "currency",
+												"type": "address"
+											},
+											{
+												"internalType": "uint64",
+												"name": "amount",
+												"type": "uint64"
+											}
+										],
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+										"name": "totalfees",
+										"type": "tuple[]"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "hashtransfers",
+										"type": "bytes32"
+									},
+									{
+										"components": [
+											{
+												"internalType": "address",
+												"name": "currency",
+												"type": "address"
+											},
+											{
+												"internalType": "uint64",
+												"name": "amount",
+												"type": "uint64"
+											}
+										],
+										"internalType": "struct VerusObjects.CCurrencyValueMap[]",
+										"name": "totalburned",
+										"type": "tuple[]"
+									},
+									{
+										"components": [
+											{
+												"internalType": "uint8",
+												"name": "destinationtype",
+												"type": "uint8"
+											},
+											{
+												"internalType": "address",
+												"name": "destinationaddress",
+												"type": "address"
+											}
+										],
+										"internalType": "struct VerusObjectsCommon.CTransferDestination",
+										"name": "rewardaddress",
+										"type": "tuple"
+									},
+									{
+										"internalType": "int32",
+										"name": "firstinput",
+										"type": "int32"
+									}
+								],
+								"internalType": "struct VerusObjects.CCrossChainExport",
+								"name": "exportinfo",
+								"type": "tuple"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint8",
+										"name": "version",
+										"type": "uint8"
+									},
+									{
+										"internalType": "uint8",
+										"name": "typeC",
+										"type": "uint8"
+									},
+									{
+										"components": [
+											{
+												"internalType": "uint8",
+												"name": "branchType",
+												"type": "uint8"
+											},
+											{
+												"components": [
+													{
+														"internalType": "uint8",
+														"name": "CMerkleBranchBase",
+														"type": "uint8"
+													},
+													{
+														"internalType": "uint32",
+														"name": "nIndex",
+														"type": "uint32"
+													},
+													{
+														"internalType": "uint32",
+														"name": "nSize",
+														"type": "uint32"
+													},
+													{
+														"internalType": "bytes32[]",
+														"name": "branch",
+														"type": "bytes32[]"
+													}
+												],
+												"internalType": "struct VerusObjects.CMerkleBranch",
+												"name": "proofSequence",
+												"type": "tuple"
+											}
+										],
+										"internalType": "struct VerusObjects.CTXProof[]",
+										"name": "txproof",
+										"type": "tuple[]"
+									},
+									{
+										"components": [
+											{
+												"internalType": "uint8",
+												"name": "elType",
+												"type": "uint8"
+											},
+											{
+												"internalType": "uint8",
+												"name": "elIdx",
+												"type": "uint8"
+											},
+											{
+												"internalType": "bytes",
+												"name": "elVchObj",
+												"type": "bytes"
+											},
+											{
+												"components": [
+													{
+														"internalType": "uint8",
+														"name": "branchType",
+														"type": "uint8"
+													},
+													{
+														"components": [
+															{
+																"internalType": "uint8",
+																"name": "CMerkleBranchBase",
+																"type": "uint8"
+															},
+															{
+																"internalType": "uint32",
+																"name": "nIndex",
+																"type": "uint32"
+															},
+															{
+																"internalType": "uint32",
+																"name": "nSize",
+																"type": "uint32"
+															},
+															{
+																"internalType": "bytes32[]",
+																"name": "branch",
+																"type": "bytes32[]"
+															}
+														],
+														"internalType": "struct VerusObjects.CMerkleBranch",
+														"name": "proofSequence",
+														"type": "tuple"
+													}
+												],
+												"internalType": "struct VerusObjects.CTXProof[]",
+												"name": "elProof",
+												"type": "tuple[]"
+											},
+											{
+												"internalType": "uint32",
+												"name": "VchObjIndex",
+												"type": "uint32"
+											}
+										],
+										"internalType": "struct VerusObjects.CComponents[]",
+										"name": "components",
+										"type": "tuple[]"
+									}
+								],
+								"internalType": "struct VerusObjects.CPtransactionproof",
+								"name": "partialtransactionproof",
+								"type": "tuple"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint32",
+										"name": "version",
+										"type": "uint32"
+									},
+									{
+										"components": [
+											{
+												"internalType": "address",
+												"name": "currency",
+												"type": "address"
+											},
+											{
+												"internalType": "uint64",
+												"name": "amount",
+												"type": "uint64"
+											}
+										],
+										"internalType": "struct VerusObjects.CCurrencyValueMap",
+										"name": "currencyvalue",
+										"type": "tuple"
+									},
+									{
+										"internalType": "uint32",
+										"name": "flags",
+										"type": "uint32"
+									},
+									{
+										"internalType": "address",
+										"name": "feecurrencyid",
+										"type": "address"
+									},
+									{
+										"internalType": "uint256",
+										"name": "fees",
+										"type": "uint256"
+									},
+									{
+										"components": [
+											{
+												"internalType": "uint8",
+												"name": "destinationtype",
+												"type": "uint8"
+											},
+											{
+												"internalType": "address",
+												"name": "destinationaddress",
+												"type": "address"
+											}
+										],
+										"internalType": "struct VerusObjectsCommon.CTransferDestination",
+										"name": "destination",
+										"type": "tuple"
+									},
+									{
+										"internalType": "address",
+										"name": "destcurrencyid",
+										"type": "address"
+									},
+									{
+										"internalType": "address",
+										"name": "destsystemid",
+										"type": "address"
+									}
+								],
+								"internalType": "struct VerusObjects.CReserveTransfer[]",
+								"name": "transfers",
+								"type": "tuple[]"
+							}
+						],
+						"internalType": "struct VerusObjects.CReserveTransferImport",
+						"name": "_import",
+						"type": "tuple"
+					}
+				],
+				"name": "checkTransfers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "computedValues",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint32",
+								"name": "version",
+								"type": "uint32"
+							},
+							{
+								"components": [
+									{
+										"internalType": "address",
+										"name": "currency",
+										"type": "address"
+									},
+									{
+										"internalType": "uint64",
+										"name": "amount",
+										"type": "uint64"
+									}
+								],
+								"internalType": "struct VerusObjects.CCurrencyValueMap",
+								"name": "currencyvalue",
+								"type": "tuple"
+							},
+							{
+								"internalType": "uint32",
+								"name": "flags",
+								"type": "uint32"
+							},
+							{
+								"internalType": "address",
+								"name": "feecurrencyid",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fees",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint8",
+										"name": "destinationtype",
+										"type": "uint8"
+									},
+									{
+										"internalType": "address",
+										"name": "destinationaddress",
+										"type": "address"
+									}
+								],
+								"internalType": "struct VerusObjectsCommon.CTransferDestination",
+								"name": "destination",
+								"type": "tuple"
+							},
+							{
+								"internalType": "address",
+								"name": "destcurrencyid",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "destsystemid",
+								"type": "address"
+							}
+						],
+						"internalType": "struct VerusObjects.CReserveTransfer[]",
+						"name": "_transfers",
+						"type": "tuple[]"
+					}
+				],
+				"name": "hashTransfers",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "bytes32",
 						"name": "_hashToCheck",
 						"type": "bytes32"
@@ -953,6 +1411,19 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testHashedTransfers",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -1039,11 +1510,11 @@
 			]
 		},
 		"contracts/MMR/VerusProof.sol": {
-			"keccak256": "0x478e899a946a1130fa75e9788d75533e3d2bf42a2fd8cb96f698cecec9783f67",
+			"keccak256": "0xd728683d3ec8e8cc01c11bd28701498d5590d5de20575544ef4576ddf77c2c6c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4620c4276916a376d994be84cc716d1208583bfc12507aae59e0f5e2b79120a6",
-				"dweb:/ipfs/QmWW93pCGAjzYcJBrjSaKoK7D3GbahF5tVFQNy6mzuiPjf"
+				"bzz-raw://4a48de7dfceb768209d62fec87d11b9a94e2de5f5bc243fd3779e65b5fcd9419",
+				"dweb:/ipfs/QmVrBdzuxqoJa1PrsQnDVbBvwSuQyfcKPKSkeDe1QrrGV1"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
