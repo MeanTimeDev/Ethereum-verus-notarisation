@@ -4,14 +4,14 @@
 pragma solidity >=0.6.0;
 pragma experimental ABIEncoderV2;
 import "../Libraries/VerusObjects.sol";
-import "./VerusBLAKE2b.sol";
+import "./VerusBlake2b.sol";
 import "../VerusBridge/VerusSerializer.sol";
 import "../VerusNotarizer/VerusNotarizer.sol";
 
 contract VerusProof{
 
     uint256 mmrRoot;
-    VerusBLAKE2b blake2b;
+    VerusBlake2b blake2b;
     VerusNotarizer verusNotarizer;
     VerusSerializer verusSerializer;
     
@@ -21,12 +21,12 @@ contract VerusProof{
     event HashEvent(bytes32 newHash,uint8 eventType);
 
     constructor(address notarizerAddress,address verusBLAKE2b,address verusSerializerAddress) {
-        blake2b = VerusBLAKE2b(verusBLAKE2b);
+        blake2b = VerusBlake2b(verusBLAKE2b);
         verusSerializer = VerusSerializer(verusSerializerAddress);
         verusNotarizer = VerusNotarizer(notarizerAddress);   
     }
 
-    function hashTransfers(VerusObjects.CReserveTransfer[] memory _transfers) public returns (bytes32){
+    function hashTransfers(VerusObjects.CReserveTransfer[] memory _transfers) public view returns (bytes32){
         bytes memory sTransfers = verusSerializer.serializeCReserveTransfers(_transfers,false);
         return blake2b.createHash(sTransfers);
     }
@@ -38,7 +38,7 @@ contract VerusProof{
         return true;
     }
 
-    function checkProof(bytes32 hashToProve, VerusObjects.CTXProof[] memory _branches) public returns(bytes32){
+    function checkProof(bytes32 hashToProve, VerusObjects.CTXProof[] memory _branches) public view returns(bytes32){
         //loop through the branches from bottom to top
         bytes32 hashInProgress = hashToProve;
         for(uint i = 0; i < _branches.length; i++){
@@ -47,12 +47,12 @@ contract VerusProof{
         return hashInProgress;
     }
 
-    function checkBranch(bytes32 _hashToCheck,VerusObjects.CMerkleBranch memory _branch) public returns(bytes32){
+    function checkBranch(bytes32 _hashToCheck,VerusObjects.CMerkleBranch memory _branch) public view returns(bytes32){
         
         require(_branch.nIndex >= 0,"Index cannot be less than 0");
         require(_branch.branch.length > 0,"Branch must be longer than 0");
         uint branchLength = _branch.branch.length;
-        bytes32 hashInProgress;
+        bytes32 hashInProgress = _hashToCheck;
         bytes memory joined;
         hashInProgress = blake2b.bytesToBytes32(abi.encodePacked(_hashToCheck));
         uint hashIndex = _branch.nIndex;
@@ -111,12 +111,12 @@ contract VerusProof{
     }
     
 
-    function proveTransaction(bytes32 mmrRootHash,bytes32 notarisationHash,bytes32[] memory _transfersProof,uint32 _hashIndex) public returns(bool){
+    function proveTransaction(bytes32 mmrRootHash,bytes32 notarisationHash,bytes32[] memory _transfersProof,uint32 _hashIndex) public view returns(bool){
         if (mmrRootHash == predictedRootHash(notarisationHash,_hashIndex,_transfersProof)) return true;
         else return false;
     }
 
-    function predictedRootHash(bytes32 _hashToCheck,uint _hashIndex,bytes32[] memory _branch) public returns(bytes32){
+    function predictedRootHash(bytes32 _hashToCheck,uint _hashIndex,bytes32[] memory _branch) public view returns(bytes32){
         
         require(_hashIndex >= 0,"Index cannot be less than 0");
         require(_branch.length > 0,"Branch must be longer than 0");
@@ -141,7 +141,7 @@ contract VerusProof{
 
     }
 
-    function checkHashInRoot(bytes32 _mmrRoot,bytes32 _hashToCheck,uint _hashIndex,bytes32[] memory _branch) public returns(bool){
+    function checkHashInRoot(bytes32 _mmrRoot,bytes32 _hashToCheck,uint _hashIndex,bytes32[] memory _branch) public view returns(bool){
         bytes32 calculatedHash = predictedRootHash(_hashToCheck,_hashIndex,_branch);
         if(_mmrRoot == calculatedHash) return true;
         else return false;

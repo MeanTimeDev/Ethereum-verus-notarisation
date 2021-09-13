@@ -158,7 +158,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MMR/VerusBLAKE2b.sol": "VerusBLAKE2b"
+			"contracts/MMR/VerusBLAKE2bOld.sol": "VerusBLAKE2b"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -188,7 +188,7 @@
 				"dweb:/ipfs/QmQbnszDfdCXrghfMjjR9vY6Zh8F3KqPCjRr6oJEQLEkhz"
 			]
 		},
-		"contracts/MMR/VerusBLAKE2b.sol": {
+		"contracts/MMR/VerusBLAKE2bOld.sol": {
 			"keccak256": "0x75022515f9d2e2bdfa150506b57b7f2fac707ccaa9debbeb9bdcacfb7df0b374",
 			"license": "MIT",
 			"urls": [

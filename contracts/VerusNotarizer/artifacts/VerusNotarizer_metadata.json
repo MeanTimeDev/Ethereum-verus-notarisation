@@ -686,7 +686,7 @@
 						"type": "bool"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -1235,31 +1235,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
-			"keccak256": "0xccb25598e7457c73aecd5ba498f361480ae1b42b6bd81d3d8fefe7eb1029ed75",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://025874734bf483e561fc319fa3b6f4dd931b8c197eeecd526f863725d7e2e920",
-				"dweb:/ipfs/QmdhQSpGFEade21snSfYuCZCyagCMgdoL3Ap3szsehHiD5"
-			]
-		},
-		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
-			"keccak256": "0x5da0529d7599b7d12c4a21beda19c5c2179485b36e41ab7ee5a6d82e0479c8c3",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://713013a1d83eb0146cf4ced9ee7a01ce128acba7cf2ef15fd1ebc137bdef6366",
-				"dweb:/ipfs/Qma24rN1DEqcERWExpB87tvPiRWA5Up8KMHqHJGr4RbVc2"
-			]
-		},
-		"contracts/MMR/VerusBLAKE2b.sol": {
-			"keccak256": "0x0755e82371a90f08115282dda436aa6187a7a690c20d95b3f832406f437a385b",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5c1acaddc1e5604066ad77e963a307c32df4ade4f72754fa8d493cd5c1d4fef5",
-				"dweb:/ipfs/QmdRU8svVJzmbcfb5FoC191bR6GpKoQJ7mfB4jBTkieffX"
-			]
-		},
-		"contracts/VerusBridge/VerusConstants.sol": {
+		"contracts/Libraries/VerusConstants.sol": {
 			"keccak256": "0x1f56515608af4324b6d9d725b3ab88b97b32e0e557b0215e61e773a3a6d31c82",
 			"license": "MIT",
 			"urls": [
@@ -1267,7 +1243,7 @@
 				"dweb:/ipfs/QmdYW5pDhgFqixDzyHTjwb1sCazTHQp4tLJSuW9msB4rXF"
 			]
 		},
-		"contracts/VerusBridge/VerusObjects.sol": {
+		"contracts/Libraries/VerusObjects.sol": {
 			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
 			"license": "MIT",
 			"urls": [
@@ -1275,7 +1251,7 @@
 				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
 			]
 		},
-		"contracts/VerusBridge/VerusObjectsCommon.sol": {
+		"contracts/Libraries/VerusObjectsCommon.sol": {
 			"keccak256": "0xfe058b5e96065103d3aad3ac2dedca134b01af3016a96d240664e54d22959d53",
 			"license": "MIT",
 			"urls": [
@@ -1283,7 +1259,7 @@
 				"dweb:/ipfs/QmXp1gcMuLojTUvGjQ3ttvQotuGvYUkepdwiUoXsBzP5uG"
 			]
 		},
-		"contracts/VerusBridge/VerusObjectsNotarization.sol": {
+		"contracts/Libraries/VerusObjectsNotarization.sol": {
 			"keccak256": "0xdffb141ca8e542554532a5bbec4428bb31766260eccd354cc7b271e6c9cb6cd7",
 			"license": "MIT",
 			"urls": [
@@ -1291,20 +1267,36 @@
 				"dweb:/ipfs/QmWPVUA6W3DSw5afrR3M645AWCARdqhGuUVNjXYnVmisVJ"
 			]
 		},
-		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0xecd33703073ce45ce5448cb8c85b967be77325c84d14cbbb57a22436db2ada93",
+		"contracts/MMR/Blake2b.sol": {
+			"keccak256": "0x2f3905aee56e95fe87f56c79e5f0fe14ec606f12862f539b223c6c621715446a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8dc75acd52d1fce8530650b185dd9b48921a9d130a14e923967948f992160714",
-				"dweb:/ipfs/QmcmLvQ1Gjy7m4Fr7fHyUCVTiizRbZykRV8UwdXimpk3Cx"
+				"bzz-raw://a2e1bc986d4d1900320807c6a484860de20cf3421814fb533de391b04708df89",
+				"dweb:/ipfs/QmT7MAHy7kqttPqJ5qT5JaqJmCt1BMDv1H4zCRUtdpXBE9"
+			]
+		},
+		"contracts/MMR/VerusBlake2b.sol": {
+			"keccak256": "0x2a3f0887b8278c4484b73d77b432d46ea6aade5e6c2c150a5893ad6df4be642d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://dda09623d75ddbbd79ea5c2b3085db882d926e2d1c9c6d87672eae8a52048f45",
+				"dweb:/ipfs/QmUfjMs5JAeRQnbA7Z4jMYqDPGK4NuYdhU2AtQsMJjCPvB"
+			]
+		},
+		"contracts/VerusBridge/VerusSerializer.sol": {
+			"keccak256": "0x4c2f222197ef27421de21eb3b95ae0ca7344b117e226f8cd2d4a485111b1d715",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d8a619ede1b74940f39ae3d53c766f529be316a9751b21b914d6e356f6c43897",
+				"dweb:/ipfs/QmQDAGh5t3vW4hHS8iT8PP8wH1N8FwukhaibMPSA6oSBDY"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x7e4e43c23ec9e8e89257ca930e0526de8301ee904fe88cebd760a74ecdea21fe",
+			"keccak256": "0x19237efd67d09adefd2fb639be6c76941f5236087d9038440d7f812cbea72e53",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://78ce2f196644765418e75ce5dcd8cd9d59ba592170730f6e4e77057f2f43588d",
-				"dweb:/ipfs/QmZ6EYoa6udrGpjT8F9op8p8hG9xwuTMMCs9jhLxMrZ95c"
+				"bzz-raw://bb5760889e4e14bf1919e450fa642ecd6f47bc26dd09aabb7b926fa01a1033bd",
+				"dweb:/ipfs/QmQgQCLp88Z6J6KGcLTEbrSgv7kQ7NCPx27p2BSnSJPUpU"
 			]
 		}
 	},

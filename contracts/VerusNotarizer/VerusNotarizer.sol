@@ -7,7 +7,7 @@ pragma experimental ABIEncoderV2;
 import "../Libraries/VerusConstants.sol";
 import "../Libraries/VerusObjectsNotarization.sol";
 import "../VerusBridge/VerusSerializer.sol";
-import "../MMR/VerusBLAKE2b.sol";
+import "../MMR/VerusBlake2b.sol";
 
 contract VerusNotarizer{
 
@@ -19,7 +19,7 @@ contract VerusNotarizer{
     address public upgradedAddress;
     //number of notaries required
     uint8 requiredNotaries = 13;
-    VerusBLAKE2b blake2b;
+    VerusBlake2b blake2b;
     VerusSerializer verusSerializer;
     bytes20 vdxfcode = bytes20(0x08613086F4B1669cAD836E1e5582e1fE6167450d);
     //8c ea 50 fa 0f c6 78 7f 0f f3 d6 88 58 b2 fa dd 36 e7 a4 85
@@ -45,7 +45,7 @@ contract VerusNotarizer{
 
     constructor(address _verusBLAKE2bAddress,address _verusSerializerAddress,address[] memory _notaries,address[] memory _notariesEthAddress) public {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
-        blake2b = VerusBLAKE2b(_verusBLAKE2bAddress);
+        blake2b = VerusBlake2b(_verusBLAKE2bAddress);
         deprecated = false;
         notaryCount = 0;
         lastBlockHeight = 0;
@@ -184,7 +184,7 @@ contract VerusNotarizer{
 
     }
     
-    function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public returns(bool){
+    function notarizedDeprecation(address _upgradedAddress,bytes32 _addressHash,uint8[] memory _vs,bytes32[] memory _rs,bytes32[] memory _ss) public view returns(bool){
         require(isNotary(msg.sender),"Only a notary can deprecate this contract");
         bytes32 testingAddressHash = blake2b.createHash(abi.encodePacked(_upgradedAddress));
         require(testingAddressHash == _addressHash,"Hashed address does not match address hash passed in");
