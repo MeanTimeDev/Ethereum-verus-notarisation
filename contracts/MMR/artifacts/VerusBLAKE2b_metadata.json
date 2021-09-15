@@ -6,15 +6,34 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "b",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint256",
+						"name": "offset",
+						"type": "uint256"
+					}
+				],
+				"name": "bytesToBytes32",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "bytes",
-						"name": "source",
+						"name": "b",
 						"type": "bytes"
 					}
 				],
@@ -22,126 +41,30 @@
 				"outputs": [
 					{
 						"internalType": "bytes32",
-						"name": "result",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "personalisation",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bool",
-						"name": "flipped",
-						"type": "bool"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bool",
-						"name": "flipped",
-						"type": "bool"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes",
-						"name": "toHash",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "personalisation",
-						"type": "bytes"
-					}
-				],
-				"name": "createHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes32",
-						"name": "_bytes32",
-						"type": "bytes32"
-					}
-				],
-				"name": "reverseBytes",
-				"outputs": [
-					{
-						"internalType": "bytes32",
 						"name": "",
 						"type": "bytes32"
 					}
 				],
 				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "input",
+						"type": "bytes"
+					}
+				],
+				"name": "createHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -158,7 +81,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MMR/VerusBLAKE2bOld.sol": "VerusBLAKE2b"
+			"contracts/MMR/VerusBlake2b.sol": "VerusBlake2b"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -172,28 +95,20 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/MMR/BLAKE2b/BLAKE2b.sol": {
-			"keccak256": "0xb6ccad7545f9d579a7a38fface03479183a6c3825125b18bbaf16b882da49405",
-			"license": "GPL-3.0-or-later",
-			"urls": [
-				"bzz-raw://c10c331d43c4a254c34130a5d6ddec90f07f466af065aea863d56b932ad988e9",
-				"dweb:/ipfs/QmUe7f85vsimHnNXkQJDi8DDVv42SDj9R8voQLvzHVXSeH"
-			]
-		},
-		"contracts/MMR/BLAKE2b/BLAKE2b_Constants.sol": {
-			"keccak256": "0x312a6514938efeccf9f672daa963d87e0c19251f795dee296439c1aac41707a4",
-			"license": "GPL-3.0-or-later",
-			"urls": [
-				"bzz-raw://9569924781f32b39b0a5945565adb8ffa6ed2fa485572c9314f6be4b673590ad",
-				"dweb:/ipfs/QmQbnszDfdCXrghfMjjR9vY6Zh8F3KqPCjRr6oJEQLEkhz"
-			]
-		},
-		"contracts/MMR/VerusBLAKE2bOld.sol": {
-			"keccak256": "0x75022515f9d2e2bdfa150506b57b7f2fac707ccaa9debbeb9bdcacfb7df0b374",
+		"contracts/MMR/Blake2b.sol": {
+			"keccak256": "0x2f3905aee56e95fe87f56c79e5f0fe14ec606f12862f539b223c6c621715446a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3a8bdc7f94b9b9123f0acf064ed29d702b8627c59750d4f66726c6e2793ab163",
-				"dweb:/ipfs/QmP72R7oRhxatT4yd2YhJMtYmBdNHpe2kBDMFrAct88YFf"
+				"bzz-raw://a2e1bc986d4d1900320807c6a484860de20cf3421814fb533de391b04708df89",
+				"dweb:/ipfs/QmT7MAHy7kqttPqJ5qT5JaqJmCt1BMDv1H4zCRUtdpXBE9"
+			]
+		},
+		"contracts/MMR/VerusBlake2b.sol": {
+			"keccak256": "0x57c88ed3ecb2d38439812ce55646bf20defbb0d1a9aa2dce3894f418b2de36d5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c10ad741c8a59f4fd2a21ad955202e1ff91b6ba4efb1e0925381f2fd29039b8",
+				"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6"
 			]
 		}
 	},

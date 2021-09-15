@@ -21,7 +21,7 @@ contract VerusBlake2b {
         bytes32 out;
 
         for (uint256 i = 0; i < 32; i++) {
-            out |= bytes32(b[offset + (31 -i)] & 0xFF) >> (i * 8);
+            out |= bytes32(b[offset + (i)] & 0xFF) >> (i * 8);
         }
         return out;
     }

@@ -4,7 +4,7 @@
 pragma solidity >=0.6.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 import "./BLAKE2b/BLAKE2b.sol";
-contract VerusBLAKE2b {
+contract VerusBlake2b {
 
     BLAKE2b blake2b;
     bytes verusKey = "VerusDefaultHash";
