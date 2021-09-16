@@ -49,14 +49,9 @@ contract VerusBridge {
     mapping (uint => VerusObjects.blockCreated) public readyExportsByBlock;
     mapping (address => uint256) public claimableFees;
     
-    
-    
-    bytes[] public SerializedCRTs;
-    bytes[] public SerializedCCEs;
     bytes32[] public hashedCRTs;
     
-    //event ReceivedTransfer(VerusObjects.CReserveTransfer transaction);
-    //event ExportsReady(uint256 index);
+    
     event Deprecate(address newAddress);
     
     constructor(address verusProofAddress,
@@ -91,7 +86,12 @@ contract VerusBridge {
         uint256 c = a / 10000000000;
         return uint64(c);
     }
-
+    
+    function convertFromVerusNumber(uint256 a) public pure returns (uint64) {
+        uint256 c = a * 10000000000;
+        return uint64(c);
+    }
+    
     function exportETH(address _destination,uint8 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID,uint32 _flags) public payable returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         //calculate amount of eth to send
@@ -174,13 +174,9 @@ contract VerusBridge {
         //create a hash of the CCCE
         
         bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
-        
         bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex],false);
-        SerializedCRTs.push(serializedTransfers);
-        bytes32 hashedTransfers = keccak256(serializedTransfers);
-        bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);
-        SerializedCCEs.push(toHash);
-        hashedCRTs.push(hashedTransfers);
+        //bytes32 hashedTransfers = keccak256(serializedTransfers);
+        //bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);
         bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,serializedTransfers));
         
         //add the hashed value
@@ -204,26 +200,27 @@ contract VerusBridge {
     }
 
     function _createImports(VerusObjects.CReserveTransferImport memory _import) public returns(bool){
-        //TO DO
-        //prove the transaction
+
         bool proved = verusProof.proveImports(_import);
         require(proved,"Transfers do not prove against the last notarization");
         require(_import.height >= lastimport.height && _import.txid != lastimport.txid,"Transfer has already been processed");
         lastimport.height = _import.height;
         lastimport.txid = _import.txid;
+        uint256 amount;
         //check the transfers were in the hash.
         for(uint i = 0; i < _import.transfers.length; i++){
             //handle eth transactions
+            amount = convertFromVerusNumber(_import.transfers[i].currencyvalue.amount);
             if(_import.transfers[i].destcurrencyid == VerusConstants.VEth) {
                 //cast the destination as an ethAddress
-                    require(_import.transfers[i].currencyvalue.amount <= address(this).balance,"Requested amount exceeds contract balance");
-                    sendEth(_import.transfers[i].currencyvalue.amount,payable(address(_import.transfers[i].destination.destinationaddress)));
-                    ethHeld -= _import.transfers[i].currencyvalue.amount;
+                    require(amount <= address(this).balance,"Requested amount exceeds contract balance");
+                    sendEth(amount,payable(address(_import.transfers[i].destination.destinationaddress)));
+                    ethHeld -= amount;
         
            } else {
                 //handle erc20 transactions   
                 tokenManager.importERC20Tokens(_import.transfers[i].destcurrencyid,
-                    _import.transfers[i].currencyvalue.amount,
+                    amount,
                     _import.transfers[i].destination.destinationaddress);
            }
             //handle the distributions of the fees
@@ -231,9 +228,6 @@ contract VerusBridge {
             if(_import.transfers[i].fees > 0 && _import.transfers[i].feecurrencyid == VerusConstants.VEth){
                 claimableFees[msg.sender] = claimableFees[msg.sender] + _import.transfers[i].fees;
             }
-            //could there be a scenario where more fees are paid here than there are funds for
-            //if its a create token situation how do we handle that
-            //probably best to just allow tokens to be created as a seperate operation
         }
         return true;
     }
@@ -246,14 +240,13 @@ contract VerusBridge {
             eIndex, //position in array
             _blockNumber, //blockHeight
             //readyExportHashes[eIndex],
+            //DO WE NEED TO DO THIS
             hashedCRTs[eIndex],
             _readyExports[eIndex]
         );
         return output;
     }
 
-
-    
     function getReadyExportsByRange(uint _startBlock,uint _endBlock) public view returns(VerusObjects.CReserveTransferSet[] memory){
         //calculate the size that the return array will be to initialise it
         uint outputSize = 0;
@@ -279,7 +272,7 @@ contract VerusBridge {
         
         _ethAddress.transfer(_ethAmount);
     }
-   /* 
+   
     function claimFees() public returns(uint256){
         require(!deprecated,"Contract has been deprecated");
         if(claimableFees[msg.sender] > 0 ){
@@ -295,7 +288,7 @@ contract VerusBridge {
             upgradedAddress = _upgradedAddress;
             Deprecate(_upgradedAddress);
         }
-    }*/
+    }
 
 
 }

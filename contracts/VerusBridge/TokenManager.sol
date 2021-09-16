@@ -81,7 +81,7 @@ contract TokenManager {
         }
     }*/
 
-    function importERC20Tokens(address _destCurrencyID,uint64 _tokenAmount,address _destination) public {
+    function importERC20Tokens(address _destCurrencyID,uint256 _tokenAmount,address _destination) public {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         address contractAddress;
         //if the token has not been previously created then it must be deployed
@@ -95,7 +95,7 @@ contract TokenManager {
         hostedToken memory tokenDetail = vERC20Tokens[contractAddress];
         //if the token has been created by this contract then burn the token
         if(tokenDetail.VerusOwned){
-            mintToken(contractAddress,uint256(_tokenAmount),address(_destination));
+            mintToken(contractAddress,_tokenAmount,address(_destination));
         } else {
             //transfer from the 
             Token token = Token(contractAddress);

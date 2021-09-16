@@ -208,7 +208,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/VerusBridge/Verus.sol": "VerusInfo"
+			"contracts/VerusBridge/VerusInfo.sol": "VerusInfo"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -270,7 +270,7 @@
 				"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6"
 			]
 		},
-		"contracts/VerusBridge/Verus.sol": {
+		"contracts/VerusBridge/VerusInfo.sol": {
 			"keccak256": "0x1afac35b4fd18de328f4fecc674ef1edce51e3ce6e42e9d984fa7b34f541aa58",
 			"license": "MIT",
 			"urls": [

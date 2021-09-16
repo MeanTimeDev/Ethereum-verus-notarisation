@@ -57,44 +57,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "SerializedCCEs",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "SerializedCRTs",
-				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"components": [
 							{
 								"internalType": "uint256",
@@ -530,6 +492,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "claimFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -556,6 +531,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "convertFromVerusNumber",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					}
+				],
 				"name": "convertToVerusNumber",
 				"outputs": [
 					{
@@ -565,6 +559,39 @@
 					}
 				],
 				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_upgradedAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_addressHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8[]",
+						"name": "_vs",
+						"type": "uint8[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "_rs",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "_ss",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "deprecate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -1482,11 +1509,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0x8397c6d0956219ca3f29fcd675e51fea3be84ffd4337ce474cda827ca392c9f0",
+			"keccak256": "0xd208c6ff817df44b6984057ef80c17f0d17e48871d46641d926f67634b3d4291",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7b60eca0d3bede6ad3fc471b5ca8bf82a5f0764f363a19aade7a5fd331c18104",
-				"dweb:/ipfs/QmZefTbWBA1QThYQ8VpDqRa85XN9eHf4VbMjD5p2hMzqNY"
+				"bzz-raw://5ae7741d060825f1c16637b7b032fbc0a8e823f9028d6d867501b3e9f2d3eb82",
+				"dweb:/ipfs/QmWRAYUyV8g5DxiG8UXjdCsvanXLRzpwZk6AF3xY9tNyJ2"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {
@@ -1498,11 +1525,11 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0x381e44731ffaf1108e6b0c8ed3f3530da165de0b3ba5dfa80efd4a9c1132b9ee",
+			"keccak256": "0xe80207790c8d41e74749d07f4e58d0d5756e5ba4b25823b0d8ae677bff63153d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6d32a756396ee6a5464f6ed500526df8afb35d56478402e2e04ff35d9c7fe815",
-				"dweb:/ipfs/QmboJUDFbS96cobRXYXMvNbz2HDDU4dW2d5dyznfyi8EGt"
+				"bzz-raw://4329ee03a35128911d66d7950906d1b7129f69c8d55f6069bd487fb04e331988",
+				"dweb:/ipfs/Qmex3LJNfCWudto2A5y1ZnsAmBVvR99govjwwNYWN4Zm15"
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {
