@@ -251,9 +251,9 @@ contract VerusBridge {
             _blockNumber, //blockHeight
             //readyExportHashes[eIndex],
             //DO WE NEED TO DO THIS
-            hashedCRTs[eIndex],
+            readyExportHashes[eIndex],
             _readyExports[eIndex],
-            eIndex == 0 ? nullobj :  hashedCRTs[eIndex - 1]
+            eIndex == 0 ? nullobj :  readyExportHashes[eIndex - 1]
         );
         return output;
     }
