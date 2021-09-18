@@ -245,13 +245,15 @@ contract VerusBridge {
         //need a transferset for each position not each block
         //retrieve a block get the indexes, create a transfer set for each index add those to the array
         uint eIndex = readyExportsByBlock[_blockNumber].index;
+        bytes32 nullobj;
         VerusObjects.CReserveTransferSet memory output = VerusObjects.CReserveTransferSet(
-            eIndex, //position in array
+        //    eIndex, //position in array
             _blockNumber, //blockHeight
             //readyExportHashes[eIndex],
             //DO WE NEED TO DO THIS
             hashedCRTs[eIndex],
-            _readyExports[eIndex]
+            _readyExports[eIndex],
+            eIndex == 0 ? nullobj :  hashedCRTs[eIndex - 1]
         );
         return output;
     }
