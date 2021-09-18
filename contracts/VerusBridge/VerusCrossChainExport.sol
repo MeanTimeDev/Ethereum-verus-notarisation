@@ -46,7 +46,7 @@ contract VerusCrossChainExport{
         //workingCCE.flags = 1;
         //need to pick up the 
         workingCCE.sourceheightstart = uint32(block.number);
-        workingCCE.sourceheightend =uint32(block.number);
+        workingCCE.sourceheightend = uint32(block.number);
         workingCCE.sourcesystemid = VerusConstants.VEth;
         workingCCE.destinationsystemid = VerusConstants.VerusSystemId;
         workingCCE.destinationcurrencyid = VerusConstants.VerusSystemId;
@@ -89,7 +89,7 @@ contract VerusCrossChainExport{
         workingCCE.totalburned = new VerusObjects.CCurrencyValueMap[](1);
         workingCCE.totalburned[0] = totalburnedCCVM;
         workingCCE.rewardaddress = VerusObjectsCommon.CTransferDestination(VerusConstants.RewardAddressType,address(VerusConstants.RewardAddress));
-        workingCCE.firstinput = 0;
+        workingCCE.firstinput = 1;
 
         //clear the arrays
         delete currencies;

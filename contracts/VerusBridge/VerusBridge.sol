@@ -48,7 +48,8 @@ contract VerusBridge {
     VerusObjects.LastImport public lastimport;
     mapping (uint => VerusObjects.blockCreated) public readyExportsByBlock;
     mapping (address => uint256) public claimableFees;
-    
+    bytes[] public SerializedCRTs;
+    bytes[] public SerializedCCEs;
     bytes32[] public hashedCRTs;
     
     
@@ -175,9 +176,17 @@ contract VerusBridge {
         
         bytes memory serializedCCE = verusSerializer.serializeCCrossChainExport(CCCE);
         bytes memory serializedTransfers = verusSerializer.serializeCReserveTransfers(_readyExports[exportIndex],false);
+        SerializedCRTs.push(serializedTransfers);
+         bytes32 hashedTransfers = keccak256(serializedTransfers);
+         bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);
+         SerializedCCEs.push(toHash);
+         hashedCRTs.push(hashedTransfers);
         //bytes32 hashedTransfers = keccak256(serializedTransfers);
         //bytes memory toHash = abi.encodePacked(serializedCCE,serializedTransfers);
-        bytes32 hashedCCE = keccak256(abi.encodePacked(serializedCCE,serializedTransfers));
+        bytes32 hashedCCE;
+        bytes32 lastProofRoot = 0;
+        if(exportIndex != 0)  lastProofRoot = readyExportHashes[exportIndex -1];
+        hashedCCE = keccak256(abi.encodePacked(serializedCCE,lastProofRoot));
         
         //add the hashed value
         if(newHash) readyExportHashes.push(hashedCCE);
