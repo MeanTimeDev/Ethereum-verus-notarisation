@@ -59,10 +59,10 @@ library VerusObjects {
     //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
     
     struct CReserveTransferSet {
-        uint position;
         uint blockHeight;
         bytes32 exportHash;
         CReserveTransfer[] transfers;
+        bytes32 previousExportHash;
     }
 
     struct LastImport {
