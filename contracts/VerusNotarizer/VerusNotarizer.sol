@@ -114,7 +114,7 @@ contract VerusNotarizer{
         bytes32[] memory _ss,
         uint32[] memory blockheights,
         address[] memory notaryAddress
-        ) public returns(string memory output){
+        ) public returns(address output){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -129,17 +129,18 @@ contract VerusNotarizer{
         address signer;
         uint8 numberOfSignatures = 0;
         bytes memory toHash;
-        output = "start";
+       // output = "start";
         
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
             toHash = abi.encodePacked(uint8(1),vdxfcode,VerusConstants.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
-            //output[i] = toHash;
+           // output = string(abi.encodePacked(output,toHash));
             hashedNotarization = keccak256(toHash);
-            signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
+           // output = hashedNotarization;
+            output = signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
             if(signer == notaryAddressMapping[notaryAddress[i]]){
                    numberOfSignatures++;
-                   output = string(abi.encodePacked(output," signature correct"));
+                  // output = string(abi.encodePacked(output," signature correct"));
             }
             if(numberOfSignatures >= requiredNotaries){
                 break;
@@ -147,7 +148,7 @@ contract VerusNotarizer{
         }
         
         if(numberOfSignatures >= currentNotariesRequired()){
-                output = string(abi.encodePacked(output," enough notaries"));
+               // output = string(abi.encodePacked(output," enough notaries"));
             for(uint j = 0 ; j < _pbaasNotarization.proofroots.length;j++){
                 //output = string(abi.encodePacked(output," adding notarized data "));
                 if(_pbaasNotarization.proofroots[j].systemid == VerusConstants.VerusCurrencyId){
@@ -156,7 +157,7 @@ contract VerusNotarizer{
                     notarizedProofRoots[_pbaasNotarization.notarizationheight] = _pbaasNotarization.proofroots[j];
                     blockHeights.push(_pbaasNotarization.notarizationheight);
                     if(lastBlockHeight <_pbaasNotarization.notarizationheight){
-                         output = string(abi.encodePacked(output," setting lastBlockHeight"));
+                       //  output = string(abi.encodePacked(output," setting lastBlockHeight"));
                         lastBlockHeight = _pbaasNotarization.notarizationheight;
                     }
                 }

@@ -103,7 +103,7 @@ contract VerusBridge {
         feesHeld += VerusConstants.transactionFee;
         //create a new Bridge Transaction
          
-        _createExports(convertToVerusNumber(amount), address(VerusConstants.VEth), _destination,_destinationType, VerusConstants.VerusSystemId, _nFees, _feeCurrencyID, _destSystemID, _flags);
+        _createExports(convertToVerusNumber(amount), address(VerusConstants.VEth), _destination,_destinationType,  VerusConstants.VerusSystemId, _nFees, _feeCurrencyID, _destSystemID, _flags);
 
         return amount;
     }
@@ -247,13 +247,12 @@ contract VerusBridge {
         uint eIndex = readyExportsByBlock[_blockNumber].index;
         bytes32 nullobj;
         VerusObjects.CReserveTransferSet memory output = VerusObjects.CReserveTransferSet(
-        //    eIndex, //position in array
+            eIndex, //position in array
             _blockNumber, //blockHeight
             //readyExportHashes[eIndex],
             //DO WE NEED TO DO THIS
             readyExportHashes[eIndex],
-            _readyExports[eIndex],
-            eIndex == 0 ? nullobj :  readyExportHashes[eIndex - 1]
+            _readyExports[eIndex]
         );
         return output;
     }

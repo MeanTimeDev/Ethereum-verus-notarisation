@@ -49,7 +49,7 @@ contract VerusCrossChainExport{
         workingCCE.sourceheightend = uint32(block.number);
         workingCCE.sourcesystemid = VerusConstants.VEth;
         workingCCE.destinationsystemid = VerusConstants.VerusSystemId;
-        workingCCE.destinationcurrencyid = VerusConstants.VerusSystemId;
+        workingCCE.destinationcurrencyid = transfers[0].destcurrencyid;
         workingCCE.numinputs = uint32(transfers.length);
         //loop through the array and create totals of the amounts and fees
         
