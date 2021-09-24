@@ -83,6 +83,11 @@
 								"internalType": "address",
 								"name": "destsystemid",
 								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "secondreserveid",
+								"type": "address"
 							}
 						],
 						"internalType": "struct VerusObjects.CReserveTransfer[]",
@@ -258,11 +263,11 @@
 			]
 		},
 		"contracts/Libraries/VerusObjects.sol": {
-			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
+			"keccak256": "0x598c38759d7456d4371f7df52691c29bd853140ba5980c4e1ed024e8b465b5fd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
-				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+				"bzz-raw://5379e7d4439914aa736c4d2e96c48c925d29532f9629935c8da22bbdf0428806",
+				"dweb:/ipfs/QmYuttbUQfka6iJZpcwRNPcHcvgsYB9o43heHzaK34Qxdx"
 			]
 		},
 		"contracts/Libraries/VerusObjectsCommon.sol": {
@@ -282,19 +287,19 @@
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {
-			"keccak256": "0x8568eca2290a345afa3f6b1953cb7df5d1c4ae42ea40a365dbaf0c979c51fe2c",
+			"keccak256": "0xc2869a90c1d5c8384b7a98f9d9fb95f2e0a51bd79e8dfb9f1e5a7331190f8d23",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4cbdf5099d3db11bb6c93818032292361abb2586219574a70b81585b98f71047",
-				"dweb:/ipfs/QmTUfUwTUpzytViyET4Lr9xK8vcHYRyR9RCWKGGVNbqFMN"
+				"bzz-raw://6e3837efbb7ffe379fcd9d83e654242d2ec9ed4980cec82b1cfb4b70f9d067e6",
+				"dweb:/ipfs/QmWKETkvD1NPUeUQTPjhc7df4hHQmmZ21yBMUJpP1SBrfK"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x4c2f222197ef27421de21eb3b95ae0ca7344b117e226f8cd2d4a485111b1d715",
+			"keccak256": "0x76a8dde7ab1d5e24fd86030399fc5aadfabc1d0128d9e303306dcdf47727c1be",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d8a619ede1b74940f39ae3d53c766f529be316a9751b21b914d6e356f6c43897",
-				"dweb:/ipfs/QmQDAGh5t3vW4hHS8iT8PP8wH1N8FwukhaibMPSA6oSBDY"
+				"bzz-raw://74ab3e2cd66bac7db1b78953f5e3db0fddc16ddc5c4deeebddfd2f85dc289989",
+				"dweb:/ipfs/QmQkQsmEZAAGDSgDVYLBQPpCXBc9LHYT5aihMWAefDuFd9"
 			]
 		}
 	},

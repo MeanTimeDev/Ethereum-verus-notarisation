@@ -54,7 +54,9 @@ library VerusObjects {
         VerusObjectsCommon.CTransferDestination destination;
         address destcurrencyid;
         address destsystemid;
+        address secondreserveid;
     }
+
 
     //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info
     

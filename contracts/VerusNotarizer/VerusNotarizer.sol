@@ -23,6 +23,7 @@ contract VerusNotarizer{
     VerusSerializer verusSerializer;
     bytes20 vdxfcode = bytes20(0x08613086F4B1669cAD836E1e5582e1fE6167450d);
     //8c ea 50 fa 0f c6 78 7f 0f f3 d6 88 58 b2 fa dd 36 e7 a4 85
+    //0322174Cb35c1E987a8cbD39D3A3Ce29b290fbed 
     //0x280a0514338bbcdd2889f4809592816b388d4e7a;
 
 
@@ -114,7 +115,7 @@ contract VerusNotarizer{
         bytes32[] memory _ss,
         uint32[] memory blockheights,
         address[] memory notaryAddress
-        ) public returns(string memory output){
+        ) public returns(address output){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -129,25 +130,31 @@ contract VerusNotarizer{
         address signer;
         uint8 numberOfSignatures = 0;
         bytes memory toHash;
-        output = "start";
+        //output = "start";
         
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
-            toHash = abi.encodePacked(uint8(1),vdxfcode,VerusConstants.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
-            //output[i] = toHash;
+            toHash = abi.encodePacked(uint8(1),
+                vdxfcode,VerusConstants.VerusSystemId,
+                verusSerializer.serializeUint32(blockheights[i]),
+                notaryAddress[i],
+                abi.encodePacked(keccak256(serializedNotarisation)));
+            //output = toHash;
             hashedNotarization = keccak256(toHash);
+            //output = hashedNotarization;
             signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
+            output = signer;
             if(signer == notaryAddressMapping[notaryAddress[i]]){
                    numberOfSignatures++;
-                   output = string(abi.encodePacked(output," signature correct"));
+                   //output = string(abi.encodePacked(output," signature correct"));
             }
             if(numberOfSignatures >= requiredNotaries){
                 break;
             }
         }
-        
+       // require(numberOfSignatures >= currentNotariesRequired(),"Not enough signatures");
         if(numberOfSignatures >= currentNotariesRequired()){
-                output = string(abi.encodePacked(output," enough notaries"));
+                //output = string(abi.encodePacked(output," enough notaries"));
             for(uint j = 0 ; j < _pbaasNotarization.proofroots.length;j++){
                 //output = string(abi.encodePacked(output," adding notarized data "));
                 if(_pbaasNotarization.proofroots[j].systemid == VerusConstants.VerusCurrencyId){
@@ -156,7 +163,7 @@ contract VerusNotarizer{
                     notarizedProofRoots[_pbaasNotarization.notarizationheight] = _pbaasNotarization.proofroots[j];
                     blockHeights.push(_pbaasNotarization.notarizationheight);
                     if(lastBlockHeight <_pbaasNotarization.notarizationheight){
-                         output = string(abi.encodePacked(output," setting lastBlockHeight"));
+                         //output = string(abi.encodePacked(output," setting lastBlockHeight"));
                         lastBlockHeight = _pbaasNotarization.notarizationheight;
                     }
                 }
@@ -169,10 +176,13 @@ contract VerusNotarizer{
         return output;
     }
 
-    function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) private pure returns (address) {
+    function recoverSigner(bytes32 _h, uint8 _v, bytes32 _r, bytes32 _s) public pure returns (address) {
         address addr = ecrecover(_h, _v, _r, _s);
         return addr;
     }
+/*
+"0x0bc6ceeca1778117d9547d03c57cbe944de11cecf37ee01a84c193b82c712440"
+4024712cb893c1841ae07ef3ec1ce14d94be7cc5037d54d9178177a1eccec60b*/
 
     function numNotarizedBlocks() public view returns(uint){
         return blockHeights.length;
@@ -199,5 +209,7 @@ contract VerusNotarizer{
             Deprecate(_upgradedAddress);
         }
     }
+    
+    
 
 }
