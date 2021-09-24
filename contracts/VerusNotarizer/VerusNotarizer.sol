@@ -108,13 +108,19 @@ contract VerusNotarizer{
 
     }
  
+    struct teststruct {
+        bytes32[2] hashofnotarisation;
+        bytes[2] tohash;
+        address[2] signer;
+    }
+
     function setLatestData(VerusObjectsNotarization.CPBaaSNotarization memory _pbaasNotarization,
         uint8[] memory _vs,
         bytes32[] memory _rs,
         bytes32[] memory _ss,
         uint32[] memory blockheights,
         address[] memory notaryAddress
-        ) public returns(address output){
+        ) public returns(teststruct memory output){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -133,11 +139,11 @@ contract VerusNotarizer{
         
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
-            toHash = abi.encodePacked(uint8(1),vdxfcode,VerusConstants.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
+           output.tohash[i] = toHash = abi.encodePacked(uint8(1),vdxfcode,VerusConstants.VerusSystemId,verusSerializer.serializeUint32(blockheights[i]),notaryAddress[i],abi.encodePacked(keccak256(serializedNotarisation)));
            // output = string(abi.encodePacked(output,toHash));
-            hashedNotarization = keccak256(toHash);
+            output.hashofnotarisation[i] = hashedNotarization = keccak256(toHash);
            // output = hashedNotarization;
-            output = signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
+            output.signer[i] = signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
             if(signer == notaryAddressMapping[notaryAddress[i]]){
                    numberOfSignatures++;
                   // output = string(abi.encodePacked(output," signature correct"));

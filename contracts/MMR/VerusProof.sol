@@ -126,7 +126,6 @@ contract VerusProof{
         bytes32 predictedRootHash;
         predictedRootHash = proveTransaction(_import);
         uint32 lastBlockHeight = verusNotarizer.lastBlockHeight();
-        lastBlockHeight = 9286933;
         bytes32 predictedStateRoot = flipBytes32(verusNotarizer.notarizedStateRoots(lastBlockHeight));
         if(predictedRootHash == predictedStateRoot) {
             return true;
