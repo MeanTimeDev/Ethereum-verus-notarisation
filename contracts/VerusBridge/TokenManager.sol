@@ -32,7 +32,8 @@ contract TokenManager {
     }
     
     function isVerusBridgeContract() private view returns(bool){
-        return msg.sender == verusBridgeContract;
+        if(verusBridgeContract == address(0)) return true;
+        else return msg.sender == verusBridgeContract;
     }
     
     //Tokens that are being exported from the eth blockchain are either destroyed or held until imported

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -792,6 +792,40 @@
 			{
 				"inputs": [
 					{
+						"internalType": "bytes32",
+						"name": "_h",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_s",
+						"type": "bytes32"
+					}
+				],
+				"name": "recoverSigner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"components": [
 							{
 								"internalType": "uint32",
@@ -1186,9 +1220,9 @@
 				"name": "setLatestData",
 				"outputs": [
 					{
-						"internalType": "string",
+						"internalType": "address",
 						"name": "output",
-						"type": "string"
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -1244,11 +1278,11 @@
 			]
 		},
 		"contracts/Libraries/VerusObjects.sol": {
-			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
+			"keccak256": "0x1ff8dba383329c4eb567023607d8d5ed91e39811500742c61b9f547a94412505",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
-				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+				"bzz-raw://5861d3c29102fc160e635bf401e2f7afc70ae774232aa85e8ff2cb27c2dcebd3",
+				"dweb:/ipfs/QmV75juzUhaS59mVE5NreoUtUwRmETzXCfbrP5hrJ8Kk8z"
 			]
 		},
 		"contracts/Libraries/VerusObjectsCommon.sol": {
@@ -1276,27 +1310,27 @@
 			]
 		},
 		"contracts/MMR/VerusBlake2b.sol": {
-			"keccak256": "0x2a3f0887b8278c4484b73d77b432d46ea6aade5e6c2c150a5893ad6df4be642d",
+			"keccak256": "0x57c88ed3ecb2d38439812ce55646bf20defbb0d1a9aa2dce3894f418b2de36d5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dda09623d75ddbbd79ea5c2b3085db882d926e2d1c9c6d87672eae8a52048f45",
-				"dweb:/ipfs/QmUfjMs5JAeRQnbA7Z4jMYqDPGK4NuYdhU2AtQsMJjCPvB"
+				"bzz-raw://2c10ad741c8a59f4fd2a21ad955202e1ff91b6ba4efb1e0925381f2fd29039b8",
+				"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x4c2f222197ef27421de21eb3b95ae0ca7344b117e226f8cd2d4a485111b1d715",
+			"keccak256": "0xb588cab7b1ef56844521b1cb16a2e8a9467ef6f8b0b5e774590fbc6145d7c35c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d8a619ede1b74940f39ae3d53c766f529be316a9751b21b914d6e356f6c43897",
-				"dweb:/ipfs/QmQDAGh5t3vW4hHS8iT8PP8wH1N8FwukhaibMPSA6oSBDY"
+				"bzz-raw://2a730eca9deaaec25000448857d5ac6dd37cad55e4b9f9cd0c070b9f57ef6005",
+				"dweb:/ipfs/Qmf1f5EUaStEjxzJEFNnjqPX6SKZu6iqCqHfNsaFGsqi9U"
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x19237efd67d09adefd2fb639be6c76941f5236087d9038440d7f812cbea72e53",
+			"keccak256": "0x7d2ba74a0ee54c81752e1225c2c5f22897dd45cc497c1c65c4420eb10e815738",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bb5760889e4e14bf1919e450fa642ecd6f47bc26dd09aabb7b926fa01a1033bd",
-				"dweb:/ipfs/QmQgQCLp88Z6J6KGcLTEbrSgv7kQ7NCPx27p2BSnSJPUpU"
+				"bzz-raw://955cc5f92046c5aae6a0ea199c5d76f084415c3652126e5f0294096ffbc87004",
+				"dweb:/ipfs/QmQk7r3m5GuZPtwY2qLztXZvgVFSBY9zwhPs9F2METHxJd"
 			]
 		}
 	},

@@ -33,11 +33,11 @@
 	},
 	"sources": {
 		"contracts/Libraries/VerusObjects.sol": {
-			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
+			"keccak256": "0x598c38759d7456d4371f7df52691c29bd853140ba5980c4e1ed024e8b465b5fd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
-				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+				"bzz-raw://5379e7d4439914aa736c4d2e96c48c925d29532f9629935c8da22bbdf0428806",
+				"dweb:/ipfs/QmYuttbUQfka6iJZpcwRNPcHcvgsYB9o43heHzaK34Qxdx"
 			]
 		},
 		"contracts/Libraries/VerusObjectsCommon.sol": {

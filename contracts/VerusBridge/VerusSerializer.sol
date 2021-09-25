@@ -175,8 +175,11 @@ contract VerusSerializer {
             serializeCTransferDestination(ct.destination),
             serializeAddress(ct.destcurrencyid)
            );
+           
+        if((ct.flags & 0x400)>0) output = abi.encodePacked(output,serializeAddress(ct.secondreserveid));           
          //see if its got a cross_system flag
         if((ct.flags & 0x40)>0) output = abi.encodePacked(output,serializeAddress(ct.destsystemid));
+        
         return output;
     }
     

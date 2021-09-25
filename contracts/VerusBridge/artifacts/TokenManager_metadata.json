@@ -339,11 +339,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0xd208c6ff817df44b6984057ef80c17f0d17e48871d46641d926f67634b3d4291",
+			"keccak256": "0x69d656570a878ec47e1ccdb8c344edf04f1a10837fb75d6b95935fdffc82e2cf",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5ae7741d060825f1c16637b7b032fbc0a8e823f9028d6d867501b3e9f2d3eb82",
-				"dweb:/ipfs/QmWRAYUyV8g5DxiG8UXjdCsvanXLRzpwZk6AF3xY9tNyJ2"
+				"bzz-raw://e14482d82105cac433966d77e4b33512dfeba145fed40677b2a5e1ce08d4c086",
+				"dweb:/ipfs/QmT8eBJchB6n71LvvhcE2kqcvJBkomUuBPKjAiyKh15Gac"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {

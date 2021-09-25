@@ -1017,6 +1017,11 @@
 								"internalType": "address",
 								"name": "destsystemid",
 								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "secondreserveid",
+								"type": "address"
 							}
 						],
 						"internalType": "struct VerusObjects.CReserveTransfer",
@@ -1101,6 +1106,11 @@
 							{
 								"internalType": "address",
 								"name": "destsystemid",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "secondreserveid",
 								"type": "address"
 							}
 						],
@@ -1964,11 +1974,11 @@
 	},
 	"sources": {
 		"contracts/Libraries/VerusObjects.sol": {
-			"keccak256": "0x603b4b20691e31a5a70d3b746c064dabe3b4d50cbdba127202629a86b0cc9f26",
+			"keccak256": "0x598c38759d7456d4371f7df52691c29bd853140ba5980c4e1ed024e8b465b5fd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4d777eb9ffbaf2f61a9008cfd55aa01bfa8a19c64b3257789a07bc6256064df4",
-				"dweb:/ipfs/QmWYyPs26LSxm76rBNz5oFHuftAaDsvA98WpCnU7uNAMxi"
+				"bzz-raw://5379e7d4439914aa736c4d2e96c48c925d29532f9629935c8da22bbdf0428806",
+				"dweb:/ipfs/QmYuttbUQfka6iJZpcwRNPcHcvgsYB9o43heHzaK34Qxdx"
 			]
 		},
 		"contracts/Libraries/VerusObjectsCommon.sol": {
@@ -1988,11 +1998,11 @@
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
-			"keccak256": "0x76a8dde7ab1d5e24fd86030399fc5aadfabc1d0128d9e303306dcdf47727c1be",
+			"keccak256": "0xb588cab7b1ef56844521b1cb16a2e8a9467ef6f8b0b5e774590fbc6145d7c35c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://74ab3e2cd66bac7db1b78953f5e3db0fddc16ddc5c4deeebddfd2f85dc289989",
-				"dweb:/ipfs/QmQkQsmEZAAGDSgDVYLBQPpCXBc9LHYT5aihMWAefDuFd9"
+				"bzz-raw://2a730eca9deaaec25000448857d5ac6dd37cad55e4b9f9cd0c070b9f57ef6005",
+				"dweb:/ipfs/Qmf1f5EUaStEjxzJEFNnjqPX6SKZu6iqCqHfNsaFGsqi9U"
 			]
 		}
 	},
