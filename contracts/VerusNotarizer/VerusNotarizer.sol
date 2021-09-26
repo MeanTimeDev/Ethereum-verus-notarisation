@@ -21,7 +21,7 @@ contract VerusNotarizer{
     uint8 requiredNotaries = 13;
     VerusBlake2b blake2b;
     VerusSerializer verusSerializer;
-    bytes20 vdxfcode = bytes20(0x08613086F4B1669cAD836E1e5582e1fE6167450d);
+    bytes20 vdxfcode = bytes20(0x367Eaadd291E1976ABc446A143f83c2D4D2C5a84);
     //8c ea 50 fa 0f c6 78 7f 0f f3 d6 88 58 b2 fa dd 36 e7 a4 85
     //0322174Cb35c1E987a8cbD39D3A3Ce29b290fbed 
     //0x280a0514338bbcdd2889f4809592816b388d4e7a;
@@ -110,9 +110,8 @@ contract VerusNotarizer{
     }
  
     struct teststruct {
-        bytes32[2] hashofnotarisation;
-        bytes[2] tohash;
-        address[2] signer;
+        address[] signer;
+        bytes[] toHash;
     }
 
     function setLatestData(VerusObjectsNotarization.CPBaaSNotarization memory _pbaasNotarization,
@@ -121,7 +120,7 @@ contract VerusNotarizer{
         bytes32[] memory _ss,
         uint32[] memory blockheights,
         address[] memory notaryAddress
-        ) public returns(address output){
+        ) public returns(teststruct memory output){
 
         require(!deprecated,"Contract has been deprecated");
         //require(komodoNotaries[msg.sender],"Only a notary can call this function");
@@ -136,11 +135,13 @@ contract VerusNotarizer{
         address signer;
         uint8 numberOfSignatures = 0;
         bytes memory toHash;
+        output.signer = new address[](blockheights.length);
+        output.toHash = new bytes[](blockheights.length);
         //output = "start";
         
         for(uint i=0; i < blockheights.length;i++){
             //build the hashing sequence
-            toHash = abi.encodePacked(uint8(1),
+            output.toHash[i] = toHash = abi.encodePacked(uint8(1),
                 vdxfcode,VerusConstants.VerusSystemId,
                 verusSerializer.serializeUint32(blockheights[i]),
                 notaryAddress[i],
@@ -149,7 +150,7 @@ contract VerusNotarizer{
             hashedNotarization = keccak256(toHash);
             //output = hashedNotarization;
             signer = recoverSigner(hashedNotarization, _vs[i]-4, _rs[i], _ss[i]);
-            output = signer;
+            output.signer[i] = signer;
             if(signer == notaryAddressMapping[notaryAddress[i]]){
                    numberOfSignatures++;
                    //output = string(abi.encodePacked(output," signature correct"));

@@ -98,7 +98,7 @@ contract VerusBridge {
     function export(VerusObjects.CReserveTransfer memory transfer) public payable{
         require(!deprecated,"Contract has been deprecated");
         require(msg.value >= VerusConstants.transactionFee + uint64(transfer.fees),"Please send the appropriate transaction fee.");
-        if(transfer.destination.destinationaddress != VerusConstants.VEth){
+        if(transfer.currencyvalue.currency != VerusConstants.VEth){
             //check there are enough fees sent
             feesHeld += msg.value;
             //check that the token is registered
@@ -114,7 +114,7 @@ contract VerusBridge {
         } else {
             //handle a vEth transfer
             transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee);
-            ethHeld += transfer.currencyvalue.amount;
+            ethHeld += msg.value - VerusConstants.transactionFee;
             feesHeld += VerusConstants.transactionFee;
         }
         _createExports(transfer);
@@ -239,7 +239,13 @@ contract VerusBridge {
 
     function _createImports(VerusObjects.CReserveTransferImport memory _import) public returns(bool){
 
-        require(processedTxids[_import.txid] != true,"Transfer has been processed");
+        require(processedTxids[_import.txid] != true,"Transfer has been processed"); 
+        bytes32 txidfound;
+        bytes memory sliced = _import.partialtransactionproof.components[0].elVchObj;
+        assembly {
+            txidfound := mload(add(sliced, 32))
+        }
+        require(_import.txid == txidfound, "Txid not correct in header"); //the txid should be present in the header
         bool proved = verusProof.proveImports(_import);
         require(proved,"Transfers do not prove against the last notarization");
         processedTxids[_import.txid] = true;
