@@ -1,5 +1,5 @@
 var VerusTokenManager = artifacts.require("./VerusBridge/TokenManager.sol");
-var VerusBlake2b = artifacts.require("./MMR/VerusBLAKE2b.sol");
+var VerusBlake2b = artifacts.require("./MMR/VerusBlake2b.sol");
 var VerusSerializer = artifacts.require("./VerusBridge/VerusSerializer.sol");
 var VerusNotarizer = artifacts.require("./VerusNotarizer/VerusNotarizer.sol");
 var VerusProof = artifacts.require("./VerusNotarizer/VerusNotarizer.sol");
@@ -12,7 +12,7 @@ const verusNotariserIDS = ["0xb26820ee0c9b1276aac834cf457026a575dfce84","0x51f9f
 const verusNotariserSigner = ["0xD010dEBcBf4183188B00cafd8902e34a2C1E9f41","0xD010dEBcBf4183188B00cafd8902e34a2C1E9f41","0xD010dEBcBf4183188B00cafd8902e34a2C1E9f41"];
 const tokenmanvrsctest = ["0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d","VRSCTEST","VRST"]
 
-module.exports = function (deployer) {
+module.exports = async function (deployer) {
      
     await deployer.deploy(Verusaddress)
     const addressInst = await Verusaddress.deployed();
