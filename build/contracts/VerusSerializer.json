@@ -18,7 +18,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -37,7 +38,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -76,7 +78,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -95,7 +98,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -114,7 +118,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -133,7 +138,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -152,7 +158,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -171,7 +178,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -190,7 +198,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -209,7 +218,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -228,7 +238,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -247,7 +258,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -266,7 +278,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -285,7 +298,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -304,7 +318,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -323,7 +338,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -342,7 +358,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -361,7 +378,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -380,7 +398,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -411,7 +430,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -442,7 +462,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -473,7 +494,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -563,7 +585,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -658,7 +681,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -689,7 +713,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -745,7 +770,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -813,7 +839,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -881,7 +908,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -937,7 +965,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1063,7 +1092,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1201,7 +1231,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1339,7 +1370,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1719,7 +1751,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1750,7 +1783,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1781,7 +1815,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1920,7 +1955,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -1939,7 +1975,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"incoming\",\"type\":\"bytes\"}],\"name\":\"flipArray\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"number\",\"type\":\"address\"}],\"name\":\"serializeAddress\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bool\",\"name\":\"anyBool\",\"type\":\"bool\"}],\"name\":\"serializeBool\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes20\",\"name\":\"anyBytes20\",\"type\":\"bytes20\"}],\"name\":\"serializeBytes20\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"anyBytes32\",\"type\":\"bytes32\"}],\"name\":\"serializeBytes32\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"uint160[]\",\"name\":\"currencies\",\"type\":\"uint160[]\"},{\"internalType\":\"int32[]\",\"name\":\"weights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserves\",\"type\":\"int64[]\"},{\"internalType\":\"int64\",\"name\":\"initialsupply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"emitted\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"supply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"preconvertedout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyfees\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyconversionfees\",\"type\":\"int64\"},{\"internalType\":\"int64[]\",\"name\":\"reservein\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"primarycurrencyin\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserveout\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"viaconversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"fees\",\"type\":\"int64[]\"},{\"internalType\":\"int32[]\",\"name\":\"priorweights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionfees\",\"type\":\"int64[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CCoinbaseCurrencyState\",\"name\":\"_cccs\",\"type\":\"tuple\"}],\"name\":\"serializeCCoinbaseCurrencyState\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"sourcesystemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightstart\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightend\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"destinationsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destinationcurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"numinputs\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalamounts\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalfees\",\"type\":\"tuple[]\"},{\"internalType\":\"bytes32\",\"name\":\"hashtransfers\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalburned\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"rewardaddress\",\"type\":\"tuple\"},{\"internalType\":\"int32\",\"name\":\"firstinput\",\"type\":\"int32\"}],\"internalType\":\"struct VerusObjects.CCrossChainExport\",\"name\":\"_ccce\",\"type\":\"tuple\"}],\"name\":\"serializeCCrossChainExport\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"_ccvm\",\"type\":\"tuple\"}],\"name\":\"serializeCCurrencyValueMap\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"_ccvms\",\"type\":\"tuple[]\"}],\"name\":\"serializeCCurrencyValueMaps\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"networkaddress\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"nodeidentity\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsNotarization.CNodeData\",\"name\":\"_cnd\",\"type\":\"tuple\"}],\"name\":\"serializeCNodeData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"proposer\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"uint160[]\",\"name\":\"currencies\",\"type\":\"uint160[]\"},{\"internalType\":\"int32[]\",\"name\":\"weights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserves\",\"type\":\"int64[]\"},{\"internalType\":\"int64\",\"name\":\"initialsupply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"emitted\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"supply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"preconvertedout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyfees\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyconversionfees\",\"type\":\"int64\"},{\"internalType\":\"int64[]\",\"name\":\"reservein\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"primarycurrencyin\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserveout\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"viaconversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"fees\",\"type\":\"int64[]\"},{\"internalType\":\"int32[]\",\"name\":\"priorweights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionfees\",\"type\":\"int64[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CCoinbaseCurrencyState\",\"name\":\"currencystate\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"notarizationheight\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"n\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjectsNotarization.CUTXORef\",\"name\":\"prevnotarization\",\"type\":\"tuple\"},{\"internalType\":\"bytes32\",\"name\":\"hashprevnotarization\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"prevheight\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"uint160[]\",\"name\":\"currencies\",\"type\":\"uint160[]\"},{\"internalType\":\"int32[]\",\"name\":\"weights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserves\",\"type\":\"int64[]\"},{\"internalType\":\"int64\",\"name\":\"initialsupply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"emitted\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"supply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"preconvertedout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyfees\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyconversionfees\",\"type\":\"int64\"},{\"internalType\":\"int64[]\",\"name\":\"reservein\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"primarycurrencyin\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserveout\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"viaconversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"fees\",\"type\":\"int64[]\"},{\"internalType\":\"int32[]\",\"name\":\"priorweights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionfees\",\"type\":\"int64[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CCoinbaseCurrencyState\",\"name\":\"currencystate\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjectsNotarization.CurrencyStates[]\",\"name\":\"currencystates\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"int16\",\"name\":\"version\",\"type\":\"int16\"},{\"internalType\":\"int16\",\"name\":\"cprtype\",\"type\":\"int16\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"rootheight\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"stateroot\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"blockhash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"compactpower\",\"type\":\"bytes32\"}],\"internalType\":\"struct VerusObjectsNotarization.CProofRoot[]\",\"name\":\"proofroots\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"networkaddress\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"nodeidentity\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsNotarization.CNodeData[]\",\"name\":\"nodes\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CPBaaSNotarization\",\"name\":\"_not\",\"type\":\"tuple\"}],\"name\":\"serializeCPBaaSNotarization\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"int16\",\"name\":\"version\",\"type\":\"int16\"},{\"internalType\":\"int16\",\"name\":\"cprtype\",\"type\":\"int16\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"rootheight\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"stateroot\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"blockhash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"compactpower\",\"type\":\"bytes32\"}],\"internalType\":\"struct VerusObjectsNotarization.CProofRoot\",\"name\":\"_cpr\",\"type\":\"tuple\"}],\"name\":\"serializeCProofRoot\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"int16\",\"name\":\"version\",\"type\":\"int16\"},{\"internalType\":\"int16\",\"name\":\"cprtype\",\"type\":\"int16\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"rootheight\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"stateroot\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"blockhash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"compactpower\",\"type\":\"bytes32\"}],\"internalType\":\"struct VerusObjectsNotarization.CProofRoot[]\",\"name\":\"_prsa\",\"type\":\"tuple[]\"}],\"name\":\"serializeCProofRootArray\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer\",\"name\":\"ct\",\"type\":\"tuple\"}],\"name\":\"serializeCReserveTransfer\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"_bts\",\"type\":\"tuple[]\"},{\"internalType\":\"bool\",\"name\":\"includeSize\",\"type\":\"bool\"}],\"name\":\"serializeCReserveTransfers\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"ctd\",\"type\":\"tuple\"}],\"name\":\"serializeCTransferDestination\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"n\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjectsNotarization.CUTXORef\",\"name\":\"_cutxo\",\"type\":\"tuple\"}],\"name\":\"serializeCUTXORef\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"uint160[]\",\"name\":\"currencies\",\"type\":\"uint160[]\"},{\"internalType\":\"int32[]\",\"name\":\"weights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserves\",\"type\":\"int64[]\"},{\"internalType\":\"int64\",\"name\":\"initialsupply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"emitted\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"supply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"preconvertedout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyfees\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyconversionfees\",\"type\":\"int64\"},{\"internalType\":\"int64[]\",\"name\":\"reservein\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"primarycurrencyin\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserveout\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"viaconversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"fees\",\"type\":\"int64[]\"},{\"internalType\":\"int32[]\",\"name\":\"priorweights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionfees\",\"type\":\"int64[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CCoinbaseCurrencyState\",\"name\":\"currencystate\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjectsNotarization.CurrencyStates\",\"name\":\"_cs\",\"type\":\"tuple\"}],\"name\":\"serializeCurrencyStates\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"uint160[]\",\"name\":\"currencies\",\"type\":\"uint160[]\"},{\"internalType\":\"int32[]\",\"name\":\"weights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserves\",\"type\":\"int64[]\"},{\"internalType\":\"int64\",\"name\":\"initialsupply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"emitted\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"supply\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"preconvertedout\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyfees\",\"type\":\"int64\"},{\"internalType\":\"int64\",\"name\":\"primarycurrencyconversionfees\",\"type\":\"int64\"},{\"internalType\":\"int64[]\",\"name\":\"reservein\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"primarycurrencyin\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"reserveout\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"viaconversionprice\",\"type\":\"int64[]\"},{\"internalType\":\"int64[]\",\"name\":\"fees\",\"type\":\"int64[]\"},{\"internalType\":\"int32[]\",\"name\":\"priorweights\",\"type\":\"int32[]\"},{\"internalType\":\"int64[]\",\"name\":\"conversionfees\",\"type\":\"int64[]\"}],\"internalType\":\"struct VerusObjectsNotarization.CCoinbaseCurrencyState\",\"name\":\"currencystate\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjectsNotarization.CurrencyStates[]\",\"name\":\"_csa\",\"type\":\"tuple[]\"}],\"name\":\"serializeCurrencyStatesArray\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int16\",\"name\":\"number\",\"type\":\"int16\"}],\"name\":\"serializeInt16\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int32\",\"name\":\"number\",\"type\":\"int32\"}],\"name\":\"serializeInt32\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int32[]\",\"name\":\"numbers\",\"type\":\"int32[]\"}],\"name\":\"serializeInt32Array\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"number\",\"type\":\"int64\"}],\"name\":\"serializeInt64\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64[]\",\"name\":\"numbers\",\"type\":\"int64[]\"}],\"name\":\"serializeInt64Array\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"networkaddress\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"nodeidentity\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsNotarization.CNodeData[]\",\"name\":\"_cnds\",\"type\":\"tuple[]\"}],\"name\":\"serializeNodes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"int16\",\"name\":\"version\",\"type\":\"int16\"},{\"internalType\":\"int16\",\"name\":\"cprtype\",\"type\":\"int16\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"rootheight\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"stateroot\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"blockhash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"compactpower\",\"type\":\"bytes32\"}],\"internalType\":\"struct VerusObjectsNotarization.CProofRoot\",\"name\":\"proofroot\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjectsNotarization.ProofRoots\",\"name\":\"_prs\",\"type\":\"tuple\"}],\"name\":\"serializeProofRoots\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"int16\",\"name\":\"version\",\"type\":\"int16\"},{\"internalType\":\"int16\",\"name\":\"cprtype\",\"type\":\"int16\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"rootheight\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"stateroot\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"blockhash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"compactpower\",\"type\":\"bytes32\"}],\"internalType\":\"struct VerusObjectsNotarization.CProofRoot\",\"name\":\"proofroot\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjectsNotarization.ProofRoots[]\",\"name\":\"_prsa\",\"type\":\"tuple[]\"}],\"name\":\"serializeProofRootsArray\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"anyString\",\"type\":\"string\"}],\"name\":\"serializeString\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"number\",\"type\":\"uint16\"}],\"name\":\"serializeUint16\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint160[]\",\"name\":\"numbers\",\"type\":\"uint160[]\"}],\"name\":\"serializeUint160Array\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"}],\"name\":\"serializeUint256\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"number\",\"type\":\"uint32\"}],\"name\":\"serializeUint32\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"number\",\"type\":\"uint64\"}],\"name\":\"serializeUint64\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"number\",\"type\":\"uint8\"}],\"name\":\"serializeUint8\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"prefix\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"systemID\",\"type\":\"address\"},{\"internalType\":\"int64\",\"name\":\"blockHeight\",\"type\":\"int64\"},{\"internalType\":\"address\",\"name\":\"signingID\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"messageToHash\",\"type\":\"bytes\"}],\"name\":\"verusHashPrefix\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newNumber\",\"type\":\"uint256\"}],\"name\":\"writeCompactSize\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"incoming\",\"type\":\"uint256\"}],\"name\":\"writeVarInt\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/VerusBridge/VerusSerializer.sol\":\"VerusSerializer\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libraries/VerusObjects.sol\":{\"keccak256\":\"0xd0274346cdb551966e295f2718e45998ec5aaaa1376966f21520ecf89c53fc0c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8ea3a4d2dc51ba51aed7dbd427fecc3ef5c1b1e06758afbc47ade97b987c468f\",\"dweb:/ipfs/QmRVSscm5FLC16CjWaxCgBh2ESqtEPa4F9ZvYidkan4Pks\"]},\"project:/contracts/Libraries/VerusObjectsCommon.sol\":{\"keccak256\":\"0x13ffd294a0bde2b004b737698e149d2c3b56c8a76e4b3e3b79bba8a509bf4cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ea27b0b52b39e39688734d090c1466f7b9e683d51c251686527ddb1fb71603\",\"dweb:/ipfs/QmWhoATj7wdKn4kkkddMbofG7eS8GK92jpBh3MJ185X2uD\"]},\"project:/contracts/Libraries/VerusObjectsNotarization.sol\":{\"keccak256\":\"0x3911d1ee0b5596eca3fed141f8e386a8d81956786ac5ef22631532346d48a670\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://989f99592ce7c7b990da06821fa2363b80d17748bc0762e268b58920e0079afa\",\"dweb:/ipfs/QmTdWiodfbsA3ZGkhRuzx9iUr2oS3Ge5XSfALCFaGpfo3i\"]},\"project:/contracts/VerusBridge/VerusSerializer.sol\":{\"keccak256\":\"0x220d0924962008b12f093e570811f82cb52844044b993be7fb265b0592faae32\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://80d78cb012f923e74ebc6e7c8c3f779f15eae28bfd0ebf3a7543fbfebaecd0a0\",\"dweb:/ipfs/QmRioKMCuLJHR1YbX3nZqku7qXH8M1ws9woqmX9qcxXvEu\"]}},\"version\":1}",
@@ -81854,9 +81891,17 @@
     "name": "solc",
     "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0x9100f7D9Ca93B0Fd37B5b7A417ECc5C064a623e6",
+      "transactionHash": "0x7a83bb6b0bfce8227c36a7020d7a6ed66895ba278adae5e372e7e93262605321"
+    }
+  },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-09-27T18:34:01.303Z",
+  "updatedAt": "2021-09-27T18:59:25.267Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -75,7 +75,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -188,7 +189,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"verusNotarizerAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"chainVersion\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"chainVerusVersion\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"chainName\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"chainTestnet\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_currencyid\",\"type\":\"address\"}],\"name\":\"getcurrency\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"version\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"currencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"parent\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"systemid\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"notarizationprotocol\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"proofprotocol\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"nativecurrencyid\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"launchsystemid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startblock\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endblock\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"initialsupply\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"prelaunchcarveout\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"gatewayid\",\"type\":\"address\"},{\"internalType\":\"address[]\",\"name\":\"notaries\",\"type\":\"address[]\"},{\"internalType\":\"uint256\",\"name\":\"minnotariesconfirm\",\"type\":\"uint256\"}],\"internalType\":\"struct VerusObjects.currencyDetail\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getinfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"version\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"VRSCversion\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"blocks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tiptime\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"testnet\",\"type\":\"bool\"}],\"internalType\":\"struct VerusObjects.infoDetails\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/VerusBridge/VerusInfo.sol\":\"VerusInfo\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libraries/VerusConstants.sol\":{\"keccak256\":\"0x715a00e4f6c5f936a43dd9fd3a400cb7452c44f895e45213f8c07317933dd8f2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c4be7eae287083a537cb4e9d0929f10156be572a17172f711e5553afef7dfff6\",\"dweb:/ipfs/QmePg9uUWb15uqSb23tsfNe9x9XCJmXcAhT2HryRcKvvpw\"]},\"project:/contracts/Libraries/VerusObjects.sol\":{\"keccak256\":\"0xd0274346cdb551966e295f2718e45998ec5aaaa1376966f21520ecf89c53fc0c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8ea3a4d2dc51ba51aed7dbd427fecc3ef5c1b1e06758afbc47ade97b987c468f\",\"dweb:/ipfs/QmRVSscm5FLC16CjWaxCgBh2ESqtEPa4F9ZvYidkan4Pks\"]},\"project:/contracts/Libraries/VerusObjectsCommon.sol\":{\"keccak256\":\"0x13ffd294a0bde2b004b737698e149d2c3b56c8a76e4b3e3b79bba8a509bf4cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ea27b0b52b39e39688734d090c1466f7b9e683d51c251686527ddb1fb71603\",\"dweb:/ipfs/QmWhoATj7wdKn4kkkddMbofG7eS8GK92jpBh3MJ185X2uD\"]},\"project:/contracts/Libraries/VerusObjectsNotarization.sol\":{\"keccak256\":\"0x3911d1ee0b5596eca3fed141f8e386a8d81956786ac5ef22631532346d48a670\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://989f99592ce7c7b990da06821fa2363b80d17748bc0762e268b58920e0079afa\",\"dweb:/ipfs/QmTdWiodfbsA3ZGkhRuzx9iUr2oS3Ge5XSfALCFaGpfo3i\"]},\"project:/contracts/MMR/Blake2b.sol\":{\"keccak256\":\"0x2f3905aee56e95fe87f56c79e5f0fe14ec606f12862f539b223c6c621715446a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a2e1bc986d4d1900320807c6a484860de20cf3421814fb533de391b04708df89\",\"dweb:/ipfs/QmT7MAHy7kqttPqJ5qT5JaqJmCt1BMDv1H4zCRUtdpXBE9\"]},\"project:/contracts/MMR/VerusBlake2b.sol\":{\"keccak256\":\"0x57c88ed3ecb2d38439812ce55646bf20defbb0d1a9aa2dce3894f418b2de36d5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c10ad741c8a59f4fd2a21ad955202e1ff91b6ba4efb1e0925381f2fd29039b8\",\"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6\"]},\"project:/contracts/VerusBridge/VerusInfo.sol\":{\"keccak256\":\"0xa4865f6ed13e32b2ad1b46f53ce9c21be929d207ef86353ca8089b77a0af9daf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8828c3c69a3f4e1799ea6b28398e5104d926dfa6d66abb6225f59dc0ccc11a3d\",\"dweb:/ipfs/QmSw3AF5Kq9CutYmeQCkNNubvPCEMDGa73Bqgu4Sa8ruQk\"]},\"project:/contracts/VerusBridge/VerusSerializer.sol\":{\"keccak256\":\"0x220d0924962008b12f093e570811f82cb52844044b993be7fb265b0592faae32\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://80d78cb012f923e74ebc6e7c8c3f779f15eae28bfd0ebf3a7543fbfebaecd0a0\",\"dweb:/ipfs/QmRioKMCuLJHR1YbX3nZqku7qXH8M1ws9woqmX9qcxXvEu\"]},\"project:/contracts/VerusNotarizer/VerusNotarizer.sol\":{\"keccak256\":\"0x01fd78198ff4f1488f4f5aa07430a5e56e1d65f06b5a20b4725f4cc009e78988\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f97da9b543071f908697feff3179a08f29efbec2f657a86573bbc5ec89251642\",\"dweb:/ipfs/Qmaii5kvYypswpu1n1ngpmMAEXGmfuoDkwNCqGv7ZesuTo\"]}},\"version\":1}",
@@ -15017,9 +15019,17 @@
     "name": "solc",
     "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0x34438887F66d46814186b4ba7d097713B8fccce1",
+      "transactionHash": "0x41c22587df11dbc28e8d1ad86035c77d74bd32223496ae16aea0419ea35196a9"
+    }
+  },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-09-27T18:34:01.278Z",
+  "updatedAt": "2021-09-27T18:59:25.470Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

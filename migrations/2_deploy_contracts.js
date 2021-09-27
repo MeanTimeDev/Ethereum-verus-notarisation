@@ -2,7 +2,7 @@ var VerusTokenManager = artifacts.require("./VerusBridge/TokenManager.sol");
 var VerusBlake2b = artifacts.require("./MMR/VerusBlake2b.sol");
 var VerusSerializer = artifacts.require("./VerusBridge/VerusSerializer.sol");
 var VerusNotarizer = artifacts.require("./VerusNotarizer/VerusNotarizer.sol");
-var VerusProof = artifacts.require("./VerusNotarizer/VerusNotarizer.sol");
+var VerusProof = artifacts.require("./MMR/VerusProof.sol");
 var VerusCCE = artifacts.require("./VerusBridge/VerusCrossChainExport.sol");
 var VerusBridge = artifacts.require("./VerusBridge/VerusBridge.sol");
 var Verusaddress = artifacts.require("./VerusBridge/VerusAddressCalculator.sol");
@@ -29,7 +29,7 @@ module.exports = async function (deployer) {
 
     await tokenInst.deployNewToken(tokenmanvrsctest[0],tokenmanvrsctest[1],tokenmanvrsctest[2]);
  
-    await deployer.deploy(VerusNotarizer,blakeInst.address,serializerInst.address,verusNotariserIDS,verusNotariserSigner);
+    await deployer.deploy(VerusNotarizer, blakeInst.address, serializerInst.address, verusNotariserIDS, verusNotariserSigner);
     const notarizerInst = await VerusNotarizer.deployed();
 
     await deployer.deploy(VerusProof,notarizerInst.address,blakeInst.address,serializerInst.address);
@@ -44,6 +44,6 @@ module.exports = async function (deployer) {
 
     
     await deployer.deploy(VerusInfo, VerusBridgeInst.address,"2000753","0.7.3-9-rc1","VETH",true);
-    const CCEInst = await VerusInfo.deployed();
+    const INFOInst = await VerusInfo.deployed();
 
 };
