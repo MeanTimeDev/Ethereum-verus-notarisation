@@ -1,0 +1,4695 @@
+{
+  "contractName": "VerusObjects",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Libraries/VerusObjects.sol\":\"VerusObjects\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libraries/VerusObjects.sol\":{\"keccak256\":\"0xd0274346cdb551966e295f2718e45998ec5aaaa1376966f21520ecf89c53fc0c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8ea3a4d2dc51ba51aed7dbd427fecc3ef5c1b1e06758afbc47ade97b987c468f\",\"dweb:/ipfs/QmRVSscm5FLC16CjWaxCgBh2ESqtEPa4F9ZvYidkan4Pks\"]},\"project:/contracts/Libraries/VerusObjectsCommon.sol\":{\"keccak256\":\"0x13ffd294a0bde2b004b737698e149d2c3b56c8a76e4b3e3b79bba8a509bf4cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ea27b0b52b39e39688734d090c1466f7b9e683d51c251686527ddb1fb71603\",\"dweb:/ipfs/QmWhoATj7wdKn4kkkddMbofG7eS8GK92jpBh3MJ185X2uD\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122017a9dcc8a972e0f10eeeaf6bb11bf53119314b9025ad57adebc3abba188e185764736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122017a9dcc8a972e0f10eeeaf6bb11bf53119314b9025ad57adebc3abba188e185764736f6c63430007060033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "182:3248:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "182:3248:2:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\n// Bridge between ethereum and verus\r\n\r\npragma solidity >=0.6.0 < 0.9.0;\r\npragma experimental ABIEncoderV2;\r\n\r\nimport \"./VerusObjectsCommon.sol\";\r\n\r\nlibrary VerusObjects {\r\n    \r\n    struct blockCreated {\r\n        uint index;\r\n        bool created;\r\n    }\r\n    struct infoDetails {\r\n        uint version;\r\n        string VRSCversion;\r\n        uint blocks;\r\n        uint tiptime;\r\n        string name;\r\n        bool testnet;\r\n    }\r\n    \r\n    struct currencyDetail {\r\n        uint version;\r\n        string name;\r\n        address currencyid;\r\n        address parent;\r\n        address systemid;\r\n        uint8 notarizationprotocol;\r\n        uint8 proofprotocol;\r\n        VerusObjectsCommon.CTransferDestination nativecurrencyid;\r\n        address launchsystemid;\r\n        uint startblock;\r\n        uint endblock;\r\n        uint256 initialsupply;\r\n        uint256 prelaunchcarveout;\r\n        address gatewayid;\r\n        address[] notaries;\r\n        uint minnotariesconfirm;\r\n    }\r\n    \r\n    struct CCurrencyValueMap {\r\n        address currency;\r\n        uint64 amount;\r\n    }\r\n\r\n    struct CReserveTransfer {\r\n        uint32 version;\r\n        CCurrencyValueMap currencyvalue;\r\n        uint32 flags;\r\n        address feecurrencyid;\r\n        uint256 fees;\r\n        VerusObjectsCommon.CTransferDestination destination;\r\n        address destcurrencyid;\r\n        address destsystemid;\r\n        address secondreserveid;\r\n    }\r\n\r\n\r\n    //CReserve Transfer Set is a simplified version of a crosschain export returning only the required info\r\n    \r\n    struct CReserveTransferSet {\r\n        uint position;\r\n        uint blockHeight;\r\n        bytes32 exportHash;\r\n        CReserveTransfer[] transfers;\r\n    }\r\n\r\n    struct LastImport {\r\n        uint height;\r\n        bytes32 txid; //this is actually the hash of the transfers that can be used for proof\r\n    }\r\n\r\n    struct CReserveTransferImport {\r\n        uint height;\r\n        bytes32 txid; //this is actually the hash of the transfers that can be used for proof\r\n        uint txoutnum; //index of the transfers in the exports array\r\n        CCrossChainExport exportinfo;\r\n        CPtransactionproof partialtransactionproof;  //partial transaction proof is for the \r\n        CReserveTransfer[] transfers ;\r\n    }\r\n\r\n    struct CCrossChainExport {\r\n        uint16 version;\r\n        uint16 flags;\r\n        address sourcesystemid;\r\n        uint32 sourceheightstart;\r\n        uint32 sourceheightend;\r\n        address destinationsystemid;\r\n        address destinationcurrencyid;\r\n        uint32 numinputs;\r\n        CCurrencyValueMap[] totalamounts;\r\n        CCurrencyValueMap[] totalfees;\r\n        bytes32 hashtransfers; // hashtransfers\r\n        CCurrencyValueMap[] totalburned;\r\n        VerusObjectsCommon.CTransferDestination rewardaddress; //reward address\r\n        int32 firstinput;\r\n    }\r\n\r\n    struct CMerkleBranch {\r\n\r\n        uint8  CMerkleBranchBase;\r\n        uint32 nIndex;\r\n        uint32 nSize;\r\n        bytes32[] branch;\r\n    }\r\n\r\n    struct CTXProof {\r\n        uint8 branchType;\r\n        CMerkleBranch proofSequence;\r\n    }\r\n\r\n    struct CComponents {\r\n        uint8 elType;\r\n        uint8 elIdx;\r\n        bytes elVchObj;\r\n        CTXProof[] elProof;\r\n        uint32 VchObjIndex;\r\n\r\n    }\r\n    \r\n    struct CPtransactionproof {\r\n        uint8 version;\r\n        uint8 typeC;\r\n        CTXProof[] txproof;\r\n        CComponents[] components;\r\n    }\r\n}",
+  "sourcePath": "D:\\dev\\Ethereum-verus-notarisation\\contracts\\Libraries\\VerusObjects.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Libraries/VerusObjects.sol",
+    "exportedSymbols": {
+      "VerusObjects": [
+        250
+      ],
+      "VerusObjectsCommon": [
+        268
+      ]
+    },
+    "id": 251,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 72,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.6",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "73:32:2"
+      },
+      {
+        "id": 73,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "107:33:2"
+      },
+      {
+        "absolutePath": "project:/contracts/Libraries/VerusObjectsCommon.sol",
+        "file": "./VerusObjectsCommon.sol",
+        "id": 74,
+        "nodeType": "ImportDirective",
+        "scope": 251,
+        "sourceUnit": 269,
+        "src": "144:34:2",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 250,
+        "linearizedBaseContracts": [
+          250
+        ],
+        "name": "VerusObjects",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "VerusObjects.blockCreated",
+            "id": 79,
+            "members": [
+              {
+                "constant": false,
+                "id": 76,
+                "mutability": "mutable",
+                "name": "index",
+                "nodeType": "VariableDeclaration",
+                "scope": 79,
+                "src": "247:10:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 75,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "247:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 78,
+                "mutability": "mutable",
+                "name": "created",
+                "nodeType": "VariableDeclaration",
+                "scope": 79,
+                "src": "268:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 77,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "268:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "blockCreated",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "216:72:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.infoDetails",
+            "id": 92,
+            "members": [
+              {
+                "constant": false,
+                "id": 81,
+                "mutability": "mutable",
+                "name": "version",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "324:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 80,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "324:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 83,
+                "mutability": "mutable",
+                "name": "VRSCversion",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "347:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 82,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "347:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 85,
+                "mutability": "mutable",
+                "name": "blocks",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "376:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 84,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "376:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 87,
+                "mutability": "mutable",
+                "name": "tiptime",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "398:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 86,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "398:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 89,
+                "mutability": "mutable",
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "421:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 88,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "421:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 91,
+                "mutability": "mutable",
+                "name": "testnet",
+                "nodeType": "VariableDeclaration",
+                "scope": 92,
+                "src": "443:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 90,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "443:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "infoDetails",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "294:169:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.currencyDetail",
+            "id": 126,
+            "members": [
+              {
+                "constant": false,
+                "id": 94,
+                "mutability": "mutable",
+                "name": "version",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "508:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 93,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "508:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 96,
+                "mutability": "mutable",
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "531:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 95,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 98,
+                "mutability": "mutable",
+                "name": "currencyid",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "553:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 97,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "553:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 100,
+                "mutability": "mutable",
+                "name": "parent",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "582:14:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 99,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "582:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 102,
+                "mutability": "mutable",
+                "name": "systemid",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "607:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 101,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "607:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 104,
+                "mutability": "mutable",
+                "name": "notarizationprotocol",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "634:26:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 103,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "634:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 106,
+                "mutability": "mutable",
+                "name": "proofprotocol",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "671:19:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 105,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "671:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 108,
+                "mutability": "mutable",
+                "name": "nativecurrencyid",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "701:56:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                  "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                },
+                "typeName": {
+                  "id": 107,
+                  "name": "VerusObjectsCommon.CTransferDestination",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 267,
+                  "src": "701:39:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                    "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 110,
+                "mutability": "mutable",
+                "name": "launchsystemid",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "768:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 109,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "768:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 112,
+                "mutability": "mutable",
+                "name": "startblock",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "801:15:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 111,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "801:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 114,
+                "mutability": "mutable",
+                "name": "endblock",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "827:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 113,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "827:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 116,
+                "mutability": "mutable",
+                "name": "initialsupply",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "851:21:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 115,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "851:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 118,
+                "mutability": "mutable",
+                "name": "prelaunchcarveout",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "883:25:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 117,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "883:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 120,
+                "mutability": "mutable",
+                "name": "gatewayid",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "919:17:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 119,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "919:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 123,
+                "mutability": "mutable",
+                "name": "notaries",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "947:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                  "typeString": "address[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 121,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "947:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 122,
+                  "nodeType": "ArrayTypeName",
+                  "src": "947:9:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                    "typeString": "address[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 125,
+                "mutability": "mutable",
+                "name": "minnotariesconfirm",
+                "nodeType": "VariableDeclaration",
+                "scope": 126,
+                "src": "976:23:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 124,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "976:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "currencyDetail",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "475:532:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CCurrencyValueMap",
+            "id": 131,
+            "members": [
+              {
+                "constant": false,
+                "id": 128,
+                "mutability": "mutable",
+                "name": "currency",
+                "nodeType": "VariableDeclaration",
+                "scope": 131,
+                "src": "1055:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 127,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1055:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 130,
+                "mutability": "mutable",
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 131,
+                "src": "1082:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 129,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1082:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CCurrencyValueMap",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "1019:84:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CReserveTransfer",
+            "id": 150,
+            "members": [
+              {
+                "constant": false,
+                "id": 133,
+                "mutability": "mutable",
+                "name": "version",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1146:14:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 132,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1146:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 135,
+                "mutability": "mutable",
+                "name": "currencyvalue",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1171:31:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CCurrencyValueMap_$131_storage_ptr",
+                  "typeString": "struct VerusObjects.CCurrencyValueMap"
+                },
+                "typeName": {
+                  "id": 134,
+                  "name": "CCurrencyValueMap",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 131,
+                  "src": "1171:17:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CCurrencyValueMap_$131_storage_ptr",
+                    "typeString": "struct VerusObjects.CCurrencyValueMap"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 137,
+                "mutability": "mutable",
+                "name": "flags",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1213:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 136,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1213:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 139,
+                "mutability": "mutable",
+                "name": "feecurrencyid",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1236:21:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 138,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1236:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 141,
+                "mutability": "mutable",
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1268:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 140,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1268:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 143,
+                "mutability": "mutable",
+                "name": "destination",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1291:51:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                  "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                },
+                "typeName": {
+                  "id": 142,
+                  "name": "VerusObjectsCommon.CTransferDestination",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 267,
+                  "src": "1291:39:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                    "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 145,
+                "mutability": "mutable",
+                "name": "destcurrencyid",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1353:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 144,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1353:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 147,
+                "mutability": "mutable",
+                "name": "destsystemid",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1386:20:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 146,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1386:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 149,
+                "mutability": "mutable",
+                "name": "secondreserveid",
+                "nodeType": "VariableDeclaration",
+                "scope": 150,
+                "src": "1417:23:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 148,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1417:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CReserveTransfer",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "1111:337:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CReserveTransferSet",
+            "id": 160,
+            "members": [
+              {
+                "constant": false,
+                "id": 152,
+                "mutability": "mutable",
+                "name": "position",
+                "nodeType": "VariableDeclaration",
+                "scope": 160,
+                "src": "1611:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 151,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1611:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 154,
+                "mutability": "mutable",
+                "name": "blockHeight",
+                "nodeType": "VariableDeclaration",
+                "scope": 160,
+                "src": "1635:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 153,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1635:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 156,
+                "mutability": "mutable",
+                "name": "exportHash",
+                "nodeType": "VariableDeclaration",
+                "scope": 160,
+                "src": "1662:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 155,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1662:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 159,
+                "mutability": "mutable",
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 160,
+                "src": "1691:28:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CReserveTransfer_$150_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CReserveTransfer[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 157,
+                    "name": "CReserveTransfer",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 150,
+                    "src": "1691:16:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CReserveTransfer_$150_storage_ptr",
+                      "typeString": "struct VerusObjects.CReserveTransfer"
+                    }
+                  },
+                  "id": 158,
+                  "nodeType": "ArrayTypeName",
+                  "src": "1691:18:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CReserveTransfer_$150_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CReserveTransfer[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CReserveTransferSet",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "1573:154:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.LastImport",
+            "id": 165,
+            "members": [
+              {
+                "constant": false,
+                "id": 162,
+                "mutability": "mutable",
+                "name": "height",
+                "nodeType": "VariableDeclaration",
+                "scope": 165,
+                "src": "1764:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 161,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1764:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 164,
+                "mutability": "mutable",
+                "name": "txid",
+                "nodeType": "VariableDeclaration",
+                "scope": 165,
+                "src": "1786:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 163,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1786:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "LastImport",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "1735:143:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CReserveTransferImport",
+            "id": 179,
+            "members": [
+              {
+                "constant": false,
+                "id": 167,
+                "mutability": "mutable",
+                "name": "height",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "1927:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 166,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1927:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 169,
+                "mutability": "mutable",
+                "name": "txid",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "1949:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 168,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1949:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 171,
+                "mutability": "mutable",
+                "name": "txoutnum",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "2044:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 170,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2044:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 173,
+                "mutability": "mutable",
+                "name": "exportinfo",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "2114:28:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CCrossChainExport_$211_storage_ptr",
+                  "typeString": "struct VerusObjects.CCrossChainExport"
+                },
+                "typeName": {
+                  "id": 172,
+                  "name": "CCrossChainExport",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 211,
+                  "src": "2114:17:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CCrossChainExport_$211_storage_ptr",
+                    "typeString": "struct VerusObjects.CCrossChainExport"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 175,
+                "mutability": "mutable",
+                "name": "partialtransactionproof",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "2153:42:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CPtransactionproof_$249_storage_ptr",
+                  "typeString": "struct VerusObjects.CPtransactionproof"
+                },
+                "typeName": {
+                  "id": 174,
+                  "name": "CPtransactionproof",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 249,
+                  "src": "2153:18:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CPtransactionproof_$249_storage_ptr",
+                    "typeString": "struct VerusObjects.CPtransactionproof"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 178,
+                "mutability": "mutable",
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 179,
+                "src": "2247:28:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CReserveTransfer_$150_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CReserveTransfer[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 176,
+                    "name": "CReserveTransfer",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 150,
+                    "src": "2247:16:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CReserveTransfer_$150_storage_ptr",
+                      "typeString": "struct VerusObjects.CReserveTransfer"
+                    }
+                  },
+                  "id": 177,
+                  "nodeType": "ArrayTypeName",
+                  "src": "2247:18:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CReserveTransfer_$150_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CReserveTransfer[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CReserveTransferImport",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "1886:398:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CCrossChainExport",
+            "id": 211,
+            "members": [
+              {
+                "constant": false,
+                "id": 181,
+                "mutability": "mutable",
+                "name": "version",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2328:14:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint16",
+                  "typeString": "uint16"
+                },
+                "typeName": {
+                  "id": 180,
+                  "name": "uint16",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2328:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 183,
+                "mutability": "mutable",
+                "name": "flags",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2353:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint16",
+                  "typeString": "uint16"
+                },
+                "typeName": {
+                  "id": 182,
+                  "name": "uint16",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2353:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 185,
+                "mutability": "mutable",
+                "name": "sourcesystemid",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2376:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 184,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2376:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 187,
+                "mutability": "mutable",
+                "name": "sourceheightstart",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2409:24:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 186,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2409:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 189,
+                "mutability": "mutable",
+                "name": "sourceheightend",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2444:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 188,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2444:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 191,
+                "mutability": "mutable",
+                "name": "destinationsystemid",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2477:27:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 190,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2477:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 193,
+                "mutability": "mutable",
+                "name": "destinationcurrencyid",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2515:29:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 192,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2515:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 195,
+                "mutability": "mutable",
+                "name": "numinputs",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2555:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 194,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2555:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 198,
+                "mutability": "mutable",
+                "name": "totalamounts",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2582:32:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 196,
+                    "name": "CCurrencyValueMap",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 131,
+                    "src": "2582:17:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CCurrencyValueMap_$131_storage_ptr",
+                      "typeString": "struct VerusObjects.CCurrencyValueMap"
+                    }
+                  },
+                  "id": 197,
+                  "nodeType": "ArrayTypeName",
+                  "src": "2582:19:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 201,
+                "mutability": "mutable",
+                "name": "totalfees",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2625:29:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 199,
+                    "name": "CCurrencyValueMap",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 131,
+                    "src": "2625:17:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CCurrencyValueMap_$131_storage_ptr",
+                      "typeString": "struct VerusObjects.CCurrencyValueMap"
+                    }
+                  },
+                  "id": 200,
+                  "nodeType": "ArrayTypeName",
+                  "src": "2625:19:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 203,
+                "mutability": "mutable",
+                "name": "hashtransfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2665:21:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 202,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2665:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 206,
+                "mutability": "mutable",
+                "name": "totalburned",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2714:31:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 204,
+                    "name": "CCurrencyValueMap",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 131,
+                    "src": "2714:17:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CCurrencyValueMap_$131_storage_ptr",
+                      "typeString": "struct VerusObjects.CCurrencyValueMap"
+                    }
+                  },
+                  "id": 205,
+                  "nodeType": "ArrayTypeName",
+                  "src": "2714:19:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CCurrencyValueMap_$131_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CCurrencyValueMap[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 208,
+                "mutability": "mutable",
+                "name": "rewardaddress",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2756:53:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                  "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                },
+                "typeName": {
+                  "id": 207,
+                  "name": "VerusObjectsCommon.CTransferDestination",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 267,
+                  "src": "2756:39:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CTransferDestination_$267_storage_ptr",
+                    "typeString": "struct VerusObjectsCommon.CTransferDestination"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 210,
+                "mutability": "mutable",
+                "name": "firstinput",
+                "nodeType": "VariableDeclaration",
+                "scope": 211,
+                "src": "2837:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int32",
+                  "typeString": "int32"
+                },
+                "typeName": {
+                  "id": 209,
+                  "name": "int32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2837:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int32",
+                    "typeString": "int32"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CCrossChainExport",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "2292:569:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CMerkleBranch",
+            "id": 221,
+            "members": [
+              {
+                "constant": false,
+                "id": 213,
+                "mutability": "mutable",
+                "name": "CMerkleBranchBase",
+                "nodeType": "VariableDeclaration",
+                "scope": 221,
+                "src": "2903:24:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 212,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2903:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 215,
+                "mutability": "mutable",
+                "name": "nIndex",
+                "nodeType": "VariableDeclaration",
+                "scope": 221,
+                "src": "2938:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 214,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2938:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 217,
+                "mutability": "mutable",
+                "name": "nSize",
+                "nodeType": "VariableDeclaration",
+                "scope": 221,
+                "src": "2962:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 216,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2962:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 220,
+                "mutability": "mutable",
+                "name": "branch",
+                "nodeType": "VariableDeclaration",
+                "scope": 221,
+                "src": "2985:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                  "typeString": "bytes32[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 218,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2985:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 219,
+                  "nodeType": "ArrayTypeName",
+                  "src": "2985:9:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                    "typeString": "bytes32[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CMerkleBranch",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "2869:140:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CTXProof",
+            "id": 226,
+            "members": [
+              {
+                "constant": false,
+                "id": 223,
+                "mutability": "mutable",
+                "name": "branchType",
+                "nodeType": "VariableDeclaration",
+                "scope": 226,
+                "src": "3044:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 222,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3044:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 225,
+                "mutability": "mutable",
+                "name": "proofSequence",
+                "nodeType": "VariableDeclaration",
+                "scope": 226,
+                "src": "3071:27:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CMerkleBranch_$221_storage_ptr",
+                  "typeString": "struct VerusObjects.CMerkleBranch"
+                },
+                "typeName": {
+                  "id": 224,
+                  "name": "CMerkleBranch",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 221,
+                  "src": "3071:13:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CMerkleBranch_$221_storage_ptr",
+                    "typeString": "struct VerusObjects.CMerkleBranch"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CTXProof",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "3017:89:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CComponents",
+            "id": 238,
+            "members": [
+              {
+                "constant": false,
+                "id": 228,
+                "mutability": "mutable",
+                "name": "elType",
+                "nodeType": "VariableDeclaration",
+                "scope": 238,
+                "src": "3144:12:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 227,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3144:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 230,
+                "mutability": "mutable",
+                "name": "elIdx",
+                "nodeType": "VariableDeclaration",
+                "scope": 238,
+                "src": "3167:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 229,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3167:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 232,
+                "mutability": "mutable",
+                "name": "elVchObj",
+                "nodeType": "VariableDeclaration",
+                "scope": 238,
+                "src": "3189:14:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes_storage_ptr",
+                  "typeString": "bytes"
+                },
+                "typeName": {
+                  "id": 231,
+                  "name": "bytes",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3189:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_storage_ptr",
+                    "typeString": "bytes"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 235,
+                "mutability": "mutable",
+                "name": "elProof",
+                "nodeType": "VariableDeclaration",
+                "scope": 238,
+                "src": "3214:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CTXProof_$226_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CTXProof[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 233,
+                    "name": "CTXProof",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 226,
+                    "src": "3214:8:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CTXProof_$226_storage_ptr",
+                      "typeString": "struct VerusObjects.CTXProof"
+                    }
+                  },
+                  "id": 234,
+                  "nodeType": "ArrayTypeName",
+                  "src": "3214:10:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CTXProof_$226_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CTXProof[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 237,
+                "mutability": "mutable",
+                "name": "VchObjIndex",
+                "nodeType": "VariableDeclaration",
+                "scope": 238,
+                "src": "3243:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 236,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3243:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CComponents",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "3114:157:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "VerusObjects.CPtransactionproof",
+            "id": 249,
+            "members": [
+              {
+                "constant": false,
+                "id": 240,
+                "mutability": "mutable",
+                "name": "version",
+                "nodeType": "VariableDeclaration",
+                "scope": 249,
+                "src": "3320:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 239,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3320:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 242,
+                "mutability": "mutable",
+                "name": "typeC",
+                "nodeType": "VariableDeclaration",
+                "scope": 249,
+                "src": "3344:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 241,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3344:5:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 245,
+                "mutability": "mutable",
+                "name": "txproof",
+                "nodeType": "VariableDeclaration",
+                "scope": 249,
+                "src": "3366:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CTXProof_$226_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CTXProof[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 243,
+                    "name": "CTXProof",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 226,
+                    "src": "3366:8:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CTXProof_$226_storage_ptr",
+                      "typeString": "struct VerusObjects.CTXProof"
+                    }
+                  },
+                  "id": 244,
+                  "nodeType": "ArrayTypeName",
+                  "src": "3366:10:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CTXProof_$226_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CTXProof[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 248,
+                "mutability": "mutable",
+                "name": "components",
+                "nodeType": "VariableDeclaration",
+                "scope": 249,
+                "src": "3395:24:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_CComponents_$238_storage_$dyn_storage_ptr",
+                  "typeString": "struct VerusObjects.CComponents[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 246,
+                    "name": "CComponents",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 238,
+                    "src": "3395:11:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CComponents_$238_storage_ptr",
+                      "typeString": "struct VerusObjects.CComponents"
+                    }
+                  },
+                  "id": 247,
+                  "nodeType": "ArrayTypeName",
+                  "src": "3395:13:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_CComponents_$238_storage_$dyn_storage_ptr",
+                    "typeString": "struct VerusObjects.CComponents[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CPtransactionproof",
+            "nodeType": "StructDefinition",
+            "scope": 250,
+            "src": "3283:144:2",
+            "visibility": "public"
+          }
+        ],
+        "scope": 251,
+        "src": "182:3248:2"
+      }
+    ],
+    "src": "73:3357:2"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/Libraries/VerusObjects.sol",
+      "exportedSymbols": {
+        "VerusObjects": [
+          250
+        ],
+        "VerusObjectsCommon": [
+          268
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.6",
+            ".0",
+            "<",
+            "0.9",
+            ".0"
+          ]
+        },
+        "id": 72,
+        "name": "PragmaDirective",
+        "src": "73:32:2"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 73,
+        "name": "PragmaDirective",
+        "src": "107:33:2"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 269,
+          "absolutePath": "project:/contracts/Libraries/VerusObjectsCommon.sol",
+          "file": "./VerusObjectsCommon.sol",
+          "scope": 251,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 74,
+        "name": "ImportDirective",
+        "src": "144:34:2"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            250
+          ],
+          "name": "VerusObjects",
+          "scope": 251
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.blockCreated",
+              "name": "blockCreated",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "index",
+                  "scope": 79,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 75,
+                    "name": "ElementaryTypeName",
+                    "src": "247:4:2"
+                  }
+                ],
+                "id": 76,
+                "name": "VariableDeclaration",
+                "src": "247:10:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "created",
+                  "scope": 79,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 77,
+                    "name": "ElementaryTypeName",
+                    "src": "268:4:2"
+                  }
+                ],
+                "id": 78,
+                "name": "VariableDeclaration",
+                "src": "268:12:2"
+              }
+            ],
+            "id": 79,
+            "name": "StructDefinition",
+            "src": "216:72:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.infoDetails",
+              "name": "infoDetails",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "version",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 80,
+                    "name": "ElementaryTypeName",
+                    "src": "324:4:2"
+                  }
+                ],
+                "id": 81,
+                "name": "VariableDeclaration",
+                "src": "324:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "VRSCversion",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string"
+                    },
+                    "id": 82,
+                    "name": "ElementaryTypeName",
+                    "src": "347:6:2"
+                  }
+                ],
+                "id": 83,
+                "name": "VariableDeclaration",
+                "src": "347:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "blocks",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 84,
+                    "name": "ElementaryTypeName",
+                    "src": "376:4:2"
+                  }
+                ],
+                "id": 85,
+                "name": "VariableDeclaration",
+                "src": "376:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "tiptime",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 86,
+                    "name": "ElementaryTypeName",
+                    "src": "398:4:2"
+                  }
+                ],
+                "id": 87,
+                "name": "VariableDeclaration",
+                "src": "398:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string"
+                    },
+                    "id": 88,
+                    "name": "ElementaryTypeName",
+                    "src": "421:6:2"
+                  }
+                ],
+                "id": 89,
+                "name": "VariableDeclaration",
+                "src": "421:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "testnet",
+                  "scope": 92,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 90,
+                    "name": "ElementaryTypeName",
+                    "src": "443:4:2"
+                  }
+                ],
+                "id": 91,
+                "name": "VariableDeclaration",
+                "src": "443:12:2"
+              }
+            ],
+            "id": 92,
+            "name": "StructDefinition",
+            "src": "294:169:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.currencyDetail",
+              "name": "currencyDetail",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "version",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 93,
+                    "name": "ElementaryTypeName",
+                    "src": "508:4:2"
+                  }
+                ],
+                "id": 94,
+                "name": "VariableDeclaration",
+                "src": "508:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string"
+                    },
+                    "id": 95,
+                    "name": "ElementaryTypeName",
+                    "src": "531:6:2"
+                  }
+                ],
+                "id": 96,
+                "name": "VariableDeclaration",
+                "src": "531:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "currencyid",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 97,
+                    "name": "ElementaryTypeName",
+                    "src": "553:7:2"
+                  }
+                ],
+                "id": 98,
+                "name": "VariableDeclaration",
+                "src": "553:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "parent",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 99,
+                    "name": "ElementaryTypeName",
+                    "src": "582:7:2"
+                  }
+                ],
+                "id": 100,
+                "name": "VariableDeclaration",
+                "src": "582:14:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "systemid",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 101,
+                    "name": "ElementaryTypeName",
+                    "src": "607:7:2"
+                  }
+                ],
+                "id": 102,
+                "name": "VariableDeclaration",
+                "src": "607:16:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "notarizationprotocol",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 103,
+                    "name": "ElementaryTypeName",
+                    "src": "634:5:2"
+                  }
+                ],
+                "id": 104,
+                "name": "VariableDeclaration",
+                "src": "634:26:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "proofprotocol",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 105,
+                    "name": "ElementaryTypeName",
+                    "src": "671:5:2"
+                  }
+                ],
+                "id": 106,
+                "name": "VariableDeclaration",
+                "src": "671:19:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "nativecurrencyid",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjectsCommon.CTransferDestination",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "VerusObjectsCommon.CTransferDestination",
+                      "referencedDeclaration": 267,
+                      "type": "struct VerusObjectsCommon.CTransferDestination"
+                    },
+                    "id": 107,
+                    "name": "UserDefinedTypeName",
+                    "src": "701:39:2"
+                  }
+                ],
+                "id": 108,
+                "name": "VariableDeclaration",
+                "src": "701:56:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "launchsystemid",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 109,
+                    "name": "ElementaryTypeName",
+                    "src": "768:7:2"
+                  }
+                ],
+                "id": 110,
+                "name": "VariableDeclaration",
+                "src": "768:22:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "startblock",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 111,
+                    "name": "ElementaryTypeName",
+                    "src": "801:4:2"
+                  }
+                ],
+                "id": 112,
+                "name": "VariableDeclaration",
+                "src": "801:15:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "endblock",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 113,
+                    "name": "ElementaryTypeName",
+                    "src": "827:4:2"
+                  }
+                ],
+                "id": 114,
+                "name": "VariableDeclaration",
+                "src": "827:13:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "initialsupply",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 115,
+                    "name": "ElementaryTypeName",
+                    "src": "851:7:2"
+                  }
+                ],
+                "id": 116,
+                "name": "VariableDeclaration",
+                "src": "851:21:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "prelaunchcarveout",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 117,
+                    "name": "ElementaryTypeName",
+                    "src": "883:7:2"
+                  }
+                ],
+                "id": 118,
+                "name": "VariableDeclaration",
+                "src": "883:25:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "gatewayid",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 119,
+                    "name": "ElementaryTypeName",
+                    "src": "919:7:2"
+                  }
+                ],
+                "id": 120,
+                "name": "VariableDeclaration",
+                "src": "919:17:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "notaries",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "address[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 121,
+                        "name": "ElementaryTypeName",
+                        "src": "947:7:2"
+                      }
+                    ],
+                    "id": 122,
+                    "name": "ArrayTypeName",
+                    "src": "947:9:2"
+                  }
+                ],
+                "id": 123,
+                "name": "VariableDeclaration",
+                "src": "947:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "minnotariesconfirm",
+                  "scope": 126,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 124,
+                    "name": "ElementaryTypeName",
+                    "src": "976:4:2"
+                  }
+                ],
+                "id": 125,
+                "name": "VariableDeclaration",
+                "src": "976:23:2"
+              }
+            ],
+            "id": 126,
+            "name": "StructDefinition",
+            "src": "475:532:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CCurrencyValueMap",
+              "name": "CCurrencyValueMap",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "currency",
+                  "scope": 131,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 127,
+                    "name": "ElementaryTypeName",
+                    "src": "1055:7:2"
+                  }
+                ],
+                "id": 128,
+                "name": "VariableDeclaration",
+                "src": "1055:16:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "scope": 131,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint64",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint64",
+                      "type": "uint64"
+                    },
+                    "id": 129,
+                    "name": "ElementaryTypeName",
+                    "src": "1082:6:2"
+                  }
+                ],
+                "id": 130,
+                "name": "VariableDeclaration",
+                "src": "1082:13:2"
+              }
+            ],
+            "id": 131,
+            "name": "StructDefinition",
+            "src": "1019:84:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CReserveTransfer",
+              "name": "CReserveTransfer",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "version",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 132,
+                    "name": "ElementaryTypeName",
+                    "src": "1146:6:2"
+                  }
+                ],
+                "id": 133,
+                "name": "VariableDeclaration",
+                "src": "1146:14:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "currencyvalue",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CCurrencyValueMap",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "CCurrencyValueMap",
+                      "referencedDeclaration": 131,
+                      "type": "struct VerusObjects.CCurrencyValueMap"
+                    },
+                    "id": 134,
+                    "name": "UserDefinedTypeName",
+                    "src": "1171:17:2"
+                  }
+                ],
+                "id": 135,
+                "name": "VariableDeclaration",
+                "src": "1171:31:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "flags",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 136,
+                    "name": "ElementaryTypeName",
+                    "src": "1213:6:2"
+                  }
+                ],
+                "id": 137,
+                "name": "VariableDeclaration",
+                "src": "1213:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "feecurrencyid",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 138,
+                    "name": "ElementaryTypeName",
+                    "src": "1236:7:2"
+                  }
+                ],
+                "id": 139,
+                "name": "VariableDeclaration",
+                "src": "1236:21:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "fees",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 140,
+                    "name": "ElementaryTypeName",
+                    "src": "1268:7:2"
+                  }
+                ],
+                "id": 141,
+                "name": "VariableDeclaration",
+                "src": "1268:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destination",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjectsCommon.CTransferDestination",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "VerusObjectsCommon.CTransferDestination",
+                      "referencedDeclaration": 267,
+                      "type": "struct VerusObjectsCommon.CTransferDestination"
+                    },
+                    "id": 142,
+                    "name": "UserDefinedTypeName",
+                    "src": "1291:39:2"
+                  }
+                ],
+                "id": 143,
+                "name": "VariableDeclaration",
+                "src": "1291:51:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destcurrencyid",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 144,
+                    "name": "ElementaryTypeName",
+                    "src": "1353:7:2"
+                  }
+                ],
+                "id": 145,
+                "name": "VariableDeclaration",
+                "src": "1353:22:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destsystemid",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 146,
+                    "name": "ElementaryTypeName",
+                    "src": "1386:7:2"
+                  }
+                ],
+                "id": 147,
+                "name": "VariableDeclaration",
+                "src": "1386:20:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "secondreserveid",
+                  "scope": 150,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 148,
+                    "name": "ElementaryTypeName",
+                    "src": "1417:7:2"
+                  }
+                ],
+                "id": 149,
+                "name": "VariableDeclaration",
+                "src": "1417:23:2"
+              }
+            ],
+            "id": 150,
+            "name": "StructDefinition",
+            "src": "1111:337:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CReserveTransferSet",
+              "name": "CReserveTransferSet",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "position",
+                  "scope": 160,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 151,
+                    "name": "ElementaryTypeName",
+                    "src": "1611:4:2"
+                  }
+                ],
+                "id": 152,
+                "name": "VariableDeclaration",
+                "src": "1611:13:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "blockHeight",
+                  "scope": 160,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 153,
+                    "name": "ElementaryTypeName",
+                    "src": "1635:4:2"
+                  }
+                ],
+                "id": 154,
+                "name": "VariableDeclaration",
+                "src": "1635:16:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "exportHash",
+                  "scope": 160,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 155,
+                    "name": "ElementaryTypeName",
+                    "src": "1662:7:2"
+                  }
+                ],
+                "id": 156,
+                "name": "VariableDeclaration",
+                "src": "1662:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "transfers",
+                  "scope": 160,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CReserveTransfer[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CReserveTransfer[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CReserveTransfer",
+                          "referencedDeclaration": 150,
+                          "type": "struct VerusObjects.CReserveTransfer"
+                        },
+                        "id": 157,
+                        "name": "UserDefinedTypeName",
+                        "src": "1691:16:2"
+                      }
+                    ],
+                    "id": 158,
+                    "name": "ArrayTypeName",
+                    "src": "1691:18:2"
+                  }
+                ],
+                "id": 159,
+                "name": "VariableDeclaration",
+                "src": "1691:28:2"
+              }
+            ],
+            "id": 160,
+            "name": "StructDefinition",
+            "src": "1573:154:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.LastImport",
+              "name": "LastImport",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "height",
+                  "scope": 165,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 161,
+                    "name": "ElementaryTypeName",
+                    "src": "1764:4:2"
+                  }
+                ],
+                "id": 162,
+                "name": "VariableDeclaration",
+                "src": "1764:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "txid",
+                  "scope": 165,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 163,
+                    "name": "ElementaryTypeName",
+                    "src": "1786:7:2"
+                  }
+                ],
+                "id": 164,
+                "name": "VariableDeclaration",
+                "src": "1786:12:2"
+              }
+            ],
+            "id": 165,
+            "name": "StructDefinition",
+            "src": "1735:143:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CReserveTransferImport",
+              "name": "CReserveTransferImport",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "height",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 166,
+                    "name": "ElementaryTypeName",
+                    "src": "1927:4:2"
+                  }
+                ],
+                "id": 167,
+                "name": "VariableDeclaration",
+                "src": "1927:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "txid",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 168,
+                    "name": "ElementaryTypeName",
+                    "src": "1949:7:2"
+                  }
+                ],
+                "id": 169,
+                "name": "VariableDeclaration",
+                "src": "1949:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "txoutnum",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 170,
+                    "name": "ElementaryTypeName",
+                    "src": "2044:4:2"
+                  }
+                ],
+                "id": 171,
+                "name": "VariableDeclaration",
+                "src": "2044:13:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "exportinfo",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CCrossChainExport",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "CCrossChainExport",
+                      "referencedDeclaration": 211,
+                      "type": "struct VerusObjects.CCrossChainExport"
+                    },
+                    "id": 172,
+                    "name": "UserDefinedTypeName",
+                    "src": "2114:17:2"
+                  }
+                ],
+                "id": 173,
+                "name": "VariableDeclaration",
+                "src": "2114:28:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "partialtransactionproof",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CPtransactionproof",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "CPtransactionproof",
+                      "referencedDeclaration": 249,
+                      "type": "struct VerusObjects.CPtransactionproof"
+                    },
+                    "id": 174,
+                    "name": "UserDefinedTypeName",
+                    "src": "2153:18:2"
+                  }
+                ],
+                "id": 175,
+                "name": "VariableDeclaration",
+                "src": "2153:42:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "transfers",
+                  "scope": 179,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CReserveTransfer[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CReserveTransfer[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CReserveTransfer",
+                          "referencedDeclaration": 150,
+                          "type": "struct VerusObjects.CReserveTransfer"
+                        },
+                        "id": 176,
+                        "name": "UserDefinedTypeName",
+                        "src": "2247:16:2"
+                      }
+                    ],
+                    "id": 177,
+                    "name": "ArrayTypeName",
+                    "src": "2247:18:2"
+                  }
+                ],
+                "id": 178,
+                "name": "VariableDeclaration",
+                "src": "2247:28:2"
+              }
+            ],
+            "id": 179,
+            "name": "StructDefinition",
+            "src": "1886:398:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CCrossChainExport",
+              "name": "CCrossChainExport",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "version",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint16",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint16",
+                      "type": "uint16"
+                    },
+                    "id": 180,
+                    "name": "ElementaryTypeName",
+                    "src": "2328:6:2"
+                  }
+                ],
+                "id": 181,
+                "name": "VariableDeclaration",
+                "src": "2328:14:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "flags",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint16",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint16",
+                      "type": "uint16"
+                    },
+                    "id": 182,
+                    "name": "ElementaryTypeName",
+                    "src": "2353:6:2"
+                  }
+                ],
+                "id": 183,
+                "name": "VariableDeclaration",
+                "src": "2353:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "sourcesystemid",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 184,
+                    "name": "ElementaryTypeName",
+                    "src": "2376:7:2"
+                  }
+                ],
+                "id": 185,
+                "name": "VariableDeclaration",
+                "src": "2376:22:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "sourceheightstart",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 186,
+                    "name": "ElementaryTypeName",
+                    "src": "2409:6:2"
+                  }
+                ],
+                "id": 187,
+                "name": "VariableDeclaration",
+                "src": "2409:24:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "sourceheightend",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 188,
+                    "name": "ElementaryTypeName",
+                    "src": "2444:6:2"
+                  }
+                ],
+                "id": 189,
+                "name": "VariableDeclaration",
+                "src": "2444:22:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destinationsystemid",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 190,
+                    "name": "ElementaryTypeName",
+                    "src": "2477:7:2"
+                  }
+                ],
+                "id": 191,
+                "name": "VariableDeclaration",
+                "src": "2477:27:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destinationcurrencyid",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 192,
+                    "name": "ElementaryTypeName",
+                    "src": "2515:7:2"
+                  }
+                ],
+                "id": 193,
+                "name": "VariableDeclaration",
+                "src": "2515:29:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "numinputs",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 194,
+                    "name": "ElementaryTypeName",
+                    "src": "2555:6:2"
+                  }
+                ],
+                "id": 195,
+                "name": "VariableDeclaration",
+                "src": "2555:16:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "totalamounts",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CCurrencyValueMap[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CCurrencyValueMap[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CCurrencyValueMap",
+                          "referencedDeclaration": 131,
+                          "type": "struct VerusObjects.CCurrencyValueMap"
+                        },
+                        "id": 196,
+                        "name": "UserDefinedTypeName",
+                        "src": "2582:17:2"
+                      }
+                    ],
+                    "id": 197,
+                    "name": "ArrayTypeName",
+                    "src": "2582:19:2"
+                  }
+                ],
+                "id": 198,
+                "name": "VariableDeclaration",
+                "src": "2582:32:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "totalfees",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CCurrencyValueMap[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CCurrencyValueMap[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CCurrencyValueMap",
+                          "referencedDeclaration": 131,
+                          "type": "struct VerusObjects.CCurrencyValueMap"
+                        },
+                        "id": 199,
+                        "name": "UserDefinedTypeName",
+                        "src": "2625:17:2"
+                      }
+                    ],
+                    "id": 200,
+                    "name": "ArrayTypeName",
+                    "src": "2625:19:2"
+                  }
+                ],
+                "id": 201,
+                "name": "VariableDeclaration",
+                "src": "2625:29:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "hashtransfers",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 202,
+                    "name": "ElementaryTypeName",
+                    "src": "2665:7:2"
+                  }
+                ],
+                "id": 203,
+                "name": "VariableDeclaration",
+                "src": "2665:21:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "totalburned",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CCurrencyValueMap[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CCurrencyValueMap[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CCurrencyValueMap",
+                          "referencedDeclaration": 131,
+                          "type": "struct VerusObjects.CCurrencyValueMap"
+                        },
+                        "id": 204,
+                        "name": "UserDefinedTypeName",
+                        "src": "2714:17:2"
+                      }
+                    ],
+                    "id": 205,
+                    "name": "ArrayTypeName",
+                    "src": "2714:19:2"
+                  }
+                ],
+                "id": 206,
+                "name": "VariableDeclaration",
+                "src": "2714:31:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "rewardaddress",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjectsCommon.CTransferDestination",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "VerusObjectsCommon.CTransferDestination",
+                      "referencedDeclaration": 267,
+                      "type": "struct VerusObjectsCommon.CTransferDestination"
+                    },
+                    "id": 207,
+                    "name": "UserDefinedTypeName",
+                    "src": "2756:39:2"
+                  }
+                ],
+                "id": 208,
+                "name": "VariableDeclaration",
+                "src": "2756:53:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "firstinput",
+                  "scope": 211,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "int32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "int32",
+                      "type": "int32"
+                    },
+                    "id": 209,
+                    "name": "ElementaryTypeName",
+                    "src": "2837:5:2"
+                  }
+                ],
+                "id": 210,
+                "name": "VariableDeclaration",
+                "src": "2837:16:2"
+              }
+            ],
+            "id": 211,
+            "name": "StructDefinition",
+            "src": "2292:569:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CMerkleBranch",
+              "name": "CMerkleBranch",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "CMerkleBranchBase",
+                  "scope": 221,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 212,
+                    "name": "ElementaryTypeName",
+                    "src": "2903:5:2"
+                  }
+                ],
+                "id": 213,
+                "name": "VariableDeclaration",
+                "src": "2903:24:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "nIndex",
+                  "scope": 221,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 214,
+                    "name": "ElementaryTypeName",
+                    "src": "2938:6:2"
+                  }
+                ],
+                "id": 215,
+                "name": "VariableDeclaration",
+                "src": "2938:13:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "nSize",
+                  "scope": 221,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 216,
+                    "name": "ElementaryTypeName",
+                    "src": "2962:6:2"
+                  }
+                ],
+                "id": 217,
+                "name": "VariableDeclaration",
+                "src": "2962:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "branch",
+                  "scope": 221,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "bytes32[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 218,
+                        "name": "ElementaryTypeName",
+                        "src": "2985:7:2"
+                      }
+                    ],
+                    "id": 219,
+                    "name": "ArrayTypeName",
+                    "src": "2985:9:2"
+                  }
+                ],
+                "id": 220,
+                "name": "VariableDeclaration",
+                "src": "2985:16:2"
+              }
+            ],
+            "id": 221,
+            "name": "StructDefinition",
+            "src": "2869:140:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CTXProof",
+              "name": "CTXProof",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "branchType",
+                  "scope": 226,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 222,
+                    "name": "ElementaryTypeName",
+                    "src": "3044:5:2"
+                  }
+                ],
+                "id": 223,
+                "name": "VariableDeclaration",
+                "src": "3044:16:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "proofSequence",
+                  "scope": 226,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CMerkleBranch",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "CMerkleBranch",
+                      "referencedDeclaration": 221,
+                      "type": "struct VerusObjects.CMerkleBranch"
+                    },
+                    "id": 224,
+                    "name": "UserDefinedTypeName",
+                    "src": "3071:13:2"
+                  }
+                ],
+                "id": 225,
+                "name": "VariableDeclaration",
+                "src": "3071:27:2"
+              }
+            ],
+            "id": 226,
+            "name": "StructDefinition",
+            "src": "3017:89:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CComponents",
+              "name": "CComponents",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "elType",
+                  "scope": 238,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 227,
+                    "name": "ElementaryTypeName",
+                    "src": "3144:5:2"
+                  }
+                ],
+                "id": 228,
+                "name": "VariableDeclaration",
+                "src": "3144:12:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "elIdx",
+                  "scope": 238,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 229,
+                    "name": "ElementaryTypeName",
+                    "src": "3167:5:2"
+                  }
+                ],
+                "id": 230,
+                "name": "VariableDeclaration",
+                "src": "3167:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "elVchObj",
+                  "scope": 238,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes",
+                      "type": "bytes"
+                    },
+                    "id": 231,
+                    "name": "ElementaryTypeName",
+                    "src": "3189:5:2"
+                  }
+                ],
+                "id": 232,
+                "name": "VariableDeclaration",
+                "src": "3189:14:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "elProof",
+                  "scope": 238,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CTXProof[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CTXProof[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CTXProof",
+                          "referencedDeclaration": 226,
+                          "type": "struct VerusObjects.CTXProof"
+                        },
+                        "id": 233,
+                        "name": "UserDefinedTypeName",
+                        "src": "3214:8:2"
+                      }
+                    ],
+                    "id": 234,
+                    "name": "ArrayTypeName",
+                    "src": "3214:10:2"
+                  }
+                ],
+                "id": 235,
+                "name": "VariableDeclaration",
+                "src": "3214:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "VchObjIndex",
+                  "scope": 238,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 236,
+                    "name": "ElementaryTypeName",
+                    "src": "3243:6:2"
+                  }
+                ],
+                "id": 237,
+                "name": "VariableDeclaration",
+                "src": "3243:18:2"
+              }
+            ],
+            "id": 238,
+            "name": "StructDefinition",
+            "src": "3114:157:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjects.CPtransactionproof",
+              "name": "CPtransactionproof",
+              "scope": 250,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "version",
+                  "scope": 249,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 239,
+                    "name": "ElementaryTypeName",
+                    "src": "3320:5:2"
+                  }
+                ],
+                "id": 240,
+                "name": "VariableDeclaration",
+                "src": "3320:13:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "typeC",
+                  "scope": 249,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 241,
+                    "name": "ElementaryTypeName",
+                    "src": "3344:5:2"
+                  }
+                ],
+                "id": 242,
+                "name": "VariableDeclaration",
+                "src": "3344:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "txproof",
+                  "scope": 249,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CTXProof[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CTXProof[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CTXProof",
+                          "referencedDeclaration": 226,
+                          "type": "struct VerusObjects.CTXProof"
+                        },
+                        "id": 243,
+                        "name": "UserDefinedTypeName",
+                        "src": "3366:8:2"
+                      }
+                    ],
+                    "id": 244,
+                    "name": "ArrayTypeName",
+                    "src": "3366:10:2"
+                  }
+                ],
+                "id": 245,
+                "name": "VariableDeclaration",
+                "src": "3366:18:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "components",
+                  "scope": 249,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct VerusObjects.CComponents[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct VerusObjects.CComponents[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CComponents",
+                          "referencedDeclaration": 238,
+                          "type": "struct VerusObjects.CComponents"
+                        },
+                        "id": 246,
+                        "name": "UserDefinedTypeName",
+                        "src": "3395:11:2"
+                      }
+                    ],
+                    "id": 247,
+                    "name": "ArrayTypeName",
+                    "src": "3395:13:2"
+                  }
+                ],
+                "id": 248,
+                "name": "VariableDeclaration",
+                "src": "3395:24:2"
+              }
+            ],
+            "id": 249,
+            "name": "StructDefinition",
+            "src": "3283:144:2"
+          }
+        ],
+        "id": 250,
+        "name": "ContractDefinition",
+        "src": "182:3248:2"
+      }
+    ],
+    "id": 251,
+    "name": "SourceUnit",
+    "src": "73:3357:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-09-27T13:57:35.338Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

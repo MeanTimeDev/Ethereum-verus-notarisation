@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Bridge between ethereum and verus
 
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity >=0.4.21;
 //pragma experimental "v0.5.0";
 pragma experimental "ABIEncoderV2";
 

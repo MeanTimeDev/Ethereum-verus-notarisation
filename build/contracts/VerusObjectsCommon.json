@@ -1,0 +1,413 @@
+{
+  "contractName": "VerusObjectsCommon",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Libraries/VerusObjectsCommon.sol\":\"VerusObjectsCommon\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libraries/VerusObjectsCommon.sol\":{\"keccak256\":\"0x13ffd294a0bde2b004b737698e149d2c3b56c8a76e4b3e3b79bba8a509bf4cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ea27b0b52b39e39688734d090c1466f7b9e683d51c251686527ddb1fb71603\",\"dweb:/ipfs/QmWhoATj7wdKn4kkkddMbofG7eS8GK92jpBh3MJ185X2uD\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220cd65244a8f78c6f2573b17836046372c23e3bf57f2b259aa5844aa9bff76e15264736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220cd65244a8f78c6f2573b17836046372c23e3bf57f2b259aa5844aa9bff76e15264736f6c63430007060033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "144:273:3:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "144:273:3:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\n// Bridge between ethereum and verus\r\n\r\npragma solidity >=0.6.0 < 0.9.0;\r\npragma experimental ABIEncoderV2;\r\n\r\nlibrary VerusObjectsCommon {\r\n    enum TransferDestinationType{\r\n        DEST_INVALID,DEST_PK,DEST_PKH,DEST_SH,DEST_ID,DEST_FULLID,DEST_QUANTUM,DEST_RAW\r\n    }\r\n    struct CTransferDestination {\r\n        uint8 destinationtype;\r\n        address destinationaddress;\r\n    }\r\n}",
+  "sourcePath": "D:\\dev\\Ethereum-verus-notarisation\\contracts\\Libraries\\VerusObjectsCommon.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Libraries/VerusObjectsCommon.sol",
+    "exportedSymbols": {
+      "VerusObjectsCommon": [
+        268
+      ]
+    },
+    "id": 269,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 252,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.6",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "73:32:3"
+      },
+      {
+        "id": 253,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "107:33:3"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 268,
+        "linearizedBaseContracts": [
+          268
+        ],
+        "name": "VerusObjectsCommon",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "VerusObjectsCommon.TransferDestinationType",
+            "id": 262,
+            "members": [
+              {
+                "id": 254,
+                "name": "DEST_INVALID",
+                "nodeType": "EnumValue",
+                "src": "217:12:3"
+              },
+              {
+                "id": 255,
+                "name": "DEST_PK",
+                "nodeType": "EnumValue",
+                "src": "230:7:3"
+              },
+              {
+                "id": 256,
+                "name": "DEST_PKH",
+                "nodeType": "EnumValue",
+                "src": "238:8:3"
+              },
+              {
+                "id": 257,
+                "name": "DEST_SH",
+                "nodeType": "EnumValue",
+                "src": "247:7:3"
+              },
+              {
+                "id": 258,
+                "name": "DEST_ID",
+                "nodeType": "EnumValue",
+                "src": "255:7:3"
+              },
+              {
+                "id": 259,
+                "name": "DEST_FULLID",
+                "nodeType": "EnumValue",
+                "src": "263:11:3"
+              },
+              {
+                "id": 260,
+                "name": "DEST_QUANTUM",
+                "nodeType": "EnumValue",
+                "src": "275:12:3"
+              },
+              {
+                "id": 261,
+                "name": "DEST_RAW",
+                "nodeType": "EnumValue",
+                "src": "288:8:3"
+              }
+            ],
+            "name": "TransferDestinationType",
+            "nodeType": "EnumDefinition",
+            "src": "178:125:3"
+          },
+          {
+            "canonicalName": "VerusObjectsCommon.CTransferDestination",
+            "id": 267,
+            "members": [
+              {
+                "constant": false,
+                "id": 264,
+                "mutability": "mutable",
+                "name": "destinationtype",
+                "nodeType": "VariableDeclaration",
+                "scope": 267,
+                "src": "348:21:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 263,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "348:5:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 266,
+                "mutability": "mutable",
+                "name": "destinationaddress",
+                "nodeType": "VariableDeclaration",
+                "scope": 267,
+                "src": "380:26:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 265,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "380:7:3",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CTransferDestination",
+            "nodeType": "StructDefinition",
+            "scope": 268,
+            "src": "309:105:3",
+            "visibility": "public"
+          }
+        ],
+        "scope": 269,
+        "src": "144:273:3"
+      }
+    ],
+    "src": "73:344:3"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/Libraries/VerusObjectsCommon.sol",
+      "exportedSymbols": {
+        "VerusObjectsCommon": [
+          268
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.6",
+            ".0",
+            "<",
+            "0.9",
+            ".0"
+          ]
+        },
+        "id": 252,
+        "name": "PragmaDirective",
+        "src": "73:32:3"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 253,
+        "name": "PragmaDirective",
+        "src": "107:33:3"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            268
+          ],
+          "name": "VerusObjectsCommon",
+          "scope": 269
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "VerusObjectsCommon.TransferDestinationType",
+              "name": "TransferDestinationType"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "DEST_INVALID"
+                },
+                "id": 254,
+                "name": "EnumValue",
+                "src": "217:12:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_PK"
+                },
+                "id": 255,
+                "name": "EnumValue",
+                "src": "230:7:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_PKH"
+                },
+                "id": 256,
+                "name": "EnumValue",
+                "src": "238:8:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_SH"
+                },
+                "id": 257,
+                "name": "EnumValue",
+                "src": "247:7:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_ID"
+                },
+                "id": 258,
+                "name": "EnumValue",
+                "src": "255:7:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_FULLID"
+                },
+                "id": 259,
+                "name": "EnumValue",
+                "src": "263:11:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_QUANTUM"
+                },
+                "id": 260,
+                "name": "EnumValue",
+                "src": "275:12:3"
+              },
+              {
+                "attributes": {
+                  "name": "DEST_RAW"
+                },
+                "id": 261,
+                "name": "EnumValue",
+                "src": "288:8:3"
+              }
+            ],
+            "id": 262,
+            "name": "EnumDefinition",
+            "src": "178:125:3"
+          },
+          {
+            "attributes": {
+              "canonicalName": "VerusObjectsCommon.CTransferDestination",
+              "name": "CTransferDestination",
+              "scope": 268,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destinationtype",
+                  "scope": 267,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 263,
+                    "name": "ElementaryTypeName",
+                    "src": "348:5:3"
+                  }
+                ],
+                "id": 264,
+                "name": "VariableDeclaration",
+                "src": "348:21:3"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "destinationaddress",
+                  "scope": 267,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 265,
+                    "name": "ElementaryTypeName",
+                    "src": "380:7:3"
+                  }
+                ],
+                "id": 266,
+                "name": "VariableDeclaration",
+                "src": "380:26:3"
+              }
+            ],
+            "id": 267,
+            "name": "StructDefinition",
+            "src": "309:105:3"
+          }
+        ],
+        "id": 268,
+        "name": "ContractDefinition",
+        "src": "144:273:3"
+      }
+    ],
+    "id": 269,
+    "name": "SourceUnit",
+    "src": "73:344:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-09-27T13:57:35.342Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
