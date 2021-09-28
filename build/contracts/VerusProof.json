@@ -25309,7 +25309,7 @@
         27
       ],
       "VerusNotarizer": [
-        6697
+        6794
       ],
       "VerusObjects": [
         250
@@ -25324,7 +25324,7 @@
         1467
       ],
       "VerusSerializer": [
-        5924
+        6021
       ]
     },
     "id": 1468,
@@ -25379,7 +25379,7 @@
         "id": 838,
         "nodeType": "ImportDirective",
         "scope": 1468,
-        "sourceUnit": 5925,
+        "sourceUnit": 6022,
         "src": "205:44:11",
         "symbolAliases": [],
         "unitAlias": ""
@@ -25390,7 +25390,7 @@
         "id": 839,
         "nodeType": "ImportDirective",
         "scope": 1468,
-        "sourceUnit": 6698,
+        "sourceUnit": 6795,
         "src": "251:46:11",
         "symbolAliases": [],
         "unitAlias": ""
@@ -25472,17 +25472,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+              "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
               "typeString": "contract VerusNotarizer"
             },
             "typeName": {
               "id": 844,
               "name": "VerusNotarizer",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6697,
+              "referencedDeclaration": 6794,
               "src": "378:14:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                 "typeString": "contract VerusNotarizer"
               }
             },
@@ -25499,17 +25499,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+              "typeIdentifier": "t_contract$_VerusSerializer_$6021",
               "typeString": "contract VerusSerializer"
             },
             "typeName": {
               "id": 846,
               "name": "VerusSerializer",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5924,
+              "referencedDeclaration": 6021,
               "src": "414:15:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+                "typeIdentifier": "t_contract$_VerusSerializer_$6021",
                 "typeString": "contract VerusSerializer"
               }
             },
@@ -25827,7 +25827,7 @@
                       "referencedDeclaration": 847,
                       "src": "839:15:11",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+                        "typeIdentifier": "t_contract$_VerusSerializer_$6021",
                         "typeString": "contract VerusSerializer"
                       }
                     },
@@ -25859,10 +25859,10 @@
                         "name": "VerusSerializer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5924,
+                        "referencedDeclaration": 6021,
                         "src": "857:15:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_VerusSerializer_$5924_$",
+                          "typeIdentifier": "t_type$_t_contract$_VerusSerializer_$6021_$",
                           "typeString": "type(contract VerusSerializer)"
                         }
                       },
@@ -25877,13 +25877,13 @@
                       "src": "857:39:11",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+                        "typeIdentifier": "t_contract$_VerusSerializer_$6021",
                         "typeString": "contract VerusSerializer"
                       }
                     },
                     "src": "839:57:11",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+                      "typeIdentifier": "t_contract$_VerusSerializer_$6021",
                       "typeString": "contract VerusSerializer"
                     }
                   },
@@ -25906,7 +25906,7 @@
                       "referencedDeclaration": 845,
                       "src": "907:14:11",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                        "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                         "typeString": "contract VerusNotarizer"
                       }
                     },
@@ -25938,10 +25938,10 @@
                         "name": "VerusNotarizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6697,
+                        "referencedDeclaration": 6794,
                         "src": "924:14:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_VerusNotarizer_$6697_$",
+                          "typeIdentifier": "t_type$_t_contract$_VerusNotarizer_$6794_$",
                           "typeString": "type(contract VerusNotarizer)"
                         }
                       },
@@ -25956,13 +25956,13 @@
                       "src": "924:32:11",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                        "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                         "typeString": "contract VerusNotarizer"
                       }
                     },
                     "src": "907:49:11",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                      "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                       "typeString": "contract VerusNotarizer"
                     }
                   },
@@ -26167,7 +26167,7 @@
                         "referencedDeclaration": 847,
                         "src": "1115:15:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_VerusSerializer_$5924",
+                          "typeIdentifier": "t_contract$_VerusSerializer_$6021",
                           "typeString": "contract VerusSerializer"
                         }
                       },
@@ -26178,7 +26178,7 @@
                       "lValueRequested": false,
                       "memberName": "serializeCReserveTransfers",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5299,
+                      "referencedDeclaration": 5396,
                       "src": "1115:42:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_pure$_t_array$_t_struct$_CReserveTransfer_$150_memory_ptr_$dyn_memory_ptr_$_t_bool_$returns$_t_bytes_memory_ptr_$",
@@ -31156,7 +31156,7 @@
                         "referencedDeclaration": 845,
                         "src": "5595:14:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                          "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                           "typeString": "contract VerusNotarizer"
                         }
                       },
@@ -31167,7 +31167,7 @@
                       "lValueRequested": false,
                       "memberName": "lastBlockHeight",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5985,
+                      "referencedDeclaration": 6082,
                       "src": "5595:30:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_uint32_$",
@@ -31257,7 +31257,7 @@
                             "referencedDeclaration": 845,
                             "src": "5679:14:11",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_VerusNotarizer_$6697",
+                              "typeIdentifier": "t_contract$_VerusNotarizer_$6794",
                               "typeString": "contract VerusNotarizer"
                             }
                           },
@@ -31268,7 +31268,7 @@
                           "lValueRequested": false,
                           "memberName": "notarizedStateRoots",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 6021,
+                          "referencedDeclaration": 6118,
                           "src": "5679:34:11",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_uint32_$returns$_t_bytes32_$",
@@ -34397,7 +34397,7 @@
           27
         ],
         "VerusNotarizer": [
-          6697
+          6794
         ],
         "VerusObjects": [
           250
@@ -34412,7 +34412,7 @@
           1467
         ],
         "VerusSerializer": [
-          5924
+          6021
         ]
       },
       "license": "MIT"
@@ -34474,7 +34474,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 5925,
+          "SourceUnit": 6022,
           "absolutePath": "project:/contracts/VerusBridge/VerusSerializer.sol",
           "file": "../VerusBridge/VerusSerializer.sol",
           "scope": 1468,
@@ -34489,7 +34489,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 6698,
+          "SourceUnit": 6795,
           "absolutePath": "project:/contracts/VerusNotarizer/VerusNotarizer.sol",
           "file": "../VerusNotarizer/VerusNotarizer.sol",
           "scope": 1468,
@@ -34588,7 +34588,7 @@
               {
                 "attributes": {
                   "name": "VerusNotarizer",
-                  "referencedDeclaration": 6697,
+                  "referencedDeclaration": 6794,
                   "type": "contract VerusNotarizer"
                 },
                 "id": 844,
@@ -34615,7 +34615,7 @@
               {
                 "attributes": {
                   "name": "VerusSerializer",
-                  "referencedDeclaration": 5924,
+                  "referencedDeclaration": 6021,
                   "type": "contract VerusSerializer"
                 },
                 "id": 846,
@@ -35098,7 +35098,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5924,
+                                  "referencedDeclaration": 6021,
                                   "type": "type(contract VerusSerializer)",
                                   "value": "VerusSerializer"
                                 },
@@ -35185,7 +35185,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6697,
+                                  "referencedDeclaration": 6794,
                                   "type": "type(contract VerusNotarizer)",
                                   "value": "VerusNotarizer"
                                 },
@@ -35391,7 +35391,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "serializeCReserveTransfers",
-                              "referencedDeclaration": 5299,
+                              "referencedDeclaration": 5396,
                               "type": "function (struct VerusObjects.CReserveTransfer memory[] memory,bool) pure external returns (bytes memory)"
                             },
                             "children": [
@@ -40784,7 +40784,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "lastBlockHeight",
-                              "referencedDeclaration": 5985,
+                              "referencedDeclaration": 6082,
                               "type": "function () view external returns (uint32)"
                             },
                             "children": [
@@ -40911,7 +40911,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "notarizedStateRoots",
-                                  "referencedDeclaration": 6021,
+                                  "referencedDeclaration": 6118,
                                   "type": "function (uint32) view external returns (bytes32)"
                                 },
                                 "children": [
@@ -43378,12 +43378,12 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0x7932f72B6e354f41B8B05e8d891403234C9a6276",
-      "transactionHash": "0xe196721cb564429ee7822d7ff49300a2443001d63943c46555ab62d99488af19"
+      "address": "0xAD118aF23cA563a811b2430a329D48Bdc52b814c",
+      "transactionHash": "0x64c963b5e085fb0d9dd7720d4816c1ec48c1f7a8fd9461ab5b067d3444e51c3f"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-09-27T18:59:25.360Z",
+  "updatedAt": "2021-09-28T19:45:46.520Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

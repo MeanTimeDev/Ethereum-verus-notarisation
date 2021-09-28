@@ -43,7 +43,7 @@ module.exports = async function (deployer) {
     const VerusBridgeInst = await VerusBridge.deployed();
 
     
-    await deployer.deploy(VerusInfo, VerusBridgeInst.address,"2000753","0.7.3-9-rc1","VETH",true);
+    await deployer.deploy(VerusInfo, notarizerInst.address,"2000753","0.7.3-9-rc1","VETH",true);
     const INFOInst = await VerusInfo.deployed();
 
 };

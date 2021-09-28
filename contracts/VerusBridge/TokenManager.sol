@@ -17,6 +17,7 @@ contract TokenManager {
         bool isRegistered;
     }
     
+    mapping(address => hostedToken) public verusToERC20mapping;
     mapping(address => address) public destinationToAddress;
     mapping(address => hostedToken) public vERC20Tokens;
     
@@ -62,32 +63,12 @@ contract TokenManager {
         }
     }
 
-    /*function exportERC20Tokens(address _destCurrencyID,uint256 _tokenAmount) public {
-        require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
-        address contactAddress = destinationToAddress[_destCurrencyID];
-        exportERC20Tokens(contactAddress,_tokenAmount);
-    }*/
-    
-    //Tokens that are being imported into the eth blockchain are either minted or transferred from a reserve
-    /*function importERC20Tokens(address _contractAddress,uint256 _tokenAmount,address _destinationAddress) public {
-        require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
-        hostedToken memory tokenDetail = vERC20Tokens[_contractAddress];
-        //if the token has been created by this contract then burn the token
-        if(tokenDetail.VerusOwned){
-            mintToken(_contractAddress,_tokenAmount,_destinationAddress);
-        } else {
-            //transfer from the 
-            Token token = Token(_contractAddress);
-            token.transfer(_destinationAddress,_tokenAmount);   
-        }
-    }*/
-
     function importERC20Tokens(address _destCurrencyID,uint256 _tokenAmount,address _destination) public {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         address contractAddress;
         //if the token has not been previously created then it must be deployed
         //require(isToken(destCurrencyID),"Token is not registered");
-        if(!isToken(_destCurrencyID)) {
+        if(!verusToERC20mapping[_destCurrencyID].isRegistered) {
             contractAddress = deployNewToken(_destCurrencyID);
         } else {
             contractAddress = destinationToAddress[_destCurrencyID];
@@ -157,6 +138,7 @@ contract TokenManager {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         if(isToken(_destinationCurrencyID)) return destinationToAddress[_destinationCurrencyID];
         Token t = new Token(_tokenName, _symbol);
+        verusToERC20mapping[_destinationCurrencyID] = hostedToken(address(t),true,true); 
         vERC20Tokens[address(t)]= hostedToken(_destinationCurrencyID,true,true);
         destinationToAddress[_destinationCurrencyID] = address(t);
         emit TokenCreated(address(t));

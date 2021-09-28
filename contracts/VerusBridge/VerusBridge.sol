@@ -53,6 +53,7 @@ contract VerusBridge {
     bytes[] public SerializedCRTs;
     bytes[] public SerializedCCEs;
     bytes32[] public hashedCRTs;
+    uint public lastTxidimport;
     
     
     event Deprecate(address newAddress);
@@ -90,9 +91,9 @@ contract VerusBridge {
         return uint64(c);
     }
     
-    function convertFromVerusNumber(uint256 a) public pure returns (uint64) {
+    function convertFromVerusNumber(uint256 a) public pure returns (uint256) {
         uint256 c = a * 10000000000;
-        return uint64(c);
+        return c;
     }
     
     function export(VerusObjects.CReserveTransfer memory transfer) public payable{
@@ -102,15 +103,15 @@ contract VerusBridge {
             //check there are enough fees sent
             feesHeld += msg.value;
             //check that the token is registered
-            require(tokenManager.destinationToAddress(transfer.destsystemid) != 0x0000000000000000000000000000000000000000, "The token is not registered");
-            Token token = Token(tokenManager.destinationToAddress(transfer.destsystemid));
+            require(tokenManager.destinationToAddress(transfer.currencyvalue.currency) != 0x0000000000000000000000000000000000000000, "The token is not registered");
+            Token token = Token(tokenManager.destinationToAddress(transfer.currencyvalue.currency));
             uint256 allowedTokens = token.allowance(msg.sender,address(this));
             require( uint64(allowedTokens) >= transfer.currencyvalue.amount,"This contract must have an allowance of greater than or equal to the number of tokens");
             //transfer the tokens to this contract
             token.transferFrom(msg.sender,address(this),uint256(transfer.currencyvalue.amount)); 
             token.approve(address(tokenManager),uint256(transfer.currencyvalue.amount));  
             //give an approval for the tokenmanagerinstance to spend the tokens
-            tokenManager.exportERC20Tokens(tokenManager.destinationToAddress(transfer.destsystemid),uint256(transfer.currencyvalue.amount));
+            tokenManager.exportERC20Tokens(tokenManager.destinationToAddress(transfer.currencyvalue.currency),uint256(transfer.currencyvalue.amount));
         } else {
             //handle a vEth transfer
             transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee);
@@ -224,22 +225,35 @@ contract VerusBridge {
         
     }
 
-
+    function getlastimportheight() public view returns(uint) {
+        return lastTxidimport;
+    }
     /***
      * Import from Verus functions
      ***/
-     
+      function checkImports(bytes32[] memory _imports) public view returns(bytes32[] memory) {
+        //loop through the transfers and return a list of unprocessed
+        bytes32[] memory txidList = new bytes32[](_imports.length);
+        uint iterator;
+        for(uint i = 0; i < _imports.length; i++){
+            if(processedTxids[_imports[i]] != true){
+                txidList[iterator] = _imports[i];
+                iterator++;
+            }
+        }
+        return txidList;
+    }
 
     function submitImports(VerusObjects.CReserveTransferImport[] memory _imports) public {
         //loop through the transfers and process
         for(uint i = 0; i < _imports.length; i++){
-            _createImports(_imports[i]);
+           _createImports(_imports[i]);
         }
     }
 
     function _createImports(VerusObjects.CReserveTransferImport memory _import) public returns(bool){
 
-        require(processedTxids[_import.txid] != true,"Transfer has been processed"); 
+        if(processedTxids[_import.txid] == true) return false; 
         bytes32 txidfound;
         bytes memory sliced = _import.partialtransactionproof.components[0].elVchObj;
         assembly {
@@ -249,11 +263,13 @@ contract VerusBridge {
         bool proved = verusProof.proveImports(_import);
         require(proved,"Transfers do not prove against the last notarization");
         processedTxids[_import.txid] = true;
+        if(lastTxidimport < _import.height)
+            lastTxidimport = _import.height;
         uint256 amount;
         //check the transfers were in the hash.
         for(uint i = 0; i < _import.transfers.length; i++){
             //handle eth transactions
-            amount = convertFromVerusNumber(_import.transfers[i].currencyvalue.amount);
+            amount = convertFromVerusNumber(uint256(_import.transfers[i].currencyvalue.amount));
             if(_import.transfers[i].currencyvalue.currency == VerusConstants.VEth) {
                 //cast the destination as an ethAddress
                     require(amount <= address(this).balance,"Requested amount exceeds contract balance");
@@ -279,7 +295,6 @@ contract VerusBridge {
         //need a transferset for each position not each block
         //retrieve a block get the indexes, create a transfer set for each index add those to the array
         uint eIndex = readyExportsByBlock[_blockNumber].index;
-        bytes32 nullobj;
         VerusObjects.CReserveTransferSet memory output = VerusObjects.CReserveTransferSet(
             eIndex, //position in array
             _blockNumber, //blockHeight
