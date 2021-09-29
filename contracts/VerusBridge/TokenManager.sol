@@ -47,7 +47,7 @@ contract TokenManager {
         hostedToken memory tokenDetail;
         //transfer the tokens to the contract address
         uint256 allowedTokens = token.allowance(msg.sender,address(this));
-        require( allowedTokens >= _tokenAmount,"Not enough tokens have been approved");
+        require( allowedTokens >= _tokenAmount,"Not enough tokens have been approved"); //values in wei
         //if its not approved it wont work
         token.transferFrom(msg.sender,address(this),_tokenAmount);   
         

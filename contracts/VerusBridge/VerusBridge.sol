@@ -95,7 +95,7 @@ contract VerusBridge {
         uint256 c = a * 10000000000;
         return c;
     }
-    
+ 
     function export(VerusObjects.CReserveTransfer memory transfer) public payable{
         require(!deprecated,"Contract has been deprecated");
         require(msg.value >= VerusConstants.transactionFee + uint64(transfer.fees),"Please send the appropriate transaction fee.");
@@ -103,19 +103,21 @@ contract VerusBridge {
             //check there are enough fees sent
             feesHeld += msg.value;
             //check that the token is registered
-            require(tokenManager.destinationToAddress(transfer.currencyvalue.currency) != 0x0000000000000000000000000000000000000000, "The token is not registered");
-            Token token = Token(tokenManager.destinationToAddress(transfer.currencyvalue.currency));
+            (address ERC20TokenAddress, bool VerusOwned, bool isRegistered) = tokenManager.verusToERC20mapping(transfer.currencyvalue.currency);
+            require(isRegistered, "The token is not registered");
+            Token token = Token(ERC20TokenAddress);
             uint256 allowedTokens = token.allowance(msg.sender,address(this));
-            require( uint64(allowedTokens) >= transfer.currencyvalue.amount,"This contract must have an allowance of greater than or equal to the number of tokens");
+            uint256 tokenAmount = convertFromVerusNumber(transfer.currencyvalue.amount); //convert to wei from verus satoshis
+            require( allowedTokens >= tokenAmount,"This contract must have an allowance of greater than or equal to the number of tokens");
             //transfer the tokens to this contract
-            token.transferFrom(msg.sender,address(this),uint256(transfer.currencyvalue.amount)); 
-            token.approve(address(tokenManager),uint256(transfer.currencyvalue.amount));  
+            token.transferFrom(msg.sender,address(this),tokenAmount); 
+            token.approve(address(tokenManager),tokenAmount);
             //give an approval for the tokenmanagerinstance to spend the tokens
-            tokenManager.exportERC20Tokens(tokenManager.destinationToAddress(transfer.currencyvalue.currency),uint256(transfer.currencyvalue.amount));
+            tokenManager.exportERC20Tokens(ERC20TokenAddress, tokenAmount);  //total amount kept as wei until export to verus
         } else {
             //handle a vEth transfer
             transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee);
-            ethHeld += msg.value - VerusConstants.transactionFee;
+            ethHeld += transfer.currencyvalue.amount;
             feesHeld += VerusConstants.transactionFee;
         }
         _createExports(transfer);
