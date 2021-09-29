@@ -149,8 +149,9 @@ contract TokenManager {
     }*/
 
     function deployNewToken(address _destinationCurrencyID,string memory _tokenName, string memory _symbol) public returns (address) {
-        require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
-        if(isToken(_destinationCurrencyID)) return destinationToAddress[_destinationCurrencyID];
+        //require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
+        if(verusToERC20mapping[_destinationCurrencyID].isRegistered) 
+            return verusToERC20mapping[_destinationCurrencyID].destinationCurrencyID;
         Token t = new Token(_tokenName, _symbol);
         verusToERC20mapping[_destinationCurrencyID] = hostedToken(address(t),true,true); 
         vERC20Tokens[address(t)]= hostedToken(_destinationCurrencyID,true,true);
