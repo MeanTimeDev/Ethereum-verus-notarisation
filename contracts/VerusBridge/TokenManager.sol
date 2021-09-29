@@ -27,6 +27,16 @@ contract TokenManager {
         verusBridgeContract = address(0);
     }
     
+        
+    function convertFromVerusNumber(uint256 a,uint8 decimals) public pure returns (uint256) {
+         uint8 power = 10; //default value for 18
+        if(decimals <= 18 ) {
+            power = decimals - 8;// number of decimals in verus
+        }
+        uint256 c = a * 10 ^ power;
+        return c;
+    }
+    
     function setVerusBridgeContract(address _verusBridgeContract) public {
         require(verusBridgeContract == address(0),"verusBridgeContract Address has already been set.");
         verusBridgeContract = _verusBridgeContract;
@@ -63,7 +73,7 @@ contract TokenManager {
         }
     }
 
-    function importERC20Tokens(address _destCurrencyID,uint256 _tokenAmount,address _destination) public {
+    function importERC20Tokens(address _destCurrencyID,uint64 _tokenAmount,address _destination) public {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
         address contractAddress;
         //if the token has not been previously created then it must be deployed
@@ -73,16 +83,17 @@ contract TokenManager {
         } else {
             contractAddress = destinationToAddress[_destCurrencyID];
         }
-
         hostedToken memory tokenDetail = vERC20Tokens[contractAddress];
+        Token token = Token(contractAddress);
+        uint256 processedTokenAmount = convertFromVerusNumber(_tokenAmount, token.decimals());
         //if the token has been created by this contract then burn the token
         if(tokenDetail.VerusOwned){
-            mintToken(contractAddress,_tokenAmount,address(_destination));
+            mintToken(contractAddress,processedTokenAmount,address(_destination));
         } else {
-            //transfer from the 
-            Token token = Token(contractAddress);
-            token.transfer(address(_destination),_tokenAmount);   
+            //transfer from the contract
+            token.transfer(address(_destination),processedTokenAmount);   
         }
+
     }
 
     function balanceOf(address _contractAddress,address _account) public view returns(uint256){

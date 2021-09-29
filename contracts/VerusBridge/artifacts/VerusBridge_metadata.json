@@ -540,6 +540,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "_imports",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "checkImports",
+				"outputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "",
+						"type": "bytes32[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "claimFees",
 				"outputs": [
@@ -577,14 +596,19 @@
 						"internalType": "uint256",
 						"name": "a",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "decimals",
+						"type": "uint8"
 					}
 				],
 				"name": "convertFromVerusNumber",
 				"outputs": [
 					{
-						"internalType": "uint64",
+						"internalType": "uint256",
 						"name": "",
-						"type": "uint64"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "pure",
@@ -596,6 +620,11 @@
 						"internalType": "uint256",
 						"name": "a",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "decimals",
+						"type": "uint8"
 					}
 				],
 				"name": "convertToVerusNumber",
@@ -975,6 +1004,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getlastimportheight",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -988,6 +1030,19 @@
 						"internalType": "bytes32",
 						"name": "",
 						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lastTxidimport",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -1529,11 +1584,11 @@
 			]
 		},
 		"contracts/MMR/VerusProof.sol": {
-			"keccak256": "0xf45585f4fc345093fb9aad80825887f7b8ec02d5d3cdd98e272e5bf2ce1f48c2",
+			"keccak256": "0x01b0e9bf9bffae9963bbb8c1929de2edf82e193e9f9628b18941f879ca4fab64",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ce0bd44b6cc0c59b0d5491a3400f22ad3fea60fb06915f9c068b2b4083ce0bc4",
-				"dweb:/ipfs/QmWKZQNgqsKeE7UAs3yny8LQp3sQWwxxSBxJmiq8GiE4Sy"
+				"bzz-raw://a9fd3a698eb643e08c51ad6163f05f8884e8957817e7caeb62468f8bfa876620",
+				"dweb:/ipfs/QmPzJyqHkyJdVLwozjgYrDes5PcAoCTponX6M5YHuAqeXf"
 			]
 		},
 		"contracts/VerusBridge/Token.sol": {
@@ -1545,11 +1600,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0x69d656570a878ec47e1ccdb8c344edf04f1a10837fb75d6b95935fdffc82e2cf",
+			"keccak256": "0xe2ea5c00ba4f48cacf4643916b31d4ce3901564d0a30cb6057da04eaa07190f7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e14482d82105cac433966d77e4b33512dfeba145fed40677b2a5e1ce08d4c086",
-				"dweb:/ipfs/QmT8eBJchB6n71LvvhcE2kqcvJBkomUuBPKjAiyKh15Gac"
+				"bzz-raw://38dd608a4b10899f4c83f6797e8f0cb6217435a3c3ce42b6420793e535e6beb2",
+				"dweb:/ipfs/QmPuTd2sVuadNFZ3qyeivjA7N594JQ6CQD2aHajVD9EsP1"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {
@@ -1561,19 +1616,19 @@
 			]
 		},
 		"contracts/VerusBridge/VerusBridge.sol": {
-			"keccak256": "0x392e507a8d0448ed3585869eb985f12b6c69cfee78dcab20e6e5c9230e078990",
+			"keccak256": "0xaf72f7524d6eccae1245b3c3a80c635840651e7ff28ec092c301b9f5c89bb391",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://07ff57bf8049690719f7fc38eb2e80cf521a711dc380db630046cf6c3a07558c",
-				"dweb:/ipfs/QmVfHcUtxFeoJtemidNihrrCdiyDWZfqxHJT3gxtiVU5gz"
+				"bzz-raw://14894aa55c52f4e67927b3ad9ef3aca1e0e56d4863e740b2ec151a35972b0509",
+				"dweb:/ipfs/QmWRyUkvCQ1wvhH7eYwCHvFZqy77f2KLQA4WVxTta3UiPc"
 			]
 		},
 		"contracts/VerusBridge/VerusCrossChainExport.sol": {
-			"keccak256": "0xc2869a90c1d5c8384b7a98f9d9fb95f2e0a51bd79e8dfb9f1e5a7331190f8d23",
+			"keccak256": "0xdcdd27ab700bda79daabe7167b548cd9157ad5c287cc7d6143f6690d730d1200",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6e3837efbb7ffe379fcd9d83e654242d2ec9ed4980cec82b1cfb4b70f9d067e6",
-				"dweb:/ipfs/QmWKETkvD1NPUeUQTPjhc7df4hHQmmZ21yBMUJpP1SBrfK"
+				"bzz-raw://3950d2932be522d751b85b7f6a4af7addc82891bf79ced25629349f55f20b843",
+				"dweb:/ipfs/QmQ2yLJY6kN5kQAxytq9NtrHqoAzccVHedeM1te5jgETBw"
 			]
 		},
 		"contracts/VerusBridge/VerusSerializer.sol": {
@@ -1585,11 +1640,11 @@
 			]
 		},
 		"contracts/VerusNotarizer/VerusNotarizer.sol": {
-			"keccak256": "0x7d2ba74a0ee54c81752e1225c2c5f22897dd45cc497c1c65c4420eb10e815738",
+			"keccak256": "0xff638c42889d0f96b998541a470901407b999601cc378019c2adddc191dccb8f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://955cc5f92046c5aae6a0ea199c5d76f084415c3652126e5f0294096ffbc87004",
-				"dweb:/ipfs/QmQk7r3m5GuZPtwY2qLztXZvgVFSBY9zwhPs9F2METHxJd"
+				"bzz-raw://f186d5ae38b20d5c9b0a96195460be490f9e7227f8bbbe380589ad757a11becd",
+				"dweb:/ipfs/QmXeDTct14xmssedgk326Zoz9taU896hJPzqP6WFU6nk7N"
 			]
 		},
 		"node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol": {

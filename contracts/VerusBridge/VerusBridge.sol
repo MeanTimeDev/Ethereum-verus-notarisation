@@ -86,14 +86,22 @@ contract VerusBridge {
         }
     }
 
-    function convertToVerusNumber(uint256 a) public pure returns (uint64) {
-        uint256 c = a / 10000000000;
-        return uint64(c);
-    }
-    
-    function convertFromVerusNumber(uint256 a) public pure returns (uint256) {
-        uint256 c = a * 10000000000;
+    function convertFromVerusNumber(uint256 a,uint8 decimals) public pure returns (uint256) {
+         uint8 power = 10; //default value for 18
+        if(decimals <= 18 ) {
+            power = decimals - 8;// number of decimals in verus
+        }
+        uint256 c = a * 10 ^ power;
         return c;
+    }
+
+    function convertToVerusNumber(uint256 a,uint8 decimals) public pure returns (uint64) {
+        uint8 power = 10; //default value for 18
+        if(decimals <= 18 ) {
+            power = decimals - 8;// number of decimals in verus
+        }
+        uint256 c = a / 10 ^ power;
+        return uint64(c);
     }
  
     function export(VerusObjects.CReserveTransfer memory transfer) public payable{
@@ -107,7 +115,7 @@ contract VerusBridge {
             require(isRegistered, "The token is not registered");
             Token token = Token(ERC20TokenAddress);
             uint256 allowedTokens = token.allowance(msg.sender,address(this));
-            uint256 tokenAmount = convertFromVerusNumber(transfer.currencyvalue.amount); //convert to wei from verus satoshis
+            uint256 tokenAmount = convertFromVerusNumber(transfer.currencyvalue.amount,token.decimals()); //convert to wei from verus satoshis
             require( allowedTokens >= tokenAmount,"This contract must have an allowance of greater than or equal to the number of tokens");
             //transfer the tokens to this contract
             token.transferFrom(msg.sender,address(this),tokenAmount); 
@@ -116,70 +124,18 @@ contract VerusBridge {
             tokenManager.exportERC20Tokens(ERC20TokenAddress, tokenAmount);  //total amount kept as wei until export to verus
         } else {
             //handle a vEth transfer
-            transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee);
+            transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee,18);
             ethHeld += transfer.currencyvalue.amount;
             feesHeld += VerusConstants.transactionFee;
         }
         _createExports(transfer);
     }
-    /*
-    function exportETH(address _destination,uint8 _destinationType,address _feeCurrencyID,uint256 _nFees,address _destSystemID,uint32 _flags,address _secondReserveID) public payable returns(uint256){
-        require(!deprecated,"Contract has been deprecated");
-        //calculate amount of eth to send
-        require(msg.value > VerusConstants.transactionFee,"Ethereum must be sent with the transaction to be sent to the Verus Chain");
-        
-        uint256 amount = msg.value - VerusConstants.transactionFee;
-        ethHeld += amount;
-        feesHeld += VerusConstants.transactionFee;
-        //create a new Bridge Transaction
-         VerusObjectsCommon.CTransferDestination memory transferDestination = VerusObjectsCommon.CTransferDestination(_destinationType,_destination);
-        _createExports(convertToVerusNumber(amount), address(VerusConstants.VEth), transferDestination, VerusConstants.VerusSystemId, _nFees, _feeCurrencyID, _destSystemID, _flags,_secondReserveID);
 
-        return amount;
-    }
-
-
-    //nFees and secondReserveID are used to send the tokens/eth on
-    function exportERC20(uint64 _amount,address _tokenAddress,address _destination,uint8 _destinationType,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID,uint32 _flags,address _secondReserveID) public payable {
-        //check that they are not attempting to send Eth
-        require(!deprecated,"Contract has been deprecated");
-        require(msg.value >= VerusConstants.transactionFee + uint64(_nFees),"Please send the appropriate transaction fee.");
-        require(_destination != VerusConstants.VEth,"To send eth use exportETH");
-        //check there are enough fees sent
-        feesHeld += msg.value;
-        Token token = Token(_tokenAddress);
-        uint256 allowedTokens = token.allowance(msg.sender,address(this));
-        require( uint64(allowedTokens) >= _amount,"This contract must have an allowance of greater than or equal to the number of tokens");
-        //transfer the tokens to this contract
-        token.transferFrom(msg.sender,address(this),uint256(_amount)); 
-        token.approve(address(tokenManager),uint256(_amount));  
-        //give an approval for the tokenmanagerinstance to spend the tokens
-        tokenManager.exportERC20Tokens(_tokenAddress,uint256(_amount));
-
-        //create the BridgeTransaction 
-        VerusObjectsCommon.CTransferDestination memory transferDestination = VerusObjectsCommon.CTransferDestination(_destinationType,_destination);
-        _createExports(_amount,tokenManager.vERC20Tokens(_tokenAddress).destinationCurrencyID,transferDestination,_destCurrencyID,_nFees,_feeCurrencyID,_destSystemID,_flags,_secondReserveID);
-    }*/
-
-    //function _createExports(uint64 _amount,address _tokenAddress,VerusObjectsCommon.CTransferDestination memory _destination,address _destCurrencyID,uint256 _nFees,address _feeCurrencyID,address _destSystemID,uint32 _flags,address _secondReserveID) private {
-      function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
+    function _createExports(VerusObjects.CReserveTransfer memory newTransaction) private {
         uint currentHeight = block.number;
         uint exportIndex;
         bool newHash;
 
-        /*VerusObjects.CCurrencyValueMap memory currencyvalues = VerusObjects.CCurrencyValueMap(_tokenAddress,_amount);
-        VerusObjects.CReserveTransfer memory newTransaction = VerusObjects.CReserveTransfer(
-            1,//force to be a signle value in the currencyvalue
-            currencyvalues,(Veth,amount)
-            _flags,65
-            _feeCurrencyID, VRSCTEST
-            _nFees, 200000
-            _destination, (4,"0xb26820ee0c9b1276aac834cf457026a575dfce84")
-            _destCurrencyID,VerusConstants.VerusSystemId
-            _destSystemID,"0xAef9ea235635E328124Ff3429dB9F9E91b64e2d",
-            _secondReserveID);'0x00000000000000000000000000000000*/
-//["1",["0x67460C2f56774eD27EeB8685f29f6CEC0B090B00","0"],"65",0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d,"2000000",["4","0xb26820ee0c9b1276aac834cf457026a575dfce84"],0xAef9ea235635E328124Ff3429dB9F9E91b64e2d,0xAef9ea235635E328124Ff3429dB9F9E91b64e2d,"0x00000000000000000000000000000000"]
-//[1,[0x67460C2f56774eD27EeB8685f29f6CEC0B090B00,0],65,0xA6ef9ea235635E328124Ff3429dB9F9E91b64e2d,2000000,[4,0xb26820ee0c9b1276aac834cf457026a575dfce84],0xAef9ea235635E328124Ff3429dB9F9E91b64e2d,0xAef9ea235635E328124Ff3429dB9F9E91b64e2d,0x00000000000000000000000000000000]
         //if there is fees in the pool spend those and not the amount that
         if(isPoolAvailable(newTransaction.fees,newTransaction.feecurrencyid)) {
             poolSize -= newTransaction.fees;
@@ -271,7 +227,7 @@ contract VerusBridge {
         //check the transfers were in the hash.
         for(uint i = 0; i < _import.transfers.length; i++){
             //handle eth transactions
-            amount = convertFromVerusNumber(uint256(_import.transfers[i].currencyvalue.amount));
+            amount = convertFromVerusNumber(uint256(_import.transfers[i].currencyvalue.amount),18);
             if(_import.transfers[i].currencyvalue.currency == VerusConstants.VEth) {
                 //cast the destination as an ethAddress
                     require(amount <= address(this).balance,"Requested amount exceeds contract balance");
@@ -279,9 +235,10 @@ contract VerusBridge {
                     ethHeld -= amount;
         
            } else {
-                //handle erc20 transactions   
+                //handle erc20 transactions  
+                //amount convesrion is handled in token manager
                 tokenManager.importERC20Tokens(_import.transfers[i].currencyvalue.currency,
-                    amount,
+                    _import.transfers[i].currencyvalue.amount,
                     _import.transfers[i].destination.destinationaddress);
            }
             //handle the distributions of the fees

@@ -98,6 +98,30 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "a",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "decimals",
+						"type": "uint8"
+					}
+				],
+				"name": "convertFromVerusNumber",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "_destinationCurrencyID",
 						"type": "address"
@@ -207,9 +231,9 @@
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "uint64",
 						"name": "_tokenAmount",
-						"type": "uint256"
+						"type": "uint64"
 					},
 					{
 						"internalType": "address",
@@ -301,6 +325,35 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "verusToERC20mapping",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "destinationCurrencyID",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "VerusOwned",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -339,11 +392,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0x69d656570a878ec47e1ccdb8c344edf04f1a10837fb75d6b95935fdffc82e2cf",
+			"keccak256": "0xe2ea5c00ba4f48cacf4643916b31d4ce3901564d0a30cb6057da04eaa07190f7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e14482d82105cac433966d77e4b33512dfeba145fed40677b2a5e1ce08d4c086",
-				"dweb:/ipfs/QmT8eBJchB6n71LvvhcE2kqcvJBkomUuBPKjAiyKh15Gac"
+				"bzz-raw://38dd608a4b10899f4c83f6797e8f0cb6217435a3c3ce42b6420793e535e6beb2",
+				"dweb:/ipfs/QmPuTd2sVuadNFZ3qyeivjA7N594JQ6CQD2aHajVD9EsP1"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {
