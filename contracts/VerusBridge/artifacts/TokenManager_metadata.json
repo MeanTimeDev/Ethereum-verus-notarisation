@@ -27,7 +27,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_contractAddress",
+						"name": "_ERC20contractAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_verusAddress",
 						"type": "address"
 					}
 				],
@@ -152,25 +157,6 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_destinationCurrencyID",
-						"type": "address"
-					}
-				],
-				"name": "deployNewToken",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -202,25 +188,6 @@
 				"name": "exportERC20Tokens",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_tokenName",
-						"type": "string"
-					}
-				],
-				"name": "generateDestinationCurrencyID",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -392,11 +359,11 @@
 			]
 		},
 		"contracts/VerusBridge/TokenManager.sol": {
-			"keccak256": "0xe2ea5c00ba4f48cacf4643916b31d4ce3901564d0a30cb6057da04eaa07190f7",
+			"keccak256": "0x267e8be1c02344e2540dc87488164d32585f8d6809f76bcf2df6f8b26c475528",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://38dd608a4b10899f4c83f6797e8f0cb6217435a3c3ce42b6420793e535e6beb2",
-				"dweb:/ipfs/QmPuTd2sVuadNFZ3qyeivjA7N594JQ6CQD2aHajVD9EsP1"
+				"bzz-raw://1e9a27f024e9c6d47a496e128b5a288ce303febece14b9c850ace3b5faa80d85",
+				"dweb:/ipfs/QmT2226qFmtSeQNuAveSupb2by3CPqxUWSnx53yt12bvw3"
 			]
 		},
 		"contracts/VerusBridge/VerusAddressCalculator.sol": {

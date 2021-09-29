@@ -79,7 +79,9 @@ contract TokenManager {
         //if the token has not been previously created then it must be deployed
         //require(isToken(destCurrencyID),"Token is not registered");
         if(!verusToERC20mapping[_destCurrencyID].isRegistered) {
-            contractAddress = deployNewToken(_destCurrencyID);
+            //contractAddress = deployNewToken(_destCurrencyID);
+            require(verusToERC20mapping[_destCurrencyID].isRegistered,
+            "Destination Currency ID is not registered");
         } else {
             contractAddress = destinationToAddress[_destCurrencyID];
         }
@@ -115,15 +117,16 @@ contract TokenManager {
         token.burn(_burnAmount);
     }
 
-    function addExistingToken(address _contractAddress) public returns(address){
-        require(!isToken(_contractAddress),"Token is already registered");
+    function addExistingToken(address _ERC20contractAddress,address _verusAddress) public returns(address){
+        require(!isToken( _verusAddress),"Token is already registered");
         //generate a address for the token name
-        Token token = Token(_contractAddress);
-        address destinationCurrencyID = generateDestinationCurrencyID(token.name());
-        vERC20Tokens[_contractAddress] = hostedToken(destinationCurrencyID,false,true);
-        destinationToAddress[destinationCurrencyID] = _contractAddress;
-        return destinationCurrencyID;
+        //Token token = Token( _ERC20contractAddress);
+        verusToERC20mapping[_verusAddress] = hostedToken(address(_ERC20contractAddress),false,true);
+        vERC20Tokens[ _ERC20contractAddress] = hostedToken(_verusAddress,false,true);
+        destinationToAddress[_verusAddress] = _ERC20contractAddress;
+        return _verusAddress;
     }
+/* no longer required unless we want auto token creation
 
     function deployNewToken(address _destinationCurrencyID) public returns (address) {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
@@ -143,7 +146,7 @@ contract TokenManager {
             }
         }
         return deployNewToken(_destinationCurrencyID,IDAsString,string(symbolUpper));
-    }
+    }*/
 
     function deployNewToken(address _destinationCurrencyID,string memory _tokenName, string memory _symbol) public returns (address) {
         require(isVerusBridgeContract(),"Call can only be made from Verus Bridge Contract");
@@ -155,7 +158,8 @@ contract TokenManager {
         emit TokenCreated(address(t));
         return address(t);
     }
-
+/*
+no longer required unless we want automatic token creation
     function generateDestinationCurrencyID(string memory _tokenName) public view returns(address){
         bytes memory reducedTokenName = abi.encodePacked(bytes9(VerusAddressCalculator.stringToBytes32(_tokenName)));
         address output;
@@ -193,10 +197,6 @@ contract TokenManager {
         //check if the tokenName already exists
         bytes9 reducedTokenName = bytes9(VerusAddressCalculator.stringToBytes32(_tokenName));
         return VerusAddressCalculator.stringToAddress(string(abi.encodePacked(reducedTokenName,bytes11(".erc20.eth."))));
-    }
-    
-    /*function isToken(address _destinationCurrencyID) public view returns(bool){
-        return vERC20Tokens[destinationToAddress[_destinationCurrencyID]].isRegistered;
     }*/
 
     function isToken(address _contractAddress) public view returns(bool){
@@ -207,7 +207,8 @@ contract TokenManager {
         return vERC20Tokens[_contractAddress].VerusOwned;
     }
 
-    /** helper function for generating currency ids **/
+    /* no longer required unless we want to automatically generate currencies
+    helper function for generating currency ids
     function _uintToStr(uint _i) private pure returns (string memory _uintAsString) {
         uint number = _i;
         if (number == 0) {
@@ -226,6 +227,6 @@ contract TokenManager {
             number /= 10;
         }
         return string(bstr);
-    }
+    }*/
 
 }
