@@ -18,8 +18,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -43,8 +42,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -63,8 +61,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"b\",\"type\":\"bytes\"},{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"}],\"name\":\"bytesToBytes32\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"bytesToBytes32\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"input\",\"type\":\"bytes\"}],\"name\":\"createHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/MMR/VerusBlake2b.sol\":\"VerusBlake2b\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/MMR/Blake2b.sol\":{\"keccak256\":\"0x2f3905aee56e95fe87f56c79e5f0fe14ec606f12862f539b223c6c621715446a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a2e1bc986d4d1900320807c6a484860de20cf3421814fb533de391b04708df89\",\"dweb:/ipfs/QmT7MAHy7kqttPqJ5qT5JaqJmCt1BMDv1H4zCRUtdpXBE9\"]},\"project:/contracts/MMR/VerusBlake2b.sol\":{\"keccak256\":\"0x57c88ed3ecb2d38439812ce55646bf20defbb0d1a9aa2dce3894f418b2de36d5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c10ad741c8a59f4fd2a21ad955202e1ff91b6ba4efb1e0925381f2fd29039b8\",\"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6\"]}},\"version\":1}",
@@ -4545,13 +4542,12 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0x231Ac94aBdF0e7DEE034382fbBf2c27CC16a503c",
-      "transactionHash": "0xdbc4d33b10c22953278f35d8a92fc4324c037082bfe56bee1df97722e81d0150"
+      "address": "0x1d1D77260aa188216439cf7b042C475c12F8bb40",
+      "transactionHash": "0xa0c0185a55474499d68880fd2e99cd02fdb1e01a87b11084f7c1cfc59d6b0f91"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-09-29T16:08:57.991Z",
-  "networkType": "ethereum",
+  "updatedAt": "2021-09-30T09:32:23.259Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

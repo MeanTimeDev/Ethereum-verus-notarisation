@@ -103,12 +103,12 @@ contract VerusBridge {
     function convertToVerusNumber(uint256 a,uint8 decimals) public pure returns (uint256) {
          uint8 power = 10; //default value for 18
          uint256 c = a;
-        if(decimals < 8 ) {
+        if(decimals > 8 ) {
             power = decimals - 8;// number of decimals in verus
-            c = a * (10 ** power);
-        }else if(decimals > 8){
-            power = 8 - decimals;// number of decimals in verus
             c = a / (10 ** power);
+        }else if(decimals < 8){
+            power = 8 - decimals;// number of decimals in verus
+            c = a * (10 ** power);
         }
       
         return c;
@@ -134,7 +134,7 @@ contract VerusBridge {
             tokenManager.exportERC20Tokens(ERC20TokenAddress, tokenAmount);  //total amount kept as wei until export to verus
         } else {
             //handle a vEth transfer
-            transfer.currencyvalue.amount = convertToVerusNumber(msg.value - VerusConstants.transactionFee,18);
+            transfer.currencyvalue.amount = uint64(convertToVerusNumber(msg.value - VerusConstants.transactionFee,18));
             ethHeld += transfer.currencyvalue.amount;
             feesHeld += VerusConstants.transactionFee;
         }

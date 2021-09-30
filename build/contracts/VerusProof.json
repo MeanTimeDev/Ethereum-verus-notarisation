@@ -58,8 +58,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -72,8 +71,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -86,8 +84,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -100,8 +97,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -114,8 +110,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -205,8 +200,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -264,8 +258,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -311,8 +304,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -671,8 +663,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1031,8 +1022,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1391,8 +1381,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1751,8 +1740,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1771,8 +1759,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"notarizerAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"verusBLAKE2b\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"verusSerializerAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"newHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"eventType\",\"type\":\"uint8\"}],\"name\":\"HashEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"_hashToCheck\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"_branch\",\"type\":\"tuple\"}],\"name\":\"checkBranch\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hashToProve\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"_branches\",\"type\":\"tuple[]\"}],\"name\":\"checkProof\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"height\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"txid\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"txoutnum\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"sourcesystemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightstart\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightend\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"destinationsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destinationcurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"numinputs\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalamounts\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalfees\",\"type\":\"tuple[]\"},{\"internalType\":\"bytes32\",\"name\":\"hashtransfers\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalburned\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"rewardaddress\",\"type\":\"tuple\"},{\"internalType\":\"int32\",\"name\":\"firstinput\",\"type\":\"int32\"}],\"internalType\":\"struct VerusObjects.CCrossChainExport\",\"name\":\"exportinfo\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"typeC\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"txproof\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"elType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"elIdx\",\"type\":\"uint8\"},{\"internalType\":\"bytes\",\"name\":\"elVchObj\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"elProof\",\"type\":\"tuple[]\"},{\"internalType\":\"uint32\",\"name\":\"VchObjIndex\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjects.CComponents[]\",\"name\":\"components\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CPtransactionproof\",\"name\":\"partialtransactionproof\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"transfers\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CReserveTransferImport\",\"name\":\"_import\",\"type\":\"tuple\"}],\"name\":\"checkTransfers\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"computedValues\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"input\",\"type\":\"bytes32\"}],\"name\":\"flipBytes32\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"_transfers\",\"type\":\"tuple[]\"}],\"name\":\"hashTransfers\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"height\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"txid\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"txoutnum\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"sourcesystemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightstart\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightend\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"destinationsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destinationcurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"numinputs\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalamounts\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalfees\",\"type\":\"tuple[]\"},{\"internalType\":\"bytes32\",\"name\":\"hashtransfers\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalburned\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"rewardaddress\",\"type\":\"tuple\"},{\"internalType\":\"int32\",\"name\":\"firstinput\",\"type\":\"int32\"}],\"internalType\":\"struct VerusObjects.CCrossChainExport\",\"name\":\"exportinfo\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"typeC\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"txproof\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"elType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"elIdx\",\"type\":\"uint8\"},{\"internalType\":\"bytes\",\"name\":\"elVchObj\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"elProof\",\"type\":\"tuple[]\"},{\"internalType\":\"uint32\",\"name\":\"VchObjIndex\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjects.CComponents[]\",\"name\":\"components\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CPtransactionproof\",\"name\":\"partialtransactionproof\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"transfers\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CReserveTransferImport\",\"name\":\"_import\",\"type\":\"tuple\"}],\"name\":\"proveComponents\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"txRoot\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"height\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"txid\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"txoutnum\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"sourcesystemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightstart\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightend\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"destinationsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destinationcurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"numinputs\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalamounts\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalfees\",\"type\":\"tuple[]\"},{\"internalType\":\"bytes32\",\"name\":\"hashtransfers\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalburned\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"rewardaddress\",\"type\":\"tuple\"},{\"internalType\":\"int32\",\"name\":\"firstinput\",\"type\":\"int32\"}],\"internalType\":\"struct VerusObjects.CCrossChainExport\",\"name\":\"exportinfo\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"typeC\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"txproof\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"elType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"elIdx\",\"type\":\"uint8\"},{\"internalType\":\"bytes\",\"name\":\"elVchObj\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"elProof\",\"type\":\"tuple[]\"},{\"internalType\":\"uint32\",\"name\":\"VchObjIndex\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjects.CComponents[]\",\"name\":\"components\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CPtransactionproof\",\"name\":\"partialtransactionproof\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"transfers\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CReserveTransferImport\",\"name\":\"_import\",\"type\":\"tuple\"}],\"name\":\"proveImports\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"height\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"txid\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"txoutnum\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"version\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"flags\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"sourcesystemid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightstart\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sourceheightend\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"destinationsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destinationcurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"numinputs\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalamounts\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalfees\",\"type\":\"tuple[]\"},{\"internalType\":\"bytes32\",\"name\":\"hashtransfers\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap[]\",\"name\":\"totalburned\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"rewardaddress\",\"type\":\"tuple\"},{\"internalType\":\"int32\",\"name\":\"firstinput\",\"type\":\"int32\"}],\"internalType\":\"struct VerusObjects.CCrossChainExport\",\"name\":\"exportinfo\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"typeC\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"txproof\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"elType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"elIdx\",\"type\":\"uint8\"},{\"internalType\":\"bytes\",\"name\":\"elVchObj\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"branchType\",\"type\":\"uint8\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"CMerkleBranchBase\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"nIndex\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"nSize\",\"type\":\"uint32\"},{\"internalType\":\"bytes32[]\",\"name\":\"branch\",\"type\":\"bytes32[]\"}],\"internalType\":\"struct VerusObjects.CMerkleBranch\",\"name\":\"proofSequence\",\"type\":\"tuple\"}],\"internalType\":\"struct VerusObjects.CTXProof[]\",\"name\":\"elProof\",\"type\":\"tuple[]\"},{\"internalType\":\"uint32\",\"name\":\"VchObjIndex\",\"type\":\"uint32\"}],\"internalType\":\"struct VerusObjects.CComponents[]\",\"name\":\"components\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CPtransactionproof\",\"name\":\"partialtransactionproof\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint32\",\"name\":\"version\",\"type\":\"uint32\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"amount\",\"type\":\"uint64\"}],\"internalType\":\"struct VerusObjects.CCurrencyValueMap\",\"name\":\"currencyvalue\",\"type\":\"tuple\"},{\"internalType\":\"uint32\",\"name\":\"flags\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"feecurrencyid\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fees\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint8\",\"name\":\"destinationtype\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"destinationaddress\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjectsCommon.CTransferDestination\",\"name\":\"destination\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"destcurrencyid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destsystemid\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"secondreserveid\",\"type\":\"address\"}],\"internalType\":\"struct VerusObjects.CReserveTransfer[]\",\"name\":\"transfers\",\"type\":\"tuple[]\"}],\"internalType\":\"struct VerusObjects.CReserveTransferImport\",\"name\":\"_import\",\"type\":\"tuple\"}],\"name\":\"proveTransaction\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"stateRoot\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"testHashedTransfers\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"testResult\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"testTransfers\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"txValue\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/MMR/VerusProof.sol\":\"VerusProof\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libraries/VerusConstants.sol\":{\"keccak256\":\"0x715a00e4f6c5f936a43dd9fd3a400cb7452c44f895e45213f8c07317933dd8f2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c4be7eae287083a537cb4e9d0929f10156be572a17172f711e5553afef7dfff6\",\"dweb:/ipfs/QmePg9uUWb15uqSb23tsfNe9x9XCJmXcAhT2HryRcKvvpw\"]},\"project:/contracts/Libraries/VerusObjects.sol\":{\"keccak256\":\"0xd0274346cdb551966e295f2718e45998ec5aaaa1376966f21520ecf89c53fc0c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8ea3a4d2dc51ba51aed7dbd427fecc3ef5c1b1e06758afbc47ade97b987c468f\",\"dweb:/ipfs/QmRVSscm5FLC16CjWaxCgBh2ESqtEPa4F9ZvYidkan4Pks\"]},\"project:/contracts/Libraries/VerusObjectsCommon.sol\":{\"keccak256\":\"0x13ffd294a0bde2b004b737698e149d2c3b56c8a76e4b3e3b79bba8a509bf4cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ea27b0b52b39e39688734d090c1466f7b9e683d51c251686527ddb1fb71603\",\"dweb:/ipfs/QmWhoATj7wdKn4kkkddMbofG7eS8GK92jpBh3MJ185X2uD\"]},\"project:/contracts/Libraries/VerusObjectsNotarization.sol\":{\"keccak256\":\"0x3911d1ee0b5596eca3fed141f8e386a8d81956786ac5ef22631532346d48a670\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://989f99592ce7c7b990da06821fa2363b80d17748bc0762e268b58920e0079afa\",\"dweb:/ipfs/QmTdWiodfbsA3ZGkhRuzx9iUr2oS3Ge5XSfALCFaGpfo3i\"]},\"project:/contracts/MMR/Blake2b.sol\":{\"keccak256\":\"0x2f3905aee56e95fe87f56c79e5f0fe14ec606f12862f539b223c6c621715446a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a2e1bc986d4d1900320807c6a484860de20cf3421814fb533de391b04708df89\",\"dweb:/ipfs/QmT7MAHy7kqttPqJ5qT5JaqJmCt1BMDv1H4zCRUtdpXBE9\"]},\"project:/contracts/MMR/VerusBlake2b.sol\":{\"keccak256\":\"0x57c88ed3ecb2d38439812ce55646bf20defbb0d1a9aa2dce3894f418b2de36d5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c10ad741c8a59f4fd2a21ad955202e1ff91b6ba4efb1e0925381f2fd29039b8\",\"dweb:/ipfs/QmeT2ntxvhm162uewhXQQZvzZZaP2nghZ3C9vpeyZzCRa6\"]},\"project:/contracts/MMR/VerusProof.sol\":{\"keccak256\":\"0xe30019bbb7d8080ea83baedccd4aba9a221a17f3933ad1e14121593f6115f8fd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://539970ff0518ae85b7945f63c56dd773902e157f58954c4c1da6adad33a399b7\",\"dweb:/ipfs/QmW2P2aQppEtvwHa4E1aFxae9RDy1HHjePvoRHqZEaKABF\"]},\"project:/contracts/VerusBridge/VerusSerializer.sol\":{\"keccak256\":\"0x220d0924962008b12f093e570811f82cb52844044b993be7fb265b0592faae32\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://80d78cb012f923e74ebc6e7c8c3f779f15eae28bfd0ebf3a7543fbfebaecd0a0\",\"dweb:/ipfs/QmRioKMCuLJHR1YbX3nZqku7qXH8M1ws9woqmX9qcxXvEu\"]},\"project:/contracts/VerusNotarizer/VerusNotarizer.sol\":{\"keccak256\":\"0x01fd78198ff4f1488f4f5aa07430a5e56e1d65f06b5a20b4725f4cc009e78988\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f97da9b543071f908697feff3179a08f29efbec2f657a86573bbc5ec89251642\",\"dweb:/ipfs/Qmaii5kvYypswpu1n1ngpmMAEXGmfuoDkwNCqGv7ZesuTo\"]}},\"version\":1}",
@@ -25309,7 +25296,7 @@
         27
       ],
       "VerusNotarizer": [
-        6494
+        6745
       ],
       "VerusObjects": [
         250
@@ -25324,7 +25311,7 @@
         1467
       ],
       "VerusSerializer": [
-        5721
+        5972
       ]
     },
     "id": 1468,
@@ -25379,7 +25366,7 @@
         "id": 838,
         "nodeType": "ImportDirective",
         "scope": 1468,
-        "sourceUnit": 5722,
+        "sourceUnit": 5973,
         "src": "205:44:11",
         "symbolAliases": [],
         "unitAlias": ""
@@ -25390,7 +25377,7 @@
         "id": 839,
         "nodeType": "ImportDirective",
         "scope": 1468,
-        "sourceUnit": 6495,
+        "sourceUnit": 6746,
         "src": "251:46:11",
         "symbolAliases": [],
         "unitAlias": ""
@@ -25472,17 +25459,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+              "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
               "typeString": "contract VerusNotarizer"
             },
             "typeName": {
               "id": 844,
               "name": "VerusNotarizer",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6494,
+              "referencedDeclaration": 6745,
               "src": "378:14:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                 "typeString": "contract VerusNotarizer"
               }
             },
@@ -25499,17 +25486,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+              "typeIdentifier": "t_contract$_VerusSerializer_$5972",
               "typeString": "contract VerusSerializer"
             },
             "typeName": {
               "id": 846,
               "name": "VerusSerializer",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5721,
+              "referencedDeclaration": 5972,
               "src": "414:15:11",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+                "typeIdentifier": "t_contract$_VerusSerializer_$5972",
                 "typeString": "contract VerusSerializer"
               }
             },
@@ -25827,7 +25814,7 @@
                       "referencedDeclaration": 847,
                       "src": "839:15:11",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+                        "typeIdentifier": "t_contract$_VerusSerializer_$5972",
                         "typeString": "contract VerusSerializer"
                       }
                     },
@@ -25859,10 +25846,10 @@
                         "name": "VerusSerializer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5721,
+                        "referencedDeclaration": 5972,
                         "src": "857:15:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_VerusSerializer_$5721_$",
+                          "typeIdentifier": "t_type$_t_contract$_VerusSerializer_$5972_$",
                           "typeString": "type(contract VerusSerializer)"
                         }
                       },
@@ -25877,13 +25864,13 @@
                       "src": "857:39:11",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+                        "typeIdentifier": "t_contract$_VerusSerializer_$5972",
                         "typeString": "contract VerusSerializer"
                       }
                     },
                     "src": "839:57:11",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+                      "typeIdentifier": "t_contract$_VerusSerializer_$5972",
                       "typeString": "contract VerusSerializer"
                     }
                   },
@@ -25906,7 +25893,7 @@
                       "referencedDeclaration": 845,
                       "src": "907:14:11",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                        "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                         "typeString": "contract VerusNotarizer"
                       }
                     },
@@ -25938,10 +25925,10 @@
                         "name": "VerusNotarizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6494,
+                        "referencedDeclaration": 6745,
                         "src": "924:14:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_VerusNotarizer_$6494_$",
+                          "typeIdentifier": "t_type$_t_contract$_VerusNotarizer_$6745_$",
                           "typeString": "type(contract VerusNotarizer)"
                         }
                       },
@@ -25956,13 +25943,13 @@
                       "src": "924:32:11",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                        "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                         "typeString": "contract VerusNotarizer"
                       }
                     },
                     "src": "907:49:11",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                      "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                       "typeString": "contract VerusNotarizer"
                     }
                   },
@@ -26167,7 +26154,7 @@
                         "referencedDeclaration": 847,
                         "src": "1115:15:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_VerusSerializer_$5721",
+                          "typeIdentifier": "t_contract$_VerusSerializer_$5972",
                           "typeString": "contract VerusSerializer"
                         }
                       },
@@ -26178,7 +26165,7 @@
                       "lValueRequested": false,
                       "memberName": "serializeCReserveTransfers",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5096,
+                      "referencedDeclaration": 5347,
                       "src": "1115:42:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_pure$_t_array$_t_struct$_CReserveTransfer_$150_memory_ptr_$dyn_memory_ptr_$_t_bool_$returns$_t_bytes_memory_ptr_$",
@@ -31156,7 +31143,7 @@
                         "referencedDeclaration": 845,
                         "src": "5595:14:11",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                          "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                           "typeString": "contract VerusNotarizer"
                         }
                       },
@@ -31167,7 +31154,7 @@
                       "lValueRequested": false,
                       "memberName": "lastBlockHeight",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5782,
+                      "referencedDeclaration": 6033,
                       "src": "5595:30:11",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_uint32_$",
@@ -31257,7 +31244,7 @@
                             "referencedDeclaration": 845,
                             "src": "5679:14:11",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_VerusNotarizer_$6494",
+                              "typeIdentifier": "t_contract$_VerusNotarizer_$6745",
                               "typeString": "contract VerusNotarizer"
                             }
                           },
@@ -31268,7 +31255,7 @@
                           "lValueRequested": false,
                           "memberName": "notarizedStateRoots",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 5818,
+                          "referencedDeclaration": 6069,
                           "src": "5679:34:11",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_uint32_$returns$_t_bytes32_$",
@@ -34397,7 +34384,7 @@
           27
         ],
         "VerusNotarizer": [
-          6494
+          6745
         ],
         "VerusObjects": [
           250
@@ -34412,7 +34399,7 @@
           1467
         ],
         "VerusSerializer": [
-          5721
+          5972
         ]
       },
       "license": "MIT"
@@ -34474,7 +34461,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 5722,
+          "SourceUnit": 5973,
           "absolutePath": "project:/contracts/VerusBridge/VerusSerializer.sol",
           "file": "../VerusBridge/VerusSerializer.sol",
           "scope": 1468,
@@ -34489,7 +34476,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 6495,
+          "SourceUnit": 6746,
           "absolutePath": "project:/contracts/VerusNotarizer/VerusNotarizer.sol",
           "file": "../VerusNotarizer/VerusNotarizer.sol",
           "scope": 1468,
@@ -34588,7 +34575,7 @@
               {
                 "attributes": {
                   "name": "VerusNotarizer",
-                  "referencedDeclaration": 6494,
+                  "referencedDeclaration": 6745,
                   "type": "contract VerusNotarizer"
                 },
                 "id": 844,
@@ -34615,7 +34602,7 @@
               {
                 "attributes": {
                   "name": "VerusSerializer",
-                  "referencedDeclaration": 5721,
+                  "referencedDeclaration": 5972,
                   "type": "contract VerusSerializer"
                 },
                 "id": 846,
@@ -35098,7 +35085,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5721,
+                                  "referencedDeclaration": 5972,
                                   "type": "type(contract VerusSerializer)",
                                   "value": "VerusSerializer"
                                 },
@@ -35185,7 +35172,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6494,
+                                  "referencedDeclaration": 6745,
                                   "type": "type(contract VerusNotarizer)",
                                   "value": "VerusNotarizer"
                                 },
@@ -35391,7 +35378,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "serializeCReserveTransfers",
-                              "referencedDeclaration": 5096,
+                              "referencedDeclaration": 5347,
                               "type": "function (struct VerusObjects.CReserveTransfer memory[] memory,bool) pure external returns (bytes memory)"
                             },
                             "children": [
@@ -40784,7 +40771,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "lastBlockHeight",
-                              "referencedDeclaration": 5782,
+                              "referencedDeclaration": 6033,
                               "type": "function () view external returns (uint32)"
                             },
                             "children": [
@@ -40911,7 +40898,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "notarizedStateRoots",
-                                  "referencedDeclaration": 5818,
+                                  "referencedDeclaration": 6069,
                                   "type": "function (uint32) view external returns (bytes32)"
                                 },
                                 "children": [
@@ -43378,13 +43365,12 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0xF9b6727468695B1e6Ef01807E07b7ccb25a289F1",
-      "transactionHash": "0xe5085d216a24ab6aa10bfef85e7a5c684f5b58fd9fad6ba5dd7bf43ddcc53221"
+      "address": "0xEfDa1dbf0e1e8D465aC0769c424b535eb185bCB9",
+      "transactionHash": "0x0f133e240980f986d7893ae158706a5c6e3ad27c53b1596faeed5ea93c9c11bc"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-09-29T16:08:58.103Z",
-  "networkType": "ethereum",
+  "updatedAt": "2021-09-30T09:32:23.275Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

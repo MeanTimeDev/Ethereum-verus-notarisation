@@ -13,7 +13,7 @@ contract VerusCrossChainExport{
     VerusObjects.CCurrencyValueMap[] currencies;
     VerusObjects.CCurrencyValueMap[] fees;
     VerusSerializer verusSerializer;
-
+ //   event test1(VerusObjects.CCrossChainExport ted);
 
     function quickSort(VerusObjects.CCurrencyValueMap[] storage currencey, int left, int right) private {
         int i = left;
@@ -123,7 +123,7 @@ contract VerusCrossChainExport{
         //clear the arrays
         delete currencies;
         delete fees;
-
+      //  emit test1(workingCCE);
         return workingCCE;
 
     }
