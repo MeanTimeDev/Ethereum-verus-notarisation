@@ -14,6 +14,30 @@ contract VerusCrossChainExport{
     VerusObjects.CCurrencyValueMap[] fees;
     VerusSerializer verusSerializer;
 
+
+    function quickSort(VerusObjects.CCurrencyValueMap[] storage currencey, int left, int right) private {
+        int i = left;
+        int j = right;
+        if (i == j) return;
+        uint160 pivot = uint160(currencey[uint160(left + (right - left) / 2)].currency);
+        while (i <= j) {
+            while (uint160(currencey[uint160(i)].currency) < pivot) i++;
+            while (pivot < uint160(currencey[uint160(j)].currency)) j--;
+            if (i <= j) {
+                VerusObjects.CCurrencyValueMap memory temp = currencey[uint160(i)];
+
+                currencey[uint160(i)] = currencey[uint160(j)];
+                currencey[uint160(j)] = temp;
+                i++;
+                j--;
+            }
+        }
+        if (left < j)
+            quickSort(currencey, left, j);
+        if (i < right)
+            quickSort(currencey, i, right);
+    }
+
     constructor(address _verusSerializerAddress) {
         verusSerializer = VerusSerializer(_verusSerializerAddress);
     }
@@ -56,6 +80,7 @@ contract VerusCrossChainExport{
         int64 currencyExists;
         int64 feeExistsInTotals;
         int64 feeExists;
+
         for(uint i = 0; i < transfers.length; i++){
             currencyExists = inCurrencies(transfers[i].currencyvalue.currency);
             if(currencyExists >= 0){
@@ -80,6 +105,10 @@ contract VerusCrossChainExport{
             }
             
         }
+        
+        quickSort(currencies, int(0), int(currencies.length - 1));
+        quickSort(fees, int(0), int(fees.length - 1));
+               
         workingCCE.totalamounts = currencies;
         workingCCE.totalfees = fees;
 
@@ -99,6 +128,6 @@ contract VerusCrossChainExport{
 
     }
     
-    
+
 
 }

@@ -88,20 +88,30 @@ contract VerusBridge {
 
     function convertFromVerusNumber(uint256 a,uint8 decimals) public pure returns (uint256) {
          uint8 power = 10; //default value for 18
-        if(decimals <= 18 ) {
+         uint256 c = a;
+        if(decimals > 8 ) {
             power = decimals - 8;// number of decimals in verus
+            c = a * (10 ** power);
+        }else if(decimals < 8){
+            power = 8 - decimals;// number of decimals in verus
+            c = a / (10 ** power);
         }
-        uint256 c = a * 10 ^ power;
+      
         return c;
     }
 
-    function convertToVerusNumber(uint256 a,uint8 decimals) public pure returns (uint64) {
-        uint8 power = 10; //default value for 18
-        if(decimals <= 18 ) {
+    function convertToVerusNumber(uint256 a,uint8 decimals) public pure returns (uint256) {
+         uint8 power = 10; //default value for 18
+         uint256 c = a;
+        if(decimals < 8 ) {
             power = decimals - 8;// number of decimals in verus
+            c = a * (10 ** power);
+        }else if(decimals > 8){
+            power = 8 - decimals;// number of decimals in verus
+            c = a / (10 ** power);
         }
-        uint256 c = a / 10 ^ power;
-        return uint64(c);
+      
+        return c;
     }
  
     function export(VerusObjects.CReserveTransfer memory transfer) public payable{
